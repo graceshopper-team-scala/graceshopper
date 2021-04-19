@@ -2,6 +2,7 @@
 
 Tajinder Singh (TJ)
 Jake Chen
+Mahfouz Basith
 
 ## Setup
 
