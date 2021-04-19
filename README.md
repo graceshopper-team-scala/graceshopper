@@ -5,7 +5,6 @@ Jake Chen
 Mahfouz Basith
 Alan Alban
 
-
 ## Setup
 
 To use this as boilerplate, you'll need to take the following steps:
