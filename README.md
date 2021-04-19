@@ -3,6 +3,7 @@
 Tajinder Singh (TJ)
 Jake Chen
 Alan Alban
+Mahfouz Basith
 
 ## Setup
 
