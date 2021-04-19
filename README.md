@@ -1,6 +1,7 @@
 # FS-App-Template
 
 Tajinder Singh (TJ)
+Jake Chen
 
 ## Setup
 
