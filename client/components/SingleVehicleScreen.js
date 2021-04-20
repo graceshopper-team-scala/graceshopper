@@ -1,4 +1,3 @@
-import './SingleVehicleScreen.css';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getSingleVehicleThunk } from '../store/singleVehicle';
