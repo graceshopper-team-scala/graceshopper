@@ -37,9 +37,9 @@ export class Cart extends Component {
   }
   handleChange(evt) {
     evt.preventdefault();
-    this.setState ={
-      [evt.target.name] = [evt.target.value]
-    }
+    this.setState = {
+      [evt.target.name]: [evt.target.value],
+    };
   }
   render() {
     //const { cart } = this.props;
