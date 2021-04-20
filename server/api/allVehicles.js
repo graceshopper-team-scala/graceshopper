@@ -1,4 +1,6 @@
-const { Vehicle } = require('../db');
+const {
+  models: { Vehicle },
+} = require('../db');
 
 const router = require('express').Router();
 
@@ -11,3 +13,15 @@ router.get('/', async (req, res, next) => {
     next(error);
   }
 });
+
+// GET /api/vehicles/:id
+router.get('/:id', async (req, res, next) => {
+  try {
+    const vehicle = await Vehicle.findByPk(req.params.id);
+    res.json(vehicle);
+  } catch (error) {
+    next(error);
+  }
+});
+
+module.exports = router;

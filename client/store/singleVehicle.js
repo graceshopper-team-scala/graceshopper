@@ -9,7 +9,7 @@ export const getSingleVehicle = (vehicle) => ({
 
 export const getSingleVehicleThunk = (id) => async (dispatch) => {
   const response = await axios.get(`/api/vehicles/${id}`);
-  dispatch(getSingleVehicle(reponse.data));
+  dispatch(getSingleVehicle(response.data));
 };
 
 const initialState = {};
