@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ButtonAppBar() {
+export function ButtonAppBar({handleClick, isLoggedIn}) {
   const classes = useStyles();
 
   return (
@@ -69,3 +69,17 @@ export default function ButtonAppBar() {
     </div>
   );
 }
+const mapState = state => {
+  return {
+    isLoggedIn: !!state.auth.id
+  }
+}
+const mapDispatch = dispatch => {
+  return {
+    handleClick() {
+      dispatch(logout())
+    }
+  }
+}
+
+export default connect(mapState, mapDispatch)(ButtonAppBar)
