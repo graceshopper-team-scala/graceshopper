@@ -1,10 +1,10 @@
 const router = require('express').Router();
-// const Car = require('../db/car);
+const Vehicle = require('../db/vehicle');
 
 router.get('/:id', async (req, res) => {
   try {
-    const car = await CaretPosition.findByPk(req.params.id);
-    res.json(car);
+    const vehicle = await Vehicle.findByPk(req.params.id);
+    res.json(vehicle);
   } catch (error) {
     console.error(500).json({ message: 'Server Error' });
   }
