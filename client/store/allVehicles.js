@@ -3,13 +3,11 @@ import axios from 'axios';
 // Action Types
 const GOT_VEHICLES = 'GOT_VEHICLES';
 
-
 // Action Creators
-const gotVehicles = (vehicle) => ({
+const gotVehicles = (vehicles) => ({
   type: GOT_VEHICLES,
   vehicles,
 });
-
 
 // Thunk Creators
 export const fetchVehicles = () => {
@@ -22,7 +20,6 @@ export const fetchVehicles = () => {
     }
   };
 };
-
 
 //reducer
 export default function vehiclesReducer(state = [], action) {
