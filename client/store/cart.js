@@ -1,6 +1,8 @@
-import axios from "axios";
+import axios from 'axios';
 // Action Types
-const ADD_ITEM = "ADD_ITEM";
+const ADD_ITEM = 'ADD_ITEM';
+const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
+const CART_RESET = 'CART_RESET';
 
 // Action Creators
 const addItem = (newItem) => ({
@@ -15,7 +17,7 @@ export const addToCart = (id) => {
       const { data: item } = await axios.get(`/api/vehicles/${id}`);
       dispatch(addItem(item));
     } catch (error) {
-      console.log("Error fetching cars from server");
+      console.log('Error fetching cars from server');
     }
   };
 };

@@ -1,27 +1,27 @@
-import React, { Component } from "react";
-import { addToCart } from "../store/cart";
-import { connect } from "react-redux";
-import CartItems from "./CartItems";
+import React, { Component } from 'react';
+import { addToCart } from '../store/cart';
+import { connect } from 'react-redux';
+import CartItems from './CartItems';
 
 const dummyCart = [
   {
     id: 1,
-    make: "toyota",
-    model: "camry",
-    description: "fake car model",
+    make: 'toyota',
+    model: 'camry',
+    description: 'fake car model',
     quantity: 2,
     imageUrl:
-      "https://image.shutterstock.com/image-vector/ui-image-placeholder-wireframes-apps-260nw-1037719204.jpg",
+      'https://image.shutterstock.com/image-vector/ui-image-placeholder-wireframes-apps-260nw-1037719204.jpg',
     price: 20000,
   },
   {
     id: 2,
-    make: "honda",
-    model: "civic",
-    description: "a civic for testing",
+    make: 'honda',
+    model: 'civic',
+    description: 'a civic for testing',
     quantity: 5,
     imageUrl:
-      "https://image.shutterstock.com/image-vector/ui-image-placeholder-wireframes-apps-260nw-1037719204.jpg",
+      'https://image.shutterstock.com/image-vector/ui-image-placeholder-wireframes-apps-260nw-1037719204.jpg',
     price: 15000,
   },
 ];
@@ -44,7 +44,7 @@ export class Cart extends Component {
   render() {
     //const { cart } = this.props;
     return (
-      <div>
+      <div className="cartscreen">
         <p> My Cart</p>
         <div>
           <div className="cart-buttons">
@@ -52,6 +52,10 @@ export class Cart extends Component {
             <button> Checkout </button>
           </div>
           <CartItems items={dummyCart} />
+        </div>
+        <div>
+          <p>Subtotal (0) items</p>
+          <p>$400000</p>
         </div>
       </div>
     );
