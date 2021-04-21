@@ -4,9 +4,6 @@ import { fetchVehicles } from '../store/allVehicles';
 import { Link } from 'react-router-dom';
 
 
-// Notice that we're exporting the AllRobots component twice. The named export
-// (below) is not connected to Redux, while the default export (at the very
-// bottom) is connected to Redux. Our tests should cover _both_ cases.
 export class AllVehicles extends React.Component {
   componentDidMount() {
     this.props.getVehicles();
@@ -14,22 +11,30 @@ export class AllVehicles extends React.Component {
 
   render() {
     const vehicles = this.props.vehicles;
+
+    //priceFormatter converts integer price value from DB into dollar currency format
+    const priceFormatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      maximumFractionDigits: 0,
+    })
+
     return (
       <div>
-        <div>
+        <div className="Allcards">
         {vehicles.map((vehicle) => (
-          <div key={vehicle.id}>
-            <h3>
-              <div>
-              <Link to={`/vehicles/${vehicle.id}`}>{vehicle.name}</Link>
-              </div>
-            </h3>
+          <div key={vehicle.id} className="Card">
             <Link to={`/vehicles/${vehicle.id}`}>
-              <div>
-              <img src={vehicle.imageUrl} alt={vehicle.name} />
+              <div className="Card-image">
+              <img src={vehicle.imageUrl} alt={vehicle.model} />
               </div>
             </Link>
-          </div>
+            <div className="Card-data">
+            <Link to={`/vehicles/${vehicle.id}`}>{vehicle.make} {vehicle.model}</Link> 
+            <div>{priceFormatter.format(vehicle.price)}</div>
+            </div>
+        </div>
+          
         ))}
         </div>
       </div>
