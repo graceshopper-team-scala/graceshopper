@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Vehicle, Order },
+  models: { User, Vehicle, Order, Order_Vehicle},
 } = require("../server/db");
 const cardata = require("./vehicledata");
 
@@ -29,17 +29,15 @@ async function seed() {
   ])
 
 
-const [cody, murphy] = users
-const [codyOrder, murphyOrder, murphyOrder2] = orders
-const [Nagasaki, Pegassi] = vehicles
+    const [cody, murphy] = users
+    const [codyOrder, murphyOrder, codyOrder2] = orders
+    const [Nagasaki, Pegassi] = vehicles
 
-await cody.setOrders(codyOrder)
-await murphy.setOrders(murphyOrder)
-await murphy.addOrder(murphyOrder2)
-await murphyOrder.setVehicles(Nagasaki)
-await murphyOrder2.setVehicles(Nagasaki)
-await codyOrder.setVehicles(Pegassi)
-
+    await cody.setOrders([codyOrder, codyOrder2])
+    await codyOrder.addVehicle(Nagasaki)
+    await codyOrder2.addVehicle(Pegassi, {through: {quantity:2}})
+    await murphy.setOrders(murphyOrder)
+    await murphyOrder.addVehicle(Nagasaki, {through: {quantity:5}})
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${users.length} users`);

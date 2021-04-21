@@ -15,7 +15,7 @@ Order.belongsTo(User)
 Vehicle.belongsToMany(Order, { through: Order_Vehicle });
 Order.belongsToMany(Vehicle, { through: Order_Vehicle });
 
-
+Vehicle.belongsTo(Order_Vehicle)
 
 
 module.exports = {
