@@ -15,8 +15,13 @@ class SingleVehicleScreen extends Component {
 
     return (
       <div className="singlevehicle">
-        <div className="left_img">
-          <img src={vehicle.imageUrl} />
+        <div className="vehiclescreen_left">
+          <div className="left_img">
+            <img src={vehicle.imageUrl} />
+          </div>
+          <div className="left_info">
+            <p className="left_description">{vehicle.description}</p>
+          </div>
         </div>
 
         <div className="vehiclescreen_top">
@@ -49,12 +54,6 @@ class SingleVehicleScreen extends Component {
             <p>
               <button type="button">Add to cart</button>
             </p>
-          </div>
-        </div>
-
-        <div className="vehiclescreen_bottom">
-          <div className="bottom_info">
-            <p className="bottom_description">{vehicle.description}</p>
           </div>
         </div>
       </div>
