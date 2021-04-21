@@ -10,6 +10,12 @@ const Vehicle = db.define("vehicle", {
     type: Sequelize.STRING,
     allowNull: false,
   },
+  vehicleName: {
+    type: Sequelize.VIRTUAL,
+    get() {
+      return `${this.make} ${this.model}`;
+    },
+  },
   class: {
     type: Sequelize.ENUM([
       "sedan",
@@ -18,12 +24,18 @@ const Vehicle = db.define("vehicle", {
       "sports",
       "military",
       "offroad",
+      "boats",
+      "planes",
     ]),
+    defaultValue: "sedan",
     allowNull: false,
   },
   price: {
     type: Sequelize.INTEGER,
     allowNull: false,
+    validate: {
+      min: 0,
+    },
   },
   description: {
     type: Sequelize.TEXT,
@@ -32,14 +44,20 @@ const Vehicle = db.define("vehicle", {
   quantity: {
     type: Sequelize.INTEGER,
     allowNull: false,
+    validate: {
+      min: 0,
+    },
   },
   logoUrl: {
     type: Sequelize.TEXT,
     allowNull: false,
+    defaultValue: "https://img.icons8.com/ios/452/rockstar-games.png",
   },
   imageUrl: {
     type: Sequelize.TEXT,
     allowNull: false,
+    defaultValue:
+      "https://www.chevynorthcountry.com/themes/foundation/dist/images/inventory-placeholder.png",
   },
 });
 
