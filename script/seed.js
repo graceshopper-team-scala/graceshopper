@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Vehicle },
+  models: { User, Vehicle, Order, Order_Vehicle },
 } = require("../server/db");
 const cardata = require("./vehicledata");
 
@@ -20,6 +20,26 @@ async function seed() {
     User.create({ username: "murphy", password: "cody_pw" }),
   ]);
   const vehicles = await Vehicle.bulkCreate(cardata);
+
+//seeding dummy order data
+  const orders = await Promise.all([
+    Order.create({status: 'pending'}),
+    Order.create({status: 'completed'}),
+    Order.create({status: 'completed'})
+  ])
+
+
+const [cody, murphy] = users
+const [codyOrder, murphyOrder, murphyOrder2] = orders
+const [Nagasaki, Pegassi] = vehicles
+
+await cody.setOrders(codyOrder)
+await murphy.setOrders(murphyOrder)
+await murphy.addOrder(murphyOrder2)
+await murphyOrder.setVehicles(Nagasaki)
+await murphyOrder2.setVehicles(Nagasaki)
+await codyOrder.setVehicles(Pegassi)
+
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${users.length} users`);
