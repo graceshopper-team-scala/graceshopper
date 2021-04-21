@@ -12,11 +12,10 @@ const addItem = (newItem) => ({
 
 // Thunk Creators
 export const addToCart = (id) => {
-  return async (dispatch, getSate) => {
+  return async (dispatch) => {
     try {
       const { data: item } = await axios.get(`/api/vehicles/${id}`);
       dispatch(addItem(item));
-      localStorage.setItem('cart', JSON.stringify(getState().cart.cartItems));
     } catch (error) {
       console.log('Error fetching cars from server');
     }
