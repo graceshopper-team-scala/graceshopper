@@ -1,4 +1,5 @@
 @import './cssModules/allVehicles.css';
+@import './cssModules/singleVehicle.css';
 
 body {
   font-family: sans-serif;

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { getSingleVehicleThunk } from '../store/singleVehicle';
 import { Link } from 'react-router-dom';
 
-import '../../public/singleVehicle.css';
+import '../../public/style.css';
 
 class SingleVehicleScreen extends Component {
   componentDidMount() {
