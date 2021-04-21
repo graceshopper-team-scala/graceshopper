@@ -8,28 +8,24 @@
 .vehiclescreen_top {
   display: flex;
   flex: 0.8;
-  /* position: absolute;
-  top: 88px;
-  left: 7px;
-  align-items: center;
-  z-index: 1; */
 }
 
 .left_img {
   margin: 1rem;
   flex: 0.6;
-  /* position: relative;
-  top: 60px;
-  left: 7px;
-  z-index: 2; */
 }
 
 .top_info {
-  margin: 1rem;
+  margin: 1rem, 0, 0, 0;
   flex: 0.4;
-  background: rgb(190, 186, 186);
+  background: rgb(199, 199, 199);
   height: fit-content;
   font-size: 0.9rem;
+}
+
+.top_logo {
+  width: 50%;
+  height: auto;
 }
 
 .top_make {
@@ -42,15 +38,23 @@
   font-size: 1.3rem;
 }
 
-.top_info > p,
+.top_info > span {
+  padding: 1rem;
+  border-bottom: 1px;
+}
+
 .right_info > p {
   padding: 1rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
-.top_info > p:last-child,
+.top_info > span:last-child,
 .right_info > p:last-child {
   border: none;
+}
+
+.vehiclescreen_left {
+  background: #d1d1d1;
 }
 
 .vehiclescreen_right {

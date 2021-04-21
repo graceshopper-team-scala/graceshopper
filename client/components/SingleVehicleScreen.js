@@ -15,23 +15,20 @@ class SingleVehicleScreen extends Component {
 
     return (
       <div className="singlevehicle">
-        <div className="vehiclescreen_left">
-          <div className="left_img">
-            <img src={vehicle.imageUrl} />
-          </div>
-          <div className="left_info">
-            <p className="left_description">{vehicle.description}</p>
-          </div>
-        </div>
-
-        <div className="vehiclescreen_top">
+        <div className="info_box">
           <div className="top_info">
-            <div className="top_logo">
+            <span className="top_logo">
               <img src={vehicle.logoUrl} />
+            </span>
+            <span className="top_make">{vehicle.make}</span>
+            <span className="top_model">{vehicle.model}</span>
+            <span className="top_price">${vehicle.price}</span>
+            <div className="left_img">
+              <img src={vehicle.imageUrl} />
             </div>
-            <h2 className="top_make">{vehicle.make}</h2>
-            <h2 className="top_model">{vehicle.model}</h2>
-            <p className="top_price">${vehicle.price}</p>
+            <div className="left_info">
+              <p className="left_description">{vehicle.description}</p>
+            </div>
           </div>
         </div>
 
