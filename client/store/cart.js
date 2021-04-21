@@ -12,10 +12,11 @@ const addItem = (newItem) => ({
 
 // Thunk Creators
 export const addToCart = (id) => {
-  return async (dispatch) => {
+  return async (dispatch, getSate) => {
     try {
       const { data: item } = await axios.get(`/api/vehicles/${id}`);
       dispatch(addItem(item));
+      localStorage.setItem('cart', JSON.stringify(getState().cart.cartItems));
     } catch (error) {
       console.log('Error fetching cars from server');
     }
@@ -23,10 +24,26 @@ export const addToCart = (id) => {
 };
 
 //reducer
-export default function cartReducer(state = [], action) {
+export default function cartReducer(state = { cartItems: [] }, action) {
   switch (action.type) {
     case ADD_ITEM:
-      return [...state, action.newItem];
+      const existItem = state.cartItems.find(
+        (x) => x.vehicle === newItem.vehicle
+      );
+      if (existItem) {
+        return {
+          ...state,
+          cartItems: state.cartItems.map((x) =>
+            x.vehicle === existItem.vehicle ? newItem : x
+          ),
+        };
+      } else {
+        return {
+          ...state,
+          cartItems: [...state.cartItems, item],
+        };
+      }
+
     default:
       return state;
   }
