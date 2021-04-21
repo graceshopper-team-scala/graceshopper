@@ -2,11 +2,11 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Login, Signup } from "./components/AuthForm";
-import Home from "./components/Home";
+import Home from "./components/home";
 import SingleVehicleScreen from "./components/SingleVehicleScreen";
 import { me } from "./store";
 import AllVehiclesScreen from "./components/AllVehiclesScreen";
-import Cart from "./components";
+import Cart from "./components/Cart";
 /**
  * COMPONENT
  */

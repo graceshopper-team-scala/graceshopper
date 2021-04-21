@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function ButtonAppBar({handleClick, isLoggedIn}) {
+export function ButtonAppBar({ handleClick, isLoggedIn }) {
   const classes = useStyles();
 
   return (
@@ -49,12 +49,9 @@ export function ButtonAppBar({handleClick, isLoggedIn}) {
             <Button color="inherit">Login</Button>
           </Link>
 
-          <Link to="/signup"><Button color="inherit">
-            Sign Up
-          </Button></Link>
-
-
-
+          <Link to="/signup">
+            <Button color="inherit">Sign Up</Button>
+          </Link>
 
           <IconButton
             edge="start"
@@ -69,17 +66,18 @@ export function ButtonAppBar({handleClick, isLoggedIn}) {
     </div>
   );
 }
-const mapState = state => {
+const mapState = (state) => {
   return {
-    isLoggedIn: !!state.auth.id
-  }
-}
-const mapDispatch = dispatch => {
+    isLoggedIn: !!state.auth.id,
+  };
+};
+
+const mapDispatch = (dispatch) => {
   return {
     handleClick() {
-      dispatch(logout())
-    }
-  }
-}
+      dispatch(logout());
+    },
+  };
+};
 
-export default connect(mapState, mapDispatch)(ButtonAppBar)
+export default connect(mapState, mapDispatch)(ButtonAppBar);
