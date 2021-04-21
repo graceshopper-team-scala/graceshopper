@@ -1,0 +1,37 @@
+.Allcards {
+	display: flex;
+	justify-content: space-evenly;
+	flex-wrap: wrap;
+	
+}
+
+.Card {
+	width: 300px;
+	margin: 1rem;
+	box-shadow: 7px 10px 12px -5px rgba(0, 0, 0, 0.56);
+}
+
+.Card-data {
+	display:flex;
+	font-size: 120%;
+	text-align: left;
+	margin-bottom: .5rem;
+	justify-content: space-evenly;
+}
+
+
+.Card-image {
+	display: flex;
+	align-items: center;
+	height: 200px;
+}
+.Card img:hover {
+	transition: all ease 500ms;
+	transform: scale(1);
+	transform: scale(1.10);
+	opacity: 0.7;
+}
+
+.Card img {
+	max-width: 100%;
+}
