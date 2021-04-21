@@ -38,26 +38,31 @@ export function ButtonAppBar({ handleClick, isLoggedIn }) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            <Link to="/home">GraceHopper Auto</Link>
+          <Typography variant="h6" className={classes.title}
+          component={Link}
+          to="/home">
+            GraceHopper Motors
           </Typography>
-          <Link color="inherit" to="/vehicles">
-            <Button color="inherit">All Vehicles</Button>
-          </Link>
 
-          <Link to="/login">
-            <Button color="inherit">Login</Button>
-          </Link>
+          <Button color="inherit" component={Link} to="/vehicles">
+            All Vehicles
+          </Button>
 
-          <Link to="/signup">
-            <Button color="inherit">Sign Up</Button>
-          </Link>
+          <Button color="inherit" component={Link} to="/login">
+            Login
+          </Button>
+
+          <Button color="inherit" component={Link} to="/signup">
+            Sign Up
+          </Button>
 
           <IconButton
             edge="start"
             className={classes.menuButton}
             color="inherit"
             aria-label="menu"
+            component={Link}
+            to="/cart"
           >
             <ShoppingCartIcon />
           </IconButton>
@@ -71,7 +76,6 @@ const mapState = (state) => {
     isLoggedIn: !!state.auth.id,
   };
 };
-
 const mapDispatch = (dispatch) => {
   return {
     handleClick() {
