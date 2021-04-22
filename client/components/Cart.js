@@ -1,30 +1,9 @@
 import React, { Component } from 'react';
-import { addToCart, removeFromCart } from '../store/cart';
+import { addToCart, removeFromCart, setCart } from '../store/cart';
 import { connect } from 'react-redux';
 import CartItems from './CartItems';
 
-const dummyCart = [
-  {
-    id: 1,
-    make: 'toyota',
-    model: 'camry',
-    description: 'fake car model',
-    quantity: 2,
-    imageUrl:
-      'https://image.shutterstock.com/image-vector/ui-image-placeholder-wireframes-apps-260nw-1037719204.jpg',
-    price: 20000,
-  },
-  {
-    id: 2,
-    make: 'honda',
-    model: 'civic',
-    description: 'a civic for testing',
-    quantity: 5,
-    imageUrl:
-      'https://image.shutterstock.com/image-vector/ui-image-placeholder-wireframes-apps-260nw-1037719204.jpg',
-    price: 15000,
-  },
-];
+
 export class Cart extends Component {
   constructor() {
     super();
@@ -34,13 +13,14 @@ export class Cart extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
   handleClick(id) {
-    console.log(dummyCart);
+
     dummyCart.filter((item) => item.id !== id);
     console.log(dummyCart.filter((item) => item.id === id));
   }
 
-  componentdidmount() {
-    this.props.getCartItems(this.props.match.params.id);
+  componentDidMount() {
+    // this.props.addCartItems(this.props.match.params.id);
+    this.props.getCart(this.props.auth.id)
   }
   handleChange(evt) {
     evt.preventdefault();
@@ -49,8 +29,10 @@ export class Cart extends Component {
     };
   }
   render() {
-    //const { cart } = this.props;
-    const itemTotal = dummyCart.reduce((acc, curr) => {
+    const { cart } = this.props;
+    console.log(this.props.auth.id);
+
+    const itemTotal = cart.reduce((acc, curr) => {
       return acc + curr.price;
     }, 0);
     return (
@@ -60,10 +42,10 @@ export class Cart extends Component {
           <div className="cart-buttons">
             <button> Continue Shopping</button>3<button> Checkout </button>
           </div>
-          <CartItems items={dummyCart} handleClick={this.handleClick} />
+          <CartItems items={cart} handleClick={this.handleClick} />
         </div>
         <div>
-          <p>Subtotal ({dummyCart.length}) items</p>
+          <p>Subtotal ({cart.length}) items</p>
           <p>Total: ${itemTotal}</p>
         </div>
       </div>
@@ -73,11 +55,14 @@ export class Cart extends Component {
 
 const mapState = (state) => ({
   cart: state.cart,
+  auth: state.auth
 });
 
 const mapDispatch = (dispatch) => ({
-  getCartItems: () => dispatch(addToCart()),
+  addCartItems: () => dispatch(addToCart()),
   removeFromCart: (vehicle) => dispatch(removeFromCart(vehicle)),
+  getCart: (userId)=> dispatch(setCart(userId))
+
 });
 
 export default connect(mapState, mapDispatch)(Cart);
