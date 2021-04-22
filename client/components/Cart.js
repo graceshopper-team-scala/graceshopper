@@ -51,7 +51,7 @@ export class Cart extends Component {
             <button> Continue Shopping</button>
             <button> Checkout </button>
           </div>
-          <CartItems items={dummyCart} />
+          {/* <CartItems items={} /> */}
         </div>
         <div>
           <p>Subtotal (0) items</p>
@@ -64,6 +64,7 @@ export class Cart extends Component {
 
 const mapState = (state) => ({
   cart: state.cart,
+  quantity: state.cart.qty,
 });
 
 const mapDispatch = (dispatch) => ({

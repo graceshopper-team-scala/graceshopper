@@ -7,8 +7,12 @@ import { addToCart } from '../store/cart';
 import '../../public/style.css';
 
 class SingleVehicleScreen extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
+    this.state = {
+      quantity: 1,
+    };
+
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   componentDidMount() {
@@ -17,7 +21,10 @@ class SingleVehicleScreen extends Component {
 
   handleSubmit(evt) {
     evt.preventDefault();
-    this.props.addToCart(this.props.match.params.vehicleId);
+    this.props.addToCart(
+      this.props.match.params.vehicleId,
+      this.state.quantity
+    );
     alert('Your sweet ride has been added to cart!');
   }
 
@@ -50,7 +57,7 @@ class SingleVehicleScreen extends Component {
                 Status: <span>In Stock</span>
               </p>
               <p>
-                Qty
+                Qty:
                 <select>
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -74,7 +81,7 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => ({
   getSingleVehicle: (id) => dispatch(getSingleVehicleThunk(id)),
-  addToCart: (vehicleId) => dispatch(addToCart(vehicleId)),
+  addToCart: (vehicleId, quantity) => dispatch(addToCart(vehicleId, quantity)),
 });
 
 export default connect(mapState, mapDispatch)(SingleVehicleScreen);
