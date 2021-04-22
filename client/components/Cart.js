@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { addToCart, removeFromCart } from "../store/cart";
-import { connect } from "react-redux";
-import CartItems from "./CartItems";
+import React, { Component } from 'react';
+import { addToCart, removeFromCart } from '../store/cart';
+import { connect } from 'react-redux';
+import CartItems from './CartItems';
 
 const dummyCart = [
   {
@@ -35,7 +35,7 @@ export class Cart extends Component {
   }
   handleClick(id) {
     console.log(dummyCart);
-    dummyCart.filter((item) => item.id !== id)
+    dummyCart.filter((item) => item.id !== id);
     console.log(dummyCart.filter((item) => item.id === id));
   }
 
@@ -60,7 +60,7 @@ export class Cart extends Component {
           <div className="cart-buttons">
             <button> Continue Shopping</button>3<button> Checkout </button>
           </div>
-          <CartItems items={dummyCart} handleClick= {this.handleClick} />
+          <CartItems items={dummyCart} handleClick={this.handleClick} />
         </div>
         <div>
           <p>Subtotal ({dummyCart.length}) items</p>
@@ -73,11 +73,10 @@ export class Cart extends Component {
 
 const mapState = (state) => ({
   cart: state.cart,
-  quantity: state.cart.qty,
 });
 
 const mapDispatch = (dispatch) => ({
-  getCartItems: (id) => dispatch(addToCart(id)),
+  getCartItems: () => dispatch(addToCart()),
   removeFromCart: (vehicle) => dispatch(removeFromCart(vehicle)),
 });
 
