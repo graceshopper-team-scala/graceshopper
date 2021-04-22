@@ -16,8 +16,6 @@ Vehicle.belongsToMany(Order, { through: Order_Vehicle });
 Order.belongsToMany(Vehicle, { through: Order_Vehicle });
 
 
-
-
 module.exports = {
   db,
   models: {

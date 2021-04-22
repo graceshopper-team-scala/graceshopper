@@ -9,8 +9,6 @@ const Order_Vehicle = db.define("order_vehicle", {
   },
 });
 
-Order_Vehicle.prototype.setQuantity = async function (quantity) {
-  this.quantity = quantity
-}
+
 
 module.exports = Order_Vehicle;
