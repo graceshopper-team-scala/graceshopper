@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { addToCart } from "../store/cart";
+import { addToCart, removeFromCart } from "../store/cart";
 import { connect } from "react-redux";
 import CartItems from "./CartItems";
 
@@ -31,7 +31,14 @@ export class Cart extends Component {
     this.state = {
       quantity: 0,
     };
+    this.handleClick = this.handleClick.bind(this);
   }
+  handleClick(id) {
+    console.log(dummyCart);
+    dummyCart.filter((item) => item.id !== id)
+    console.log(dummyCart.filter((item) => item.id === id));
+  }
+
   componentdidmount() {
     this.props.getCartItems(this.props.match.params.id);
   }
@@ -53,7 +60,7 @@ export class Cart extends Component {
           <div className="cart-buttons">
             <button> Continue Shopping</button>3<button> Checkout </button>
           </div>
-          <CartItems items={dummyCart} />
+          <CartItems items={dummyCart} handleClick= {this.handleClick} />
         </div>
         <div>
           <p>Subtotal ({dummyCart.length}) items</p>
@@ -70,6 +77,7 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => ({
   getCartItems: (id) => dispatch(addToCart(id)),
+  removeFromCart: (vehicle) => dispatch(removeFromCart(vehicle)),
 });
 
 export default connect(mapState, mapDispatch)(Cart);
