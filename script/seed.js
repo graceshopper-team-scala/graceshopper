@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Vehicle, Order, Order_Vehicle},
+  models: { User, Vehicle, Order },
 } = require("../server/db");
 const cardata = require("./vehicledata");
 
