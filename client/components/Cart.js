@@ -43,19 +43,21 @@ export class Cart extends Component {
   }
   render() {
     //const { cart } = this.props;
+    const itemTotal = dummyCart.reduce((acc, curr) => {
+      return acc + curr.price;
+    }, 0);
     return (
       <div className="cartscreen">
         <p> My Cart</p>
         <div>
           <div className="cart-buttons">
-            <button> Continue Shopping</button>
-            <button> Checkout </button>
+            <button> Continue Shopping</button>3<button> Checkout </button>
           </div>
           <CartItems items={dummyCart} />
         </div>
         <div>
-          <p>Subtotal (0) items</p>
-          <p>$400000</p>
+          <p>Subtotal ({dummyCart.length}) items</p>
+          <p>Total: ${itemTotal}</p>
         </div>
       </div>
     );
@@ -64,6 +66,7 @@ export class Cart extends Component {
 
 const mapState = (state) => ({
   cart: state.cart,
+  quantity: state.cart.qty,
 });
 
 const mapDispatch = (dispatch) => ({

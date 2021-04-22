@@ -5,16 +5,16 @@ const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 const CART_RESET = 'CART_RESET';
 
 // Action Creators
-const addItem = (newItem) => ({
+const addItem = (id) => ({
   type: ADD_ITEM,
-  newItem,
+  id,
 });
 
 // Thunk Creators
-export const addToCart = (id) => {
+export const addToCart = (id, qty) => {
   return async (dispatch) => {
     try {
-      const { data: item } = await axios.get(`/api/vehicles/${id}`);
+      const { data: item } = await axios.get(`/api/vehicles/${id}`, qty);
       dispatch(addItem(item));
     } catch (error) {
       console.log('Error fetching cars from server');
@@ -26,7 +26,7 @@ export const addToCart = (id) => {
 export default function cartReducer(state = [], action) {
   switch (action.type) {
     case ADD_ITEM:
-      return [...state, action.newItem];
+      return [...state, action.id];
     default:
       return state;
   }
