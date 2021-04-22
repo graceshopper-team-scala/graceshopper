@@ -76,16 +76,16 @@ class SingleVehicleScreen extends Component {
                 <button onClick={this.handleSubmit}>Add to cart</button>
               </p> */}
 
-              <form onSubmit={this.handleAddCartItem}>
+              {/* <form onSubmit={this.handleAddCartItem}>
                 <select onChange={this.handleQtyChange}>
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
                 </select>
                 <button type="submit">Add to cart</button>
-              </form>
+              </form> */}
 
-              {/* <Form onSubmit={this.handleAddCartItem}>
+              <Form onSubmit={this.handleAddCartItem}>
                 <Form.Control
                   as="select"
                   className="qty_selector"
@@ -99,7 +99,7 @@ class SingleVehicleScreen extends Component {
                 <Button type="submit" variant="success">
                   Add To Cart
                 </Button>
-              </Form> */}
+              </Form>
             </div>
           </div>
         </div>

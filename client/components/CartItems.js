@@ -29,7 +29,10 @@ export default class CartItems extends Component {
                     <option value="2">2</option>
                     <option value="3">3</option>
                   </select>
-                  <button>
+                  <button
+                    className="remove"
+                    onClick={() => handleClick(item.id)}
+                  >
                     <i className="fas fa-trash"></i>
                   </button>
                 </td>
