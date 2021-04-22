@@ -4,8 +4,13 @@ import { Link } from 'react-router-dom';
 
 export default class CartItems extends Component {
   render() {
+<<<<<<< HEAD
     const { items, handleClick } = this.props;
     console.log(items);
+=======
+    const { items } = this.props;
+    console.log('items in cartItem >>> ', this.props);
+>>>>>>> 0e36cf01cbef29d1518b686cf740f8b20d4987d2
 
     return (
       <table className="cart-items">

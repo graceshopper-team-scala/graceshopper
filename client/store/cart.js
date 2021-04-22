@@ -5,9 +5,9 @@ const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 const CART_RESET = 'CART_RESET';
 
 // Action Creators
-const addItem = (newItem) => ({
+const addItem = (id) => ({
   type: ADD_ITEM,
-  newItem,
+  id,
 });
 
 export const _removeFromCart = (vehicle )=> {
@@ -18,7 +18,7 @@ export const _removeFromCart = (vehicle )=> {
 }
 
 // Thunk Creators
-export const addToCart = (id) => {
+export const addToCart = (id, qty) => {
   return async (dispatch) => {
     try {
       // const { data: item } = await axios.get(`/api/vehicles/${id}`);
