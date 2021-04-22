@@ -1,8 +1,74 @@
-.singlevehicle {
-  max-width: 1300px;
-  margin: 1rem auto;
+/* .singlevehicle {
+  align-items: top;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  text-align: left;
+  background: rgb(230, 161, 161);
+}
+
+.halfWidth {
+  width: 50%;
+}
+
+.midLeftMargin {
+  margin-left: 5em;
+  background: #a7dcfa;
+}
+
+.vehiclescreen_right {
+  flex: 0.2;
+}
+
+.right_info {
+  width: 250px;
+  margin: 1rem;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.right_info p {
+  padding: 1rem;
+  font-size: 0.8rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.right_info p > button {
+  grid-column: 1/-1;
+  padding: 10px 16px;
+  background: #171717;
+  color: #f4f4f4;
+  border: 1px solid #171717;
+  cursor: pointer;
+}
+
+.right_info select {
+  padding: 10px 16px;
+}
+
+.right_info > p {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.top_info {
+  margin: 1rem, 0, 0, 0;
+  flex: 0.4;
+  background: rgb(97, 91, 91);
+  height: fit-content;
+  font-size: 0.9rem;
+}
+
+.top_info > span {
+  padding: 1rem;
+  border-bottom: 1px;
+}
+
+.left_img {
+  margin: 1rem;
+  background: #000000;
+  width: fit-content;
+  height: auto;
 }
 
 .vehiclescreen_top {
@@ -115,4 +181,4 @@
     width: 100%;
     margin: 0;
   }
-}
+} */

@@ -5,9 +5,9 @@ const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 const CART_RESET = 'CART_RESET';
 
 // Action Creators
-const addItem = (newItem) => ({
+const addItem = (id) => ({
   type: ADD_ITEM,
-  newItem,
+  id,
 });
 
 // Thunk Creators
@@ -23,26 +23,10 @@ export const addToCart = (id) => {
 };
 
 //reducer
-export default function cartReducer(state = { cartItems: [] }, action) {
+export default function cartReducer(state = [], action) {
   switch (action.type) {
     case ADD_ITEM:
-      const existItem = state.cartItems.find(
-        (x) => x.vehicle === newItem.vehicle
-      );
-      if (existItem) {
-        return {
-          ...state,
-          cartItems: state.cartItems.map((x) =>
-            x.vehicle === existItem.vehicle ? newItem : x
-          ),
-        };
-      } else {
-        return {
-          ...state,
-          cartItems: [...state.cartItems, item],
-        };
-      }
-
+      return [...state, action.id];
     default:
       return state;
   }
