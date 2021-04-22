@@ -66,11 +66,10 @@ export class Cart extends Component {
 
 const mapState = (state) => ({
   cart: state.cart,
-  quantity: state.cart.qty,
 });
 
 const mapDispatch = (dispatch) => ({
-  getCartItems: (id) => dispatch(addToCart(id)),
+  getCartItems: () => dispatch(addToCart()),
 });
 
 export default connect(mapState, mapDispatch)(Cart);

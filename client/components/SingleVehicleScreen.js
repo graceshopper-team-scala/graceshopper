@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import { getSingleVehicleThunk } from '../store/singleVehicle';
 import { Link } from 'react-router-dom';
 import { addToCart } from '../store/cart';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import PropTypes from 'prop-types';
 
 import '../../public/style.css';
 
@@ -13,23 +16,28 @@ class SingleVehicleScreen extends Component {
       quantity: 1,
     };
 
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleAddCartItem = this.handleAddCartItem.bind(this);
+    this.handleQtyChange = this.handleQtyChange.bind(this);
   }
+
   componentDidMount() {
     this.props.getSingleVehicle(this.props.match.params.id);
   }
 
-  handleSubmit(evt) {
+  handleAddCartItem(evt) {
+    // console.log('handAddCart >>> ', this);
     evt.preventDefault();
-    this.props.addToCart(
-      this.props.match.params.vehicleId,
-      this.state.quantity
-    );
+    this.props.addToCart(this.props.match.params.id, this.state.quantity);
     alert('Your sweet ride has been added to cart!');
+  }
+
+  handleQtyChange(evt) {
+    this.setState({ quantity: Number(evt.target.value) });
   }
 
   render() {
     const { vehicle } = this.props;
+    console.log('single vehicle props >>> ', this);
 
     return (
       <div className="singlevehicle">
@@ -56,17 +64,42 @@ class SingleVehicleScreen extends Component {
               <p>
                 Status: <span>In Stock</span>
               </p>
-              <p>
+              {/* <p>
                 Qty:
-                <select>
+                <select onChange={this.handleQtyChange}>
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
                 </select>
-              </p>
-              <p>
+              </p> */}
+              {/* <p>
                 <button onClick={this.handleSubmit}>Add to cart</button>
-              </p>
+              </p> */}
+
+              <form onSubmit={this.handleAddCartItem}>
+                <select onChange={this.handleQtyChange}>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+                <button type="submit">Add to cart</button>
+              </form>
+
+              {/* <Form onSubmit={this.handleAddCartItem}>
+                <Form.Control
+                  as="select"
+                  className="qty_selector"
+                  onChange={this.handleQtyChange}
+                  style={{ maxWidth: 50 }}
+                >
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </Form.Control>
+                <Button type="submit" variant="success">
+                  Add To Cart
+                </Button>
+              </Form> */}
             </div>
           </div>
         </div>
@@ -75,13 +108,17 @@ class SingleVehicleScreen extends Component {
   }
 }
 
+SingleVehicleScreen.propTypes = {
+  vehicle: PropTypes.object,
+};
+
 const mapState = (state) => ({
   vehicle: state.vehicle,
 });
 
 const mapDispatch = (dispatch) => ({
   getSingleVehicle: (id) => dispatch(getSingleVehicleThunk(id)),
-  addToCart: (vehicleId, quantity) => dispatch(addToCart(vehicleId, quantity)),
+  addToCart: (id, quantity) => dispatch(addToCart(id, quantity)),
 });
 
 export default connect(mapState, mapDispatch)(SingleVehicleScreen);

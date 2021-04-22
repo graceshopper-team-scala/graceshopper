@@ -8,11 +8,21 @@ export const getSingleVehicle = (vehicle) => ({
 });
 
 export const getSingleVehicleThunk = (id) => async (dispatch) => {
-  const response = await axios.get(`/api/vehicles/${id}`);
-  dispatch(getSingleVehicle(response.data));
+  try {
+    const { data: oneVehicle } = await axios.get(`/api/vehicles/${id}`);
+    dispatch(getSingleVehicle(oneVehicle));
+  } catch (error) {
+    console.error(error);
+  }
 };
 
-const initialState = {};
+const initialState = {
+  imageUrl: '',
+  make: '',
+  model: '',
+  description: '',
+  price: '',
+};
 
 const singleVehicleReducer = (state = initialState, action) => {
   switch (action.type) {
