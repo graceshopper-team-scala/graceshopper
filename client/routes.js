@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Login, Signup } from "./components/AuthForm";
 import Home from "./components/home";
+import UserHome from "./components/userHome";
 import SingleVehicleScreen from "./components/SingleVehicleScreen";
 import { me } from "./store";
 import AllVehiclesScreen from "./components/AllVehiclesScreen";
@@ -20,21 +21,28 @@ class Routes extends Component {
 
     return (
       <div>
-        {isLoggedIn ? (
-          <Switch>
-            <Route path="/home" component={Home} />
-            <Redirect to="/home" />
-          </Switch>
-        ) : (
-          <Switch>
-            <Route path="/" exact component={Login} />
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
-            <Route exact path="/vehicles/:id" component={SingleVehicleScreen} />
-            <Route path="/vehicles" component={AllVehiclesScreen} />
-            <Route path="/cart" component={Cart} />
-          </Switch>
-        )}
+        <Switch>
+          <Route exact path="/" exact component={Home} />
+          <Route path="/Home" exact component={Home} />
+          <Route path="/login" component={Login} />
+          {isLoggedIn && (
+            <Switch>
+              {/* Routes placed here are only available after logging in */}
+              <Route path="/home" component={UserHome} />
+              <Route
+                exact
+                path="/vehicles/:id"
+                component={SingleVehicleScreen}
+              />
+              <Route path="/vehicles" component={AllVehiclesScreen} />
+              <Route path="/cart" component={Cart} />
+            </Switch>
+          )}
+          <Route path="/signup" component={Signup} />
+          <Route exact path="/vehicles/:id" component={SingleVehicleScreen} />
+          <Route path="/vehicles" component={AllVehiclesScreen} />
+          <Route path="/cart" component={Cart} />
+        </Switch>
       </div>
     );
   }
