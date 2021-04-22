@@ -36,6 +36,7 @@ async function seed() {
 
     await cody.setOrders([codyOrder, codyOrder2])
     await codyOrder.addVehicle(Nagasaki)
+    await codyOrder.addVehicle(Pegassi)
     await codyOrder2.addVehicle(Pegassi, {through: {quantity:2}})
     await murphy.setOrders([murphyOrder, murphyOrder2])
     await murphyOrder.addVehicle(Nagasaki, {through: {quantity:5}})

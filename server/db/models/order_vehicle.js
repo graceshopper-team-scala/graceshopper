@@ -6,6 +6,9 @@ const Order_Vehicle = db.define("order_vehicle", {
     type: Sequelize.INTEGER,
     defaultValue: 1,
     allowNull: false,
+    validate: {
+      min: 0
+    }
   },
 });
 
