@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+
 export default class CartItems extends Component {
   render() {
+<<<<<<< HEAD
+    const { items, handleClick } = this.props;
+    console.log(items);
+=======
     const { items } = this.props;
     console.log('items in cartItem >>> ', this.props);
+>>>>>>> 0e36cf01cbef29d1518b686cf740f8b20d4987d2
 
     return (
       <table className="cart-items">
@@ -29,7 +35,10 @@ export default class CartItems extends Component {
                     <option value="2">2</option>
                     <option value="3">3</option>
                   </select>
-                  <button>
+                  <button
+                      className="remove"
+                      onClick={()=> handleClick(item.id)}
+                    >
                     <i className="fas fa-trash"></i>
                   </button>
                 </td>
