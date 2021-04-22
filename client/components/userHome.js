@@ -4,7 +4,9 @@ import { connect } from "react-redux";
 /**
  * COMPONENT
  */
-const Home = (props) => {
+export const userHome = (props) => {
+  const { username } = props;
+
   return (
     <div
       id="carouselExampleControls"
@@ -56,4 +58,13 @@ const Home = (props) => {
   );
 };
 
-export default Home;
+/**
+ * CONTAINER
+ */
+const mapState = (state) => {
+  return {
+    username: state.auth.username,
+  };
+};
+
+export default connect(mapState)(userHome);
