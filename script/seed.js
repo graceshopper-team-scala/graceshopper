@@ -24,20 +24,22 @@ async function seed() {
 //seeding dummy order data
   const orders = await Promise.all([
     Order.create({status: 'pending'}),
-    Order.create({status: 'completed'}),
+    Order.create({status:'completed'}),
+    Order.create({status: 'pending' }),
     Order.create({status: 'completed'})
   ])
 
 
     const [cody, murphy] = users
-    const [codyOrder, murphyOrder, codyOrder2] = orders
+    const [codyOrder, codyOrder2, murphyOrder, murphyOrder2] = orders
     const [Nagasaki, Pegassi] = vehicles
 
     await cody.setOrders([codyOrder, codyOrder2])
     await codyOrder.addVehicle(Nagasaki)
     await codyOrder2.addVehicle(Pegassi, {through: {quantity:2}})
-    await murphy.setOrders(murphyOrder)
+    await murphy.setOrders([murphyOrder, murphyOrder2])
     await murphyOrder.addVehicle(Nagasaki, {through: {quantity:5}})
+    await murphyOrder2.addVehicle(Pegassi)
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${users.length} users`);
