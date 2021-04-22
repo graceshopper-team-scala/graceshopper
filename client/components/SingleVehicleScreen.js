@@ -43,63 +43,28 @@ class SingleVehicleScreen extends Component {
       <div className="singlevehicle">
         <div className="halfWidth midLeftMargin">
           <div className="top_info">
-            <span className="top_logo">
-              <img src={vehicle.logoUrl} />
-            </span>
-            <span className="top_make">{vehicle.make}</span>
-            <span className="top_model">{vehicle.model}</span>
+            <div>
+              <img className="logo-img" src={vehicle.logoUrl} />
+              <span className="top_make">{vehicle.vehicleName}</span>
+            </div>
             <span className="top_price">${vehicle.price}</span>
           </div>
-          <div className="left_img">
-            <img src={vehicle.imageUrl} />
-          </div>
-          <div className="left_info">
-            <p className="left_description">{vehicle.description}</p>
-          </div>
-          <div className="vehiclescreen_right">
-            <div className="right_info">
-              <p>
-                Price: <span>${vehicle.price}</span>
-              </p>
-              <p>
-                Status: <span>In Stock</span>
-              </p>
-              {/* <p>
-                Qty:
-                <select onChange={this.handleQtyChange}>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                </select>
-              </p> */}
-              {/* <p>
-                <button onClick={this.handleSubmit}>Add to cart</button>
-              </p> */}
-
-              {/* <form onSubmit={this.handleAddCartItem}>
-                <select onChange={this.handleQtyChange}>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                </select>
-                <button type="submit">Add to cart</button>
-              </form> */}
-
-              <Form onSubmit={this.handleAddCartItem}>
-                <Form.Control
-                  as="select"
-                  className="qty_selector"
-                  onChange={this.handleQtyChange}
-                  style={{ maxWidth: 50 }}
-                >
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                </Form.Control>
-                <Button type="submit" variant="success">
-                  Add To Cart
-                </Button>
-              </Form>
+          <div className="vehicle-card">
+            <div className="img-desription">
+              <img src={vehicle.imageUrl} />
+              <div className="img-description-right">
+                <p className="vechicle-description">{vehicle.description}</p>
+                <form>
+                  <select>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+                  <button onClick={this.handleSubmit} type="submit">
+                    Add to cart
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
