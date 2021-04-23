@@ -1,10 +1,11 @@
 const {
-    models: { Order, Vehicle, User },
+    models: { Order, Vehicle, User, Order_Vehicle},
   } = require('../db');
   
   const router = require('express').Router();
+
   
-  // GET /api/orders
+//GET /api/orders
   router.get('/', async (req, res, next) => {
     try {
     const orders = await Order.findAll({
@@ -26,10 +27,9 @@ const {
     }
 });
   
-  // GET /api/orders/:id
-  router.get('/:id', async (req, res, next) => {
+//GET /api/orders/:id
+router.get('/:id', async (req, res, next) => {
     try {
-    //   const order = await Order.findByPk(req.params.id);
     const order = await Order.findOne(
         {
             include: [
@@ -45,7 +45,6 @@ const {
             where: {
                 id: req.params.id
             },
-            
         }
     )
       res.json(order);
@@ -94,38 +93,84 @@ router.post('/', async (req, res, next) => {
     }
   });
 
-// PUT /api/orders/:id
+
+
+//PUT /api/orders/quantity
+//Updates quantity of vehicle in cart
 /*
+  This route will update the quantity alone. It needs data in the following format:
   {
-    "status": "completed",
-    "vehicles": [
-        {
-            "id": 1,
-            "quantity": 2
-        }
-    ]
-    }
+    "orderId": 1,
+    "vehicleId": 1,
+    "quantity": 2
+  }
 */
-router.put('/:id', async (req, res, next) => {
-    try {
-      const order = await Order.findByPk(req.params.id);
-      await order.update(req.body)
-      console.log(req.body)
-      if (req.body.vehicles){
-        order.removeVehicles()
-        const newVehicles = req.body.vehicles
-        newVehicles.map(async vehicle => {
-            const quantity = vehicle.quantity
-            const addVehicle = await Vehicle.findByPk(vehicle.id)
-            await order.addVehicle(addVehicle, 
-                        {through: {quantity}})
-    })
-    }
-      res.send(order);
-    } catch (error) {
-      next(error);
-    }
-  });
+// router.put('/quantity', async (req, res, next) => {
+//   try {
+//     const orderId = req.body.orderId
+//     const vehicleId = req.body.vehicleId
+//     const quantityToUpdate = await Order_Vehicle.findOne({
+//       where: {
+//         orderId,
+//         vehicleId,
+//       }
+//     })
+    
+//     quantityToUpdate.update(req.body)
+//     res.send('reached');
+// } catch (error) {
+//   next(error);
+// }
+// })
+
+//PUT /api/orders/add_vehicle
+//adds vehicle to cart/order
+/*
+  Example of required data:
+  {
+    "orderId": 3,
+    "vehicleId": 1,
+    "quantity": 3
+}
+*/
+router.put('/add_vehicle', async (req, res, next) => {
+  try {
+    const order = await Order.findByPk(req.body.orderId)
+    const vehicle = await Vehicle.findByPk(req.body.vehicleId)
+    const quantity = req.body.quantity
+
+    await order.addVehicle(vehicle, {through: {quantity}})
+
+    res.send(vehicle)
+} catch (error) {
+  next(error);
+}
+})
+
+
+//PUT /api/orders/remove_vehicle
+//remove vehicle from cart/order
+/*
+  Example of required data:
+  {
+    "orderId": 3,
+    "vehicleId": 1
+  }
+*/
+router.put('/remove_vehicle', async (req, res, next) => {
+  try {
+    const order = await Order.findByPk(req.body.orderId)
+    const vehicle = await Vehicle.findByPk(req.body.vehicleId)
+
+    await order.removeVehicle(vehicle)
+
+    res.send(vehicle)
+} catch (error) {
+  next(error);
+}
+})
+
+
 
 
 // DELETE /api/orders/id
