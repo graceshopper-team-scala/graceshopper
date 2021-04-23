@@ -39,7 +39,7 @@ async function seed() {
   await codyOrder.addVehicle(Pegassi);
   await codyOrder2.addVehicle(Pegassi, { through: { quantity: 2 } });
   await murphy.setOrders([murphyOrder, murphyOrder2]);
-  await murphyOrder.addVehicle(Nagasaki, { through: { quantity: 5 } });
+  await murphyOrder.addVehicle(Nagasaki, { through: { quantity: 3 } });
   await murphyOrder2.addVehicle(Pegassi);
 
   console.log(`seeded ${users.length} users`);
