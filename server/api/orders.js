@@ -59,7 +59,6 @@ router.get('/:id', async (req, res, next) => {
 //req.body needs to include at least the fields below example:
     /*
         {
-        "status": "pending",
         "userId": 2,
         "vehicles": [{
             "id": 2,
