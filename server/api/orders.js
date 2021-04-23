@@ -1,19 +1,19 @@
 const {
     models: { Order, Vehicle, User, Order_Vehicle},
   } = require('../db');
-  
+
   const router = require('express').Router();
 
-  
+
 //GET /api/orders
   router.get('/', async (req, res, next) => {
     try {
     const orders = await Order.findAll({
-        attributes: ['id', 'status', 'userId'], 
+        attributes: ['id', 'status', 'userId'],
         include: [
             {
                 model: Vehicle,
-                attributes: ['vehicleName', 'id', 'make', 
+                attributes: ['vehicleName', 'id', 'make',
                         'model', 'class', 'price'],
                 through: {
                 attributes:['quantity']
@@ -26,7 +26,7 @@ const {
         next(error);
     }
 });
-  
+
 //GET /api/orders/:id
 router.get('/:id', async (req, res, next) => {
     try {
@@ -35,7 +35,7 @@ router.get('/:id', async (req, res, next) => {
             include: [
                 {
                     model: Vehicle,
-                    attributes: ['vehicleName', 'id', 'make', 
+                    attributes: ['vehicleName', 'id', 'make',
                             'model', 'class', 'price'],
                     through: {
                     attributes:['quantity']
@@ -68,7 +68,7 @@ router.get('/:id', async (req, res, next) => {
     */
 router.post('/', async (req, res, next) => {
     try {
-        
+
         //create new order
         const newOrder = await Order.create(req.body)
         //associate user to order
@@ -78,14 +78,14 @@ router.post('/', async (req, res, next) => {
         //pull vehicles in order from req.body
         const newVehicles = req.body.vehicles
         //map through vehicles and associate each with order in the database
-      
+
         newVehicles.map(async vehicle => {
                 const quantity = vehicle.quantity
                 const addVehicle = await Vehicle.findByPk(vehicle.id)
-                await newOrder.addVehicle(addVehicle, 
+                await newOrder.addVehicle(addVehicle,
                             {through: {quantity}})
         })
-  
+
       res.send(newOrder);
     } catch (error) {
       next(error);
@@ -128,7 +128,7 @@ router.put('/add_vehicle', async (req, res, next) => {
           res.send("Cannot decrement on this put route")
         }
     }
-    
+
 } catch (error) {
   next(error);
 }
@@ -138,8 +138,8 @@ router.put('/add_vehicle', async (req, res, next) => {
 //PUT /api/orders/remove_vehicle
 //remove vehicle from cart/order
 /*
-  Example of required data, below. 
-  
+  Example of required data, below.
+
   ****
   If quantity is provided, quantity will be updated.
   If no quantity is provided, the vehicle is completely removed from the order/cart.
@@ -172,7 +172,7 @@ router.put('/remove_vehicle', async (req, res, next) => {
             })
         if(quantityToUpdate.quantity>req.body.quantity){
             await quantityToUpdate.update({quantity:req.body.quantity})
-          res.send(await order.getVehicles())     
+          res.send(await order.getVehicles())
         }
         else{
           res.send("Cannot increment on this put route")
@@ -205,6 +205,5 @@ router.delete('/:id', async (req, res, next) => {
       next(error);
     }
   });
-  
+
   module.exports = router;
-  

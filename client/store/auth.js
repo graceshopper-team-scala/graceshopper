@@ -28,7 +28,6 @@ export const me = () => async (dispatch, state) => {
       },
     });
     const { data:orders } = await axios.get(`api/users/orders/${res.data.id}`);
-    console.log(orders)
     //user object returned
     window.localStorage.setItem(ID, res.data.id);
     window.localStorage.setItem(ORDERID, orders[0].id)
