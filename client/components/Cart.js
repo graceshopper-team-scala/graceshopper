@@ -1,19 +1,19 @@
-import React, { Component } from "react";
-import { addToCart, removeFromCart, setCart } from "../store/cart";
-import { connect } from "react-redux";
-import CartItems from "./CartItems";
-import Button from "react-bootstrap/Button";
+import React, { Component } from 'react';
+import { createCartItem, removeFromCart, setCart } from '../store/cart';
+import { connect } from 'react-redux';
+import CartItems from './CartItems';
+import Button from 'react-bootstrap/Button';
 
 export class Cart extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       quantity: 0,
     };
     this.handleClick = this.handleClick.bind(this);
   }
   componentDidMount() {
-    const userId = window.localStorage.getItem("id");
+    const userId = window.localStorage.getItem('id');
     this.props.getCart(+userId);
   }
 
@@ -23,7 +23,7 @@ export class Cart extends Component {
       [evt.target.name]: [evt.target.value],
     };
   }
-  handleClick(vehicleId, orderId){
+  handleClick(vehicleId, orderId) {
     this.props.removeFromCart(vehicleId, orderId);
   }
   render() {
@@ -64,7 +64,8 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => ({
   addCartItems: () => dispatch(addToCart()),
-  removeFromCart: (vehicleId, orderId) => dispatch(removeFromCart(vehicleId, orderId)),
+  removeFromCart: (vehicleId, orderId) =>
+    dispatch(removeFromCart(vehicleId, orderId)),
   getCart: (id) => dispatch(setCart(id)),
 });
 

@@ -1,14 +1,8 @@
-import React from "react";
-import { connect } from "react-redux";
-import { authenticate } from "../store";
-import { Formik } from "formik";
-import * as yup from "yup";
-import Button from "react-bootstrap";
+import React from 'react';
+import { connect } from 'react-redux';
+import { authenticate } from '../store';
+import Button from 'react-bootstrap';
 
-const loginSchema = yup.object({
-  username: yup.string().required().min(4),
-  password: yup.string().required().min(8),
-});
 /**
  * COMPONENT
  */
@@ -50,16 +44,16 @@ const AuthForm = (props) => {
  */
 const mapLogin = (state) => {
   return {
-    name: "login",
-    displayName: "Login",
+    name: 'login',
+    displayName: 'Login',
     error: state.auth.error,
   };
 };
 
 const mapSignup = (state) => {
   return {
-    name: "signup",
-    displayName: "Sign Up",
+    name: 'signup',
+    displayName: 'Sign Up',
     error: state.auth.error,
   };
 };
