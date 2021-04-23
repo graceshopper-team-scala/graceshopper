@@ -60,7 +60,9 @@ class SingleVehicleScreen extends Component {
                       <option value="2">2</option>
                       <option value="3">3</option>
                     </select>
-                    <Button type="submit">Add to cart</Button>
+                    <Button variant="warning" type="submit">
+                      Add to cart
+                    </Button>
                   </form>
                 </div>
               </div>

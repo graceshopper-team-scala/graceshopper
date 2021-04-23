@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { addToCart, removeFromCart, setCart } from "../store/cart";
 import { connect } from "react-redux";
 import CartItems from "./CartItems";
+import Button from "react-bootstrap/Button";
 
 export class Cart extends Component {
   constructor() {
@@ -33,8 +34,10 @@ export class Cart extends Component {
           <div className="cart-area">
             <div className="cart-top">
               <p> My Cart</p>
-              <button> Continue Shopping</button>
-              <button> Checkout </button>
+              <div>
+                <Button variant="warning"> Continue Shopping</Button>
+                <Button variant="warning"> Checkout </Button>
+              </div>
             </div>
             <CartItems items={cart} />
             <div className="cart-total">

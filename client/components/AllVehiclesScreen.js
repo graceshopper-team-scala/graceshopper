@@ -19,24 +19,20 @@ export class AllVehicles extends React.Component {
     });
 
     return (
-      <div>
-        <div className="Allcards">
-          {vehicles.map((vehicle) => (
-            <div key={vehicle.id} className="Card">
-              <Link to={`/vehicles/${vehicle.id}`}>
-                <div className="Card-image">
-                  <img src={vehicle.imageUrl} alt={vehicle.model} />
-                </div>
-              </Link>
-              <div className="Card-data">
-                <Link to={`/vehicles/${vehicle.id}`}>
-                  {vehicle.vehicleName}
-                </Link>
-                <div>{priceFormatter.format(vehicle.price)}</div>
+      <div className="Allcards">
+        {vehicles.map((vehicle) => (
+          <div key={vehicle.id} className="Card">
+            <Link to={`/vehicles/${vehicle.id}`}>
+              <div className="Card-image">
+                <img src={vehicle.imageUrl} alt={vehicle.model} />
               </div>
+            </Link>
+            <div className="Card-data">
+              <Link to={`/vehicles/${vehicle.id}`}>{vehicle.vehicleName}</Link>
+              <div>{priceFormatter.format(vehicle.price)}</div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     );
   }

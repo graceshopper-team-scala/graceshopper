@@ -12,9 +12,15 @@
 /* CART TOP */
 .cart-top {
   display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid black;
 }
-.cart-top > button {
-  align-self: center;
+.cart-top button {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
 }
 
 /* CART TABLE */

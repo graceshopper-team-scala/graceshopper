@@ -1,6 +1,7 @@
 @import "./cssModules/allVehicles.css";
 @import "./cssModules/singleVehicle.css";
 @import "./cssModules/cart.css";
+@import "./cssModules/home.css";
 
 body {
   font-family: sans-serif;

@@ -15,11 +15,12 @@
 
 /* HEADER BOX */
 .top-info {
-  background-color: lightgrey;
+  background-color: rgb(12, 12, 12, 0.6);
+  color: white;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 7rem;
+  height: 6rem;
 }
 
 .logo-img {
@@ -47,13 +48,14 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: black;
+  background-color: rgb(36, 36, 36);
   color: white;
 }
-.vehicle-description {
-  background-color: black;
+.img-description-right p {
   color: white;
+  padding: 1.5rem;
 }
+
 /* ADDING TO CART */
 
 .vehicle-form {
