@@ -3,6 +3,7 @@ import history from "../history";
 
 const TOKEN = "token";
 const ID = "id";
+const ORDERID = "order_id"
 
 /**
  * ACTION TYPES
@@ -26,7 +27,12 @@ export const me = () => async (dispatch, state) => {
         authorization: token,
       },
     });
+    const { data:orders } = await axios.get(`api/users/orders/${res.data.id}`);
+    console.log(orders)
+    //user object returned
     window.localStorage.setItem(ID, res.data.id);
+    window.localStorage.setItem(ORDERID, orders[0].id)
+
     return dispatch(setAuth(res.data));
   }
 };
