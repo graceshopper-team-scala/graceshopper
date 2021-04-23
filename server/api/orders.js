@@ -109,10 +109,26 @@ router.put('/add_vehicle', async (req, res, next) => {
     const order = await Order.findByPk(req.body.orderId)
     const vehicle = await Vehicle.findByPk(req.body.vehicleId)
     const quantity = req.body.quantity
-
-    await order.addVehicle(vehicle, {through: {quantity}})
-
-    res.send(order)
+    if(quantity===0){
+      order.removeVehicle(vehicle)
+      res.send("Vehicle removed from order")
+    }
+    else if(quantity>0){
+      const quantityToUpdate = await Order_Vehicle.findOne({
+        where: {
+          orderId: order.id,
+          vehicleId: vehicle.id
+        }
+      })
+      if(quantityToUpdate.quantity<quantity) {
+        await order.addVehicle(vehicle, {through: {quantity}})
+        res.send(order)
+      }
+      else{
+        res.send("Cannot decrement on this put route")
+      }
+    }
+    
 } catch (error) {
   next(error);
 }
@@ -128,7 +144,7 @@ router.put('/add_vehicle', async (req, res, next) => {
   If quantity is provided, quantity will be updated.
   If no quantity is provided, the vehicle is completely removed from the order/cart
   ****
-  
+
   {
     "orderId": 3,
     "vehicleId": 1,
