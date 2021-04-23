@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { addToCart, removeFromCart, setCart } from '../store/cart';
+import { createCartItem, removeFromCart, fetchCart } from '../store/cart';
 import { connect } from 'react-redux';
 import CartItems from './CartItems';
 import Button from 'react-bootstrap/Button';
@@ -59,9 +59,9 @@ const mapState = (state) => {
 };
 
 const mapDispatch = (dispatch) => ({
-  addCartItems: () => dispatch(addToCart()),
+  addCartItems: () => dispatch(createCartItem()),
   removeFromCart: (vehicle) => dispatch(removeFromCart(vehicle)),
-  getCart: (id) => dispatch(setCart(id)),
+  getCart: (id) => dispatch(fetchCart(id)),
 });
 
 export default connect(mapState, mapDispatch)(Cart);

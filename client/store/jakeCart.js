@@ -36,33 +36,26 @@ export const fetchCart = () => {
   };
 };
 
-export const createCartItem = (vehicleName, price, quantity, vehicleId) => {
+export const createCartItem = (vehicles) => {
   return async (dispatch) => {
     try {
-      await axios.post(`/api/orders/${userId}`, {
-        vehicleId,
-        quantity,
+      await axios.post(`/api/orders/${orderId}`, {
+        vehicles,
       });
-      dispatch(addNewToCart({ vehicleName, price, quantity, vehicleId }));
+      dispatch(addNewToCart({ vehicles }));
     } catch (error) {
       console.error(error);
     }
   };
 };
 
-export const updateCartItem = (
-  orderId,
-  vehicleId,
-  quantity,
-  price,
-  vehicleName
-) => {
+export const updateCartItem = (vehicles) => {
   return async (dispatch) => {
     try {
-      const {
-        data: cartItem,
-      } = await axios.put(`/api/orders/${userId}/${orderId}`, { quantity });
-      dispatch(updateCart(vehicleName, price, vehicleId, cartItem));
+      const { data: cartItem } = await axios.put(`/api/orders/${orderId}`, {
+        quantity,
+      });
+      dispatch(updateCart(vehicles));
     } catch (error) {
       console.error(error);
     }

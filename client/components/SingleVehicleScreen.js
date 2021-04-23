@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getSingleVehicleThunk } from '../store/singleVehicle';
 import { Link } from 'react-router-dom';
-import { addToCart } from '../store/cart';
+import { createCartItem } from '../store/cart';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
@@ -26,7 +26,7 @@ class SingleVehicleScreen extends Component {
 
   handleAddCartItem(evt) {
     evt.preventDefault();
-    this.props.addToCart(this.props.match.params.id, this.state.quantity);
+    this.props.addNewToCart(this.props.match.params.id, this.state.quantity);
     alert('Your sweet ride has been added to cart!');
   }
 
@@ -36,7 +36,6 @@ class SingleVehicleScreen extends Component {
 
   render() {
     const { vehicle } = this.props;
-    console.log('single vehicle props >>> ', this);
 
     return (
       <div className="singlevehicle">
@@ -85,8 +84,7 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => ({
   getSingleVehicle: (id) => dispatch(getSingleVehicleThunk(id)),
-  addNewToCart: (orderId, vehicle) =>
-    dispatch(createCartItem(orderId, vehicle)),
+  addNewToCart: (vehicle) => dispatch(createCartItem(vehicle)),
 });
 
 export default connect(mapState, mapDispatch)(SingleVehicleScreen);
