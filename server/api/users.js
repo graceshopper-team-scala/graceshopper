@@ -21,7 +21,8 @@ router.get('/orders/:userId', async (req, res, next) => {
   try {
     const orders = await Order.findAll({
         where: {
-          userId: req.params.userId
+          userId: req.params.userId,
+          status: 'pending'
         }
       });
     res.json(orders);
