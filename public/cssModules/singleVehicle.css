@@ -4,27 +4,37 @@
   flex-direction: column;
   text-align: left;
   margin: auto;
-  background: rgb(230, 161, 161);
+  height: 100vh;
 }
 
-.halfWidth {
+.container {
   width: 50%;
+  margin-left: auto;
+  margin-top: 3rem;
 }
 
-.midLeftMargin {
-  margin-left: 5em;
-  background: #a7dcfa;
-}
-
-.top_info {
+/* HEADER BOX */
+.top-info {
   background-color: lightgrey;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: 7rem;
 }
 
 .logo-img {
-  width: 5rem;
+  width: 4rem;
+  margin-left: 1rem;
+}
+
+.vehicle-price {
+  margin-right: 2rem;
+  font-size: 2rem;
+}
+/* VEHICLE BOX */
+.vehicle-name {
+  margin-left: 2rem;
+  font-size: 2rem;
 }
 
 .vehicle-card {
@@ -37,9 +47,39 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background-color: black;
+  color: white;
+}
+.vehicle-description {
+  background-color: black;
+  color: white;
+}
+/* ADDING TO CART */
+
+.vehicle-form {
+  width: 100%;
+  align-self: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 
-@media (max-width: 960px) {
+.vehicle-form form {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.vehicle-form button {
+  margin-bottom: 4rem;
+  margin-right: 4rem;
+}
+
+.vehicle-form-select {
+  margin-bottom: 4rem;
+  margin-left: 4rem;
+}
+
+/* @media (max-width: 960px) {
   .singlevehicle {
     flex-direction: column;
   }
@@ -66,4 +106,4 @@
     width: 100%;
     margin: 0;
   }
-}
+} */

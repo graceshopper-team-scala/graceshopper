@@ -1,0 +1,25 @@
+.cart-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+.cart-container > .cart-area {
+  width: 50%;
+  background-color: azure;
+  display: flex;
+  flex-direction: column;
+}
+/* CART TOP */
+.cart-top {
+  display: flex;
+}
+.cart-top > button {
+  align-self: center;
+}
+
+/* CART TABLE */
+
+/* CART ITEMS */
+.cart-img {
+  width: 200px;
+}

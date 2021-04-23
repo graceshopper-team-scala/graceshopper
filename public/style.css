@@ -1,8 +1,13 @@
-@import './cssModules/allVehicles.css';
-@import './cssModules/singleVehicle.css';
+@import "./cssModules/allVehicles.css";
+@import "./cssModules/singleVehicle.css";
+@import "./cssModules/cart.css";
 
 body {
   font-family: sans-serif;
+  /* background-image: url("https://forum.cfx.re/uploads/default/original/4X/5/2/d/52dda17749e27535169e71cfc18c4403612e1902.jpeg"); */
+  background-image: url("https://wallpaperaccess.com/full/3377719.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 100vh;
 }
 
 a {

@@ -1,7 +1,7 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { fetchVehicles } from '../store/allVehicles';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { connect } from "react-redux";
+import { fetchVehicles } from "../store/allVehicles";
+import { Link } from "react-router-dom";
 
 export class AllVehicles extends React.Component {
   componentDidMount() {
@@ -12,9 +12,9 @@ export class AllVehicles extends React.Component {
     const vehicles = this.props.vehicles;
 
     //priceFormatter converts integer price value from DB into dollar currency format
-    const priceFormatter = new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
+    const priceFormatter = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
       maximumFractionDigits: 0,
     });
 
@@ -30,7 +30,7 @@ export class AllVehicles extends React.Component {
               </Link>
               <div className="Card-data">
                 <Link to={`/vehicles/${vehicle.id}`}>
-                  {vehicle.make} {vehicle.model}
+                  {vehicle.vehicleName}
                 </Link>
                 <div>{priceFormatter.format(vehicle.price)}</div>
               </div>

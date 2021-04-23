@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { getSingleVehicleThunk } from '../store/singleVehicle';
-import { Link } from 'react-router-dom';
-import { addToCart } from '../store/cart';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { getSingleVehicleThunk } from "../store/singleVehicle";
+import { Link } from "react-router-dom";
+import { addToCart } from "../store/cart";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import PropTypes from "prop-types";
 
-import '../../public/style.css';
+import "../../public/style.css";
 
 class SingleVehicleScreen extends Component {
   constructor() {
@@ -25,10 +25,9 @@ class SingleVehicleScreen extends Component {
   }
 
   handleAddCartItem(evt) {
-    // console.log('handAddCart >>> ', this);
     evt.preventDefault();
     this.props.addToCart(this.props.match.params.id, this.state.quantity);
-    alert('Your sweet ride has been added to cart!');
+    alert("Your sweet ride has been added to cart!");
   }
 
   handleQtyChange(evt) {
@@ -37,33 +36,33 @@ class SingleVehicleScreen extends Component {
 
   render() {
     const { vehicle } = this.props;
-    console.log('single vehicle props >>> ', this);
+    console.log("single vehicle props >>> ", this);
 
     return (
       <div className="singlevehicle">
-        <div className="halfWidth midLeftMargin">
-          <div className="top_info">
+        <div className="container">
+          <div className="top-info">
             <div>
               <img className="logo-img" src={vehicle.logoUrl} />
-              <span className="top_make">{vehicle.vehicleName}</span>
+              <span className="vehicle-name">{vehicle.vehicleName}</span>
             </div>
-            <span className="top_price">${vehicle.price}</span>
+            <span className="vehicle-price">${vehicle.price}</span>
           </div>
           <div className="vehicle-card">
             <div className="img-desription">
               <img src={vehicle.imageUrl} />
               <div className="img-description-right">
                 <p className="vechicle-description">{vehicle.description}</p>
-                <form>
-                  <select>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                  </select>
-                  <button onClick={this.handleSubmit} type="submit">
-                    Add to cart
-                  </button>
-                </form>
+                <div className="vehicle-form">
+                  <form onClick={this.handleAddCartItem}>
+                    <select className="vehicle-form-select">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                    </select>
+                    <Button type="submit">Add to cart</Button>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
