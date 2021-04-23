@@ -10,6 +10,7 @@ export class Cart extends Component {
     this.state = {
       quantity: 0,
     };
+    this.handleClick = this.handleClick.bind(this);
   }
   componentDidMount() {
     const userId = window.localStorage.getItem('id');
@@ -22,8 +23,11 @@ export class Cart extends Component {
       [evt.target.name]: [evt.target.value],
     };
   }
+  handleClick(vehicleId, orderId) {
+    this.props.removeFromCart(vehicleId, orderId);
+  }
   render() {
-    const cart = this.props.cart.vehicles || [];
+    const cart = this.props.cart || [];
     const itemTotal = cart.reduce((acc, curr) => {
       return acc + curr.price;
     }, 0);
@@ -39,7 +43,7 @@ export class Cart extends Component {
                 <Button variant="warning"> Checkout </Button>
               </div>
             </div>
-            <CartItems items={cart} />
+            <CartItems items={cart} handleClick={this.handleClick} />
             <div className="cart-total">
               <p>Subtotal ({cart.length}) items</p>
               <p>Total: ${itemTotal}</p>
@@ -59,9 +63,10 @@ const mapState = (state) => {
 };
 
 const mapDispatch = (dispatch) => ({
-  addCartItems: () => dispatch(createCartItem()),
-  removeFromCart: (vehicle) => dispatch(removeFromCart(vehicle)),
-  getCart: (id) => dispatch(fetchCart(id)),
+  addCartItems: () => dispatch(addToCart()),
+  removeFromCart: (vehicleId, orderId) =>
+    dispatch(removeFromCart(vehicleId, orderId)),
+  getCart: (id) => dispatch(setCart(id)),
 });
 
 export default connect(mapState, mapDispatch)(Cart);

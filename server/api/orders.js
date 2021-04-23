@@ -1,13 +1,23 @@
 const {
+<<<<<<< HEAD
   models: { Order, Vehicle, User, Order_Vehicle },
 } = require('../db');
 
 const router = require('express').Router();
 
+=======
+    models: { Order, Vehicle, User, Order_Vehicle},
+  } = require('../db');
+
+  const router = require('express').Router();
+
+
+>>>>>>> 73287da6a22904fad5b339cfa0553122752dc96e
 //GET /api/orders
 router.get('/', async (req, res, next) => {
   try {
     const orders = await Order.findAll({
+<<<<<<< HEAD
       attributes: ['id', 'status', 'userId'],
       include: [
         {
@@ -18,6 +28,19 @@ router.get('/', async (req, res, next) => {
           },
         },
       ],
+=======
+        attributes: ['id', 'status', 'userId'],
+        include: [
+            {
+                model: Vehicle,
+                attributes: ['vehicleName', 'id', 'make',
+                        'model', 'class', 'price'],
+                through: {
+                attributes:['quantity']
+        }
+            }
+        ],
+>>>>>>> 73287da6a22904fad5b339cfa0553122752dc96e
     });
     res.json(orders);
   } catch (error) {
@@ -31,6 +54,7 @@ router.get('/:id', async (req, res, next) => {
     const order = await Order.findOne({
       include: [
         {
+<<<<<<< HEAD
           model: Vehicle,
           attributes: ['vehicleName', 'id', 'make', 'model', 'class', 'price'],
           through: {
@@ -47,6 +71,30 @@ router.get('/:id', async (req, res, next) => {
     next(error);
   }
 });
+=======
+            include: [
+                {
+                    model: Vehicle,
+                    attributes: ['vehicleName', 'id', 'make',
+                            'model', 'class', 'price'],
+                    through: {
+                    attributes:['quantity']
+            }
+                }
+            ],
+            where: {
+                id: req.params.id
+            },
+        }
+    )
+      res.send(order);
+    } catch (error) {
+      next(error);
+    }
+  });
+
+
+>>>>>>> 73287da6a22904fad5b339cfa0553122752dc96e
 
 //POST /api/orders
 //req.body needs to include at least the fields below example:
@@ -60,6 +108,7 @@ router.get('/:id', async (req, res, next) => {
     }
     */
 router.post('/', async (req, res, next) => {
+<<<<<<< HEAD
   try {
     //create new order
     const newOrder = await Order.create(req.body);
@@ -76,6 +125,32 @@ router.post('/', async (req, res, next) => {
       const addVehicle = await Vehicle.findByPk(vehicle.id);
       await newOrder.addVehicle(addVehicle, { through: { quantity } });
     });
+=======
+    try {
+
+        //create new order
+        const newOrder = await Order.create(req.body)
+        //associate user to order
+        const user = await User.findByPk(newOrder.userId)
+        await user.addOrder(newOrder)
+        //associate order to vehicles
+        //pull vehicles in order from req.body
+        const newVehicles = req.body.vehicles
+        //map through vehicles and associate each with order in the database
+
+        newVehicles.map(async vehicle => {
+                const quantity = vehicle.quantity
+                const addVehicle = await Vehicle.findByPk(vehicle.id)
+                await newOrder.addVehicle(addVehicle,
+                            {through: {quantity}})
+        })
+
+      res.send(newOrder);
+    } catch (error) {
+      next(error);
+    }
+  });
+>>>>>>> 73287da6a22904fad5b339cfa0553122752dc96e
 
     res.send(newOrder);
   } catch (error) {
@@ -116,10 +191,19 @@ router.put('/add_vehicle', async (req, res, next) => {
         res.send('Cannot decrement on this put route');
       }
     }
+<<<<<<< HEAD
   } catch (error) {
     next(error);
   }
 });
+=======
+
+} catch (error) {
+  next(error);
+}
+})
+
+>>>>>>> 73287da6a22904fad5b339cfa0553122752dc96e
 
 //PUT /api/orders/remove_vehicle
 //remove vehicle from cart/order
@@ -149,6 +233,7 @@ router.put('/remove_vehicle', async (req, res, next) => {
       res.send('Vehicle removed from order');
     } else {
       const quantityToUpdate = await Order_Vehicle.findOne({
+<<<<<<< HEAD
         where: {
           orderId: order.id,
           vehicleId: vehicle.id,
@@ -160,6 +245,20 @@ router.put('/remove_vehicle', async (req, res, next) => {
       } else {
         res.send('Cannot increment on this put route');
       }
+=======
+            where: {
+              orderId: order.id,
+              vehicleId: vehicle.id
+              }
+            })
+        if(quantityToUpdate.quantity>req.body.quantity){
+            await quantityToUpdate.update({quantity:req.body.quantity})
+          res.send(await order.getVehicles())
+        }
+        else{
+          res.send("Cannot increment on this put route")
+        }
+>>>>>>> 73287da6a22904fad5b339cfa0553122752dc96e
     }
   } catch (error) {
     next(error);
@@ -180,6 +279,7 @@ router.put('/:orderId/complete', async (req, res, next) => {
 
 // DELETE /api/orders/:id
 router.delete('/:id', async (req, res, next) => {
+<<<<<<< HEAD
   try {
     const order = await Order.findByPk(req.params.id);
     await order.destroy();
@@ -190,3 +290,15 @@ router.delete('/:id', async (req, res, next) => {
 });
 
 module.exports = router;
+=======
+    try {
+      const order = await Order.findByPk(req.params.id);
+      await order.destroy();
+      res.send(order);
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  module.exports = router;
+>>>>>>> 73287da6a22904fad5b339cfa0553122752dc96e

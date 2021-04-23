@@ -7,10 +7,16 @@ const ADD_NEW_TO_CART = 'ADD_NEW_TO_CART';
 const UPDATE_CART = 'UPDATE_CART';
 
 // Action Creators
-export const _removeFromCart = (vehicle) => {
+const addItem = (id) => ({
+  type: ADD_ITEM,
+  id,
+});
+
+export const _removeFromCart = (vehicleId, orderId) => {
   return {
     type: REMOVE_FROM_CART,
-    vehicle,
+    vehicleId,
+    orderId,
   };
 };
 const setCart = (cart) => ({
@@ -66,16 +72,29 @@ export const updateCartItem = (orderId, vehicles) => {
   };
 };
 
-export const removeFromCart = (id, history) => {
+export const removeFromCart = (vehicleId, orderId) => {
   return async (dispatch) => {
     //change to remove from through table
-
-    // const {data} =  await axios.put(`/api/orders/${id}`, {
-    //   vehicles:
-    // });
-
-    // dispatch(_removeFromCart(data));
-    history.push('/vehicle');
+    try {
+      const { data } = await axios.put(`/api/orders/remove_vehicle`, {
+        orderId: orderId,
+        vehicleId: vehicleId,
+      });
+      console.log('vehicleId---->', vehicleId);
+      dispatch(_removeFromCart(vehicleId, orderId));
+    } catch (error) {
+      console.log('Error deleting cars from server', error);
+    }
+  };
+};
+export const setCart = (userId) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`api/users/orders/${userId}`);
+      dispatch(_setCart(data[0].vehicles));
+    } catch (error) {
+      console.log('Error fetching cars from server', error);
+    }
   };
 };
 
@@ -96,10 +115,11 @@ const existedItem = (cart, newItem) => {
 export default function (state = [], action) {
   switch (action.type) {
     case REMOVE_FROM_CART:
-      return [
-        ...state,
-        state.filter((vehicle) => vehicle.id !== action.vehicle.id),
-      ];
+      const filterCars = state.filter(
+        (vehicle) => vehicle.id !== action.vehicleId
+      );
+      console.log(filterCars);
+      return filterCars;
     case SET_CART:
       return action.cart;
 
