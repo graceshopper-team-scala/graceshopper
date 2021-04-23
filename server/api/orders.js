@@ -124,7 +124,7 @@ router.post('/', async (req, res, next) => {
 // })
 
 //PUT /api/orders/add_vehicle
-//adds vehicle to cart/order
+//adds vehicle to cart/order; this includes updating quantity of a vehicle in an order
 /*
   Example of required data:
   {
@@ -181,9 +181,6 @@ router.put('/:orderId/complete', async (req, res, next) => {
   next(error);
 }
 })
-
-
-
 
 // DELETE /api/orders/id
 router.delete('/:id', async (req, res, next) => {
