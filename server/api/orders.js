@@ -122,10 +122,17 @@ router.put('/add_vehicle', async (req, res, next) => {
 //PUT /api/orders/remove_vehicle
 //remove vehicle from cart/order
 /*
-  Example of required data:
+  Example of required data, below. 
+  
+  ****
+  If quantity is provided, quantity will be updated.
+  If no quantity is provided, the vehicle is completely removed from the order/cart
+  ****
+  
   {
     "orderId": 3,
-    "vehicleId": 1
+    "vehicleId": 1,
+    "quantity":  2
   }
 */
 router.put('/remove_vehicle', async (req, res, next) => {
@@ -133,8 +140,18 @@ router.put('/remove_vehicle', async (req, res, next) => {
     const order = await Order.findByPk(req.body.orderId)
     const vehicle = await Vehicle.findByPk(req.body.vehicleId)
 
-    await order.removeVehicle(vehicle)
-
+    if(req.body.quantity){
+      const quantityToUpdate = await Order_Vehicle.findOne({
+              where: {
+                orderId: order.id,
+                vehicleId: vehicle.id
+              }
+            })
+            await quantityToUpdate.update(req.body)
+    }
+    else{
+      await order.removeVehicle(vehicle)
+    }
     res.send(order)
 } catch (error) {
   next(error);
