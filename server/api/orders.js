@@ -170,6 +170,18 @@ router.put('/remove_vehicle', async (req, res, next) => {
 }
 })
 
+//PUT /api/:orderId/complete
+router.put('/:orderId/complete', async (req, res, next) => {
+  try {
+    const order = await Order.findByPk(req.params.orderId)
+    order.update({status:'completed'})
+
+    res.send(order)
+} catch (error) {
+  next(error);
+}
+})
+
 
 
 
