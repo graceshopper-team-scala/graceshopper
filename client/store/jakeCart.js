@@ -3,7 +3,7 @@ import axios from 'axios';
 // ACTION TYPES
 
 const SET_CART = 'SET_CART';
-const ADD_NEW_TO_CART = 'ADD_NEW_TO_CART';
+const ADD_TO_CART = 'ADD_TO_CART';
 const UPDATE_CART = 'UPDATE_CART';
 
 // ACTION CREATORS
@@ -13,8 +13,8 @@ const setCart = (cart) => ({
   cart,
 });
 
-const addNewToCart = (cartItem) => ({
-  type: ADD_NEW_TO_CART,
+const addToCart = (cartItem) => ({
+  type: ADD_TO_CART,
   cartItem,
 });
 
@@ -36,13 +36,15 @@ export const fetchCart = () => {
   };
 };
 
-export const createCartItem = (vehicles) => {
+export const addToCart = (orderId, vehicleId, quantity) => {
   return async (dispatch) => {
     try {
-      await axios.post(`/api/orders/${orderId}`, {
-        vehicles,
+      const { data: cart } = await axios.put(`/api/orders/add_vehicle`, {
+        orderId,
+        vehicleId,
+        quantity,
       });
-      dispatch(addNewToCart({ vehicles }));
+      dispatch(addNewToCart(cart));
     } catch (error) {
       console.error(error);
     }
@@ -76,12 +78,8 @@ export default function cartReducer(state = [], action) {
     case SET_CART:
       return action.cart;
 
-    case ADD_NEW_TO_CART:
-      newState = [...state, action.cartItem];
-      if (existedItem(state, action.cartItem)) {
-        return state;
-      }
-      return newState;
+    case ADD_TO_CART:
+      return action.cartItem;
 
     case UPDATE_CART:
       newState = state.map((item) => {

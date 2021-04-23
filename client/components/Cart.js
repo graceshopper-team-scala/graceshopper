@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { createCartItem, removeFromCart, fetchCart } from '../store/cart';
+import { createCartItem, removeFromCart, setCart } from '../store/cart';
 import { connect } from 'react-redux';
 import CartItems from './CartItems';
 import Button from 'react-bootstrap/Button';

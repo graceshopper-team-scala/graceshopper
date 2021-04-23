@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getSingleVehicleThunk } from '../store/singleVehicle';
 import { Link } from 'react-router-dom';
-import { createCartItem } from '../store/cart';
+import { addToCartThunk } from '../store/cart';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
@@ -13,7 +13,7 @@ class SingleVehicleScreen extends Component {
   constructor() {
     super();
     this.state = {
-      orders: [],
+      quantity: 1,
     };
 
     this.handleAddCartItem = this.handleAddCartItem.bind(this);
@@ -26,7 +26,18 @@ class SingleVehicleScreen extends Component {
 
   handleAddCartItem(evt) {
     evt.preventDefault();
-    this.props.addNewToCart(this.props.match.params.id, this.state.quantity);
+
+    const orderId = window.localStorage.getItem('order_id');
+
+    // console.log('orderId>>>', orderId);
+    // console.log('vehicleId>>>', this.props.match.params.id);
+    // console.log('quantity>>>', this.state.quantity);
+
+    this.props.addNewToCart(
+      orderId,
+      this.props.match.params.id,
+      this.state.quantity
+    );
     alert('Your sweet ride has been added to cart!');
   }
 
@@ -53,7 +64,7 @@ class SingleVehicleScreen extends Component {
               <div className="img-description-right">
                 <p className="vechicle-description">{vehicle.description}</p>
                 <div className="vehicle-form">
-                  <form onClick={this.handleAddCartItem}>
+                  <form onSubmit={this.handleAddCartItem}>
                     <select className="vehicle-form-select">
                       <option value="1">1</option>
                       <option value="2">2</option>
@@ -84,7 +95,8 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => ({
   getSingleVehicle: (id) => dispatch(getSingleVehicleThunk(id)),
-  addNewToCart: (vehicle) => dispatch(createCartItem(vehicle)),
+  addNewToCart: (orderId, vehicleId, quantity) =>
+    dispatch(addToCartThunk(orderId, vehicleId, quantity)),
 });
 
 export default connect(mapState, mapDispatch)(SingleVehicleScreen);
