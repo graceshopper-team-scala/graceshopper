@@ -31,6 +31,7 @@ POST /api/orders
             "quantity": 3
         }]
     }
+- sends back the new order (data structure: object)
 
 PUT /api/orders/add_vehicle
 - adds vehicle to cart/order; 
@@ -42,7 +43,7 @@ PUT /api/orders/add_vehicle
     "vehicleId": 1,
     "quantity": 3
     }
-
+- sends back an array of the new vehicles
 
 PUT /api/orders/remove_vehicle
 - remove vehicle from order
@@ -59,9 +60,14 @@ PUT /api/orders/remove_vehicle
   - If quantity === 0, the vehicle will also be removed from the order.
   ****
 
+  - sends back an array of the new vehicles
+
+
 PUT /api/:orderId/complete
 - updates status of order to 'completed'
+- sends back an array of the new vehicles
 
 DELETE /api/orders/:id
 - deletes order entirely
+- sends back the order
 

@@ -47,7 +47,7 @@ router.get('/:id', async (req, res, next) => {
             },
         }
     )
-      res.json(order);
+      res.send(order);
     } catch (error) {
       next(error);
     }
@@ -78,15 +78,15 @@ router.post('/', async (req, res, next) => {
         //pull vehicles in order from req.body
         const newVehicles = req.body.vehicles
         //map through vehicles and associate each with order in the database
+      
         newVehicles.map(async vehicle => {
                 const quantity = vehicle.quantity
                 const addVehicle = await Vehicle.findByPk(vehicle.id)
                 await newOrder.addVehicle(addVehicle, 
                             {through: {quantity}})
         })
-
-       
-      res.status(201).send(newOrder);
+  
+      res.send(newOrder);
     } catch (error) {
       next(error);
     }
@@ -110,8 +110,8 @@ router.put('/add_vehicle', async (req, res, next) => {
     const quantity = req.body.quantity
     const alreadyInCart = await order.hasVehicle(vehicle)
     if(!alreadyInCart){
-      order.addVehicle(vehicle, {through: {quantity}})
-      res.send(order)
+      await order.addVehicle(vehicle, {through: {quantity}})
+      res.send(await order.getVehicles())
     }
     else{
       const quantityToUpdate = await Order_Vehicle.findOne({
@@ -122,7 +122,7 @@ router.put('/add_vehicle', async (req, res, next) => {
         })
         if(quantityToUpdate.quantity<quantity) {
           await order.addVehicle(vehicle, {through: {quantity}})
-          res.send(order)
+          res.send(await order.getVehicles())
         }
         else{
           res.send("Cannot decrement on this put route")
@@ -155,6 +155,7 @@ router.put('/add_vehicle', async (req, res, next) => {
 router.put('/remove_vehicle', async (req, res, next) => {
   try {
     const order = await Order.findByPk(req.body.orderId)
+
     const vehicle = await Vehicle.findByPk(req.body.vehicleId)
 
     if(!req.body.quantity || req.body.quantity===0) {
@@ -170,8 +171,8 @@ router.put('/remove_vehicle', async (req, res, next) => {
               }
             })
         if(quantityToUpdate.quantity>req.body.quantity){
-          await quantityToUpdate.update({quantity:req.body.quantity})
-          res.send(order)     
+            await quantityToUpdate.update({quantity:req.body.quantity})
+          res.send(await order.getVehicles())     
         }
         else{
           res.send("Cannot increment on this put route")
@@ -187,9 +188,8 @@ router.put('/remove_vehicle', async (req, res, next) => {
 router.put('/:orderId/complete', async (req, res, next) => {
   try {
     const order = await Order.findByPk(req.params.orderId)
-    order.update({status:'completed'})
-
-    res.send(order)
+    await order.update({status:'completed'})
+    res.send(await order.getVehicles())
 } catch (error) {
   next(error);
 }
