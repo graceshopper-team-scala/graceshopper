@@ -24,11 +24,12 @@ router.get("/orders/:userId", async (req, res, next) => {
   try {
     console.log(req.params.userId);
     const orders = await Order.findAll({
-      where: {
-        userId: req.params.userId,
-      },
-      include: [{ model: Vehicle }],
-    });
+        where: {
+          userId: req.params.userId,
+          status: 'pending'
+        },
+        include: [{ model: Vehicle }],
+      });
     res.json(orders);
   } catch (error) {
     next(error);

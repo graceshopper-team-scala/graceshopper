@@ -52,9 +52,7 @@ export const setCart = (userId) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`api/users/orders/${userId}`);
-      const pending = data.filter((item) => item.status === "pending");
-      console.log("thunk data -->", pending);
-      dispatch(_setCart(pending[0]));
+      dispatch(_setCart(data[0]));
     } catch (error) {
       console.log("Error fetching cars from server", error);
     }
