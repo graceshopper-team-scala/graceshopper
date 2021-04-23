@@ -8,10 +8,10 @@ const Home = (props) => {
   return (
     <div
       id="carouselExampleControls"
-      className="carousel slide"
+      className="carousel slide carousel-size carousel-size"
       data-bs-ride="carousel"
     >
-      <div className="carousel-inner">
+      <div className="carousel-inner ">
         <div className="carousel-item active">
           <img
             src="http://i.imgur.com/LmVILuw.jpg"

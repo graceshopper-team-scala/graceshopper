@@ -1,0 +1,31 @@
+.cart-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+.cart-container > .cart-area {
+  width: 50%;
+  background-color: azure;
+  display: flex;
+  flex-direction: column;
+}
+/* CART TOP */
+.cart-top {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid black;
+}
+.cart-top button {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+/* CART TABLE */
+
+/* CART ITEMS */
+.cart-img {
+  width: 200px;
+}
