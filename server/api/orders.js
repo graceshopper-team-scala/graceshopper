@@ -109,24 +109,25 @@ router.put('/add_vehicle', async (req, res, next) => {
     const order = await Order.findByPk(req.body.orderId)
     const vehicle = await Vehicle.findByPk(req.body.vehicleId)
     const quantity = req.body.quantity
-    if(quantity===0){
-      order.removeVehicle(vehicle)
-      res.send("Vehicle removed from order")
+    const alreadyInCart = await order.hasVehicle(vehicle)
+    if(!alreadyInCart){
+      order.addVehicle(vehicle, {through: {quantity}})
+      res.send(order)
     }
-    else if(quantity>0){
+    else{
       const quantityToUpdate = await Order_Vehicle.findOne({
-        where: {
-          orderId: order.id,
-          vehicleId: vehicle.id
+          where: {
+            orderId: order.id,
+            vehicleId: vehicle.id
+          }
+        })
+        if(quantityToUpdate.quantity<quantity) {
+          await order.addVehicle(vehicle, {through: {quantity}})
+          res.send(order)
         }
-      })
-      if(quantityToUpdate.quantity<quantity) {
-        await order.addVehicle(vehicle, {through: {quantity}})
-        res.send(order)
-      }
-      else{
-        res.send("Cannot decrement on this put route")
-      }
+        else{
+          res.send("Cannot decrement on this put route")
+        }
     }
     
 } catch (error) {
@@ -142,7 +143,8 @@ router.put('/add_vehicle', async (req, res, next) => {
   
   ****
   If quantity is provided, quantity will be updated.
-  If no quantity is provided, the vehicle is completely removed from the order/cart
+  If no quantity is provided, the vehicle is completely removed from the order/cart.
+  If quantity === 0, the vehicle will also be removed from order/cart
   ****
 
   {
@@ -156,19 +158,26 @@ router.put('/remove_vehicle', async (req, res, next) => {
     const order = await Order.findByPk(req.body.orderId)
     const vehicle = await Vehicle.findByPk(req.body.vehicleId)
 
-    if(req.body.quantity){
+    if(!req.body.quantity || req.body.quantity===0) {
+      await order.removeVehicle(vehicle)
+      res.send("Vehicle removed from order")
+    }
+    else
+    {
       const quantityToUpdate = await Order_Vehicle.findOne({
-              where: {
-                orderId: order.id,
-                vehicleId: vehicle.id
+            where: {
+              orderId: order.id,
+              vehicleId: vehicle.id
               }
             })
-            await quantityToUpdate.update(req.body)
+        if(quantityToUpdate.quantity>req.body.quantity){
+          await quantityToUpdate.update({quantity:req.body.quantity})
+          res.send(order)     
+        }
+        else{
+          res.send("Cannot increment on this put route")
+        }
     }
-    else{
-      await order.removeVehicle(vehicle)
-    }
-    res.send(order)
 } catch (error) {
   next(error);
 }
