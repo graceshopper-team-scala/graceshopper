@@ -11,10 +11,11 @@ const addItem = (id) => ({
   id,
 });
 
-export const _removeFromCart = (vehicle) => {
+export const _removeFromCart = (vehicleId, orderId) => {
   return {
     type: REMOVE_FROM_CART,
-    vehicle,
+    vehicleId,
+    orderId,
   };
 };
 export const _setCart = (cart) => {
@@ -36,23 +37,26 @@ export const addToCart = (id, qty) => {
   };
 };
 
-export const removeFromCart = (id, history) => {
+export const removeFromCart = (vehicleId,orderId) => {
   return async (dispatch) => {
     //change to remove from through table
-
-    // const {data} =  await axios.put(`/api/orders/${id}`, {
-    //   vehicles:
-    // });
-
-    // dispatch(_removeFromCart(data));
-    history.push("/vehicle");
+    try {
+      const { data } = await axios.put(`/api/orders/remove_vehicle`, {
+        orderId: orderId,
+        vehicleId: vehicleId,
+      });
+      console.log('vehicleId---->', vehicleId)
+      dispatch(_removeFromCart(vehicleId, orderId));
+    } catch (error) {
+      console.log("Error deleting cars from server", error);
+    }
   };
 };
 export const setCart = (userId) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`api/users/orders/${userId}`);
-      dispatch(_setCart(data[0]));
+      dispatch(_setCart(data[0].vehicles));
     } catch (error) {
       console.log("Error fetching cars from server", error);
     }
@@ -72,10 +76,11 @@ export default function (state = [], action) {
     case ADD_ITEM:
       return [...state, action.newItem];
     case REMOVE_FROM_CART:
-      return [
-        ...state,
-        state.filter((vehicle) => vehicle.id !== action.vehicle.id),
-      ];
+      const filterCars= state.filter(
+        (vehicle) => vehicle.id !== action.vehicleId
+      );
+      console.log(filterCars)
+      return filterCars
     case SET_CART:
       return action.cart;
     default:

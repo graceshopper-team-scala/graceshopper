@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 
 export default class CartItems extends Component {
   render() {
-    const { items } = this.props;
-
+    const { items, handleClick } = this.props;
+    const orderId = window.localStorage.order_id;
+    // console.log(handleClick);
     return (
       <table className="cart-items">
         <tbody>
@@ -28,7 +29,7 @@ export default class CartItems extends Component {
                     <option value="2">2</option>
                     <option value="3">3</option>
                   </select>
-                  <button className="remove">
+                  <button className="remove" onClick={() => handleClick(item.id,orderId )} >
                     <i className="fas fa-trash"></i>
                   </button>
                 </td>
