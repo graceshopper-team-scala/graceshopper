@@ -13,7 +13,7 @@ class SingleVehicleScreen extends Component {
   constructor() {
     super();
     this.state = {
-      vehicles: [],
+      orders: [],
     };
 
     this.handleAddCartItem = this.handleAddCartItem.bind(this);
@@ -31,7 +31,7 @@ class SingleVehicleScreen extends Component {
       // this.props.match.params.userId,
       // this.state.quantity
       this.props.auth.id,
-      this.state.vehicles
+      this.state.orders
     );
     alert('Your sweet ride has been added to cart!');
   }
@@ -89,7 +89,8 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => ({
   getSingleVehicle: (id) => dispatch(getSingleVehicleThunk(id)),
-  addNewToCart: (userId, vehicle) => dispatch(createCartItem(userId, vehicle)),
+  addNewToCart: (orderId, vehicle) =>
+    dispatch(createCartItem(orderId, vehicle)),
 });
 
 export default connect(mapState, mapDispatch)(SingleVehicleScreen);
