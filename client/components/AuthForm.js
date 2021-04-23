@@ -85,12 +85,14 @@ const mapSignup = (state) => {
 
 const mapDispatch = (dispatch, { history }) => {
   return {
-    handleSubmit(evt) {
+    async handleSubmit(evt) {
       evt.preventDefault();
       const formName = evt.target.name;
       const username = evt.target.username.value;
       const password = evt.target.password.value;
       dispatch(authenticate(username, password, formName));
+      const { data:orders } = await axios.get(`api/users/orders/${res.data.id}`);
+      setCart(orders[0].id)
       history.push("/home");
     },
   };
