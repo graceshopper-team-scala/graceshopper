@@ -15,7 +15,7 @@ The below is a summary of the routes in our order API.
 
 GET /api/orders
 - to be used for admin purposes
-- retrieves all orders fromo database
+- retrieves all orders from database
 
 GET /api/orders/:id
 - retrieves an order by its id
@@ -54,9 +54,9 @@ PUT /api/orders/remove_vehicle
     }
   
   ****
-  - If quantity is provided, quantity will be updated.
-  - If no quantity is provided, the vehicle is completely removed from the order/cart.
-  - If quantity === 0, the vehicle will also be removed from order/cart
+  - If quantity is provided, quantity will be updated (i.e. decremented).
+  - If no quantity is provided, the vehicle is completely removed from the order.
+  - If quantity === 0, the vehicle will also be removed from the order.
   ****
 
 PUT /api/:orderId/complete
