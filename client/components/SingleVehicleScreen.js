@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getSingleVehicleThunk } from '../store/singleVehicle';
 import { Link } from 'react-router-dom';
-import { addToCart } from '../store/cart';
+import { createCartItem } from '../store/cart';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
@@ -13,7 +13,7 @@ class SingleVehicleScreen extends Component {
   constructor() {
     super();
     this.state = {
-      quantity: 1,
+      vehicles: [],
     };
 
     this.handleAddCartItem = this.handleAddCartItem.bind(this);
@@ -27,7 +27,12 @@ class SingleVehicleScreen extends Component {
   handleAddCartItem(evt) {
     // console.log('handAddCart >>> ', this);
     evt.preventDefault();
-    this.props.addToCart(this.props.match.params.id, this.state.quantity);
+    this.props.addNewToCart(
+      // this.props.match.params.userId,
+      // this.state.quantity
+      this.props.auth.id,
+      this.state.vehicles
+    );
     alert('Your sweet ride has been added to cart!');
   }
 
@@ -37,7 +42,7 @@ class SingleVehicleScreen extends Component {
 
   render() {
     const { vehicle } = this.props;
-    console.log('single vehicle props >>> ', this);
+    // console.log('single vehicle props >>> ', this);
 
     return (
       <div className="singlevehicle">
@@ -60,7 +65,7 @@ class SingleVehicleScreen extends Component {
                     <option value="2">2</option>
                     <option value="3">3</option>
                   </select>
-                  <button onClick={this.handleSubmit} type="submit">
+                  <button onClick={this.handleAddCartItem} type="submit">
                     Add to cart
                   </button>
                 </form>
@@ -79,11 +84,12 @@ SingleVehicleScreen.propTypes = {
 
 const mapState = (state) => ({
   vehicle: state.vehicle,
+  auth: state.auth,
 });
 
 const mapDispatch = (dispatch) => ({
   getSingleVehicle: (id) => dispatch(getSingleVehicleThunk(id)),
-  addToCart: (id, quantity) => dispatch(addToCart(id, quantity)),
+  addNewToCart: (userId, vehicle) => dispatch(createCartItem(userId, vehicle)),
 });
 
 export default connect(mapState, mapDispatch)(SingleVehicleScreen);

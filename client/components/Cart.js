@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { addToCart, removeFromCart } from '../store/cart';
+import { removeFromCart } from '../store/cart';
 import { connect } from 'react-redux';
 import CartItems from './CartItems';
+import { fetchCart } from '../store/cart';
 
 const dummyCart = [
   {
@@ -26,8 +27,8 @@ const dummyCart = [
   },
 ];
 export class Cart extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       quantity: 0,
     };
@@ -40,7 +41,7 @@ export class Cart extends Component {
   }
 
   componentdidmount() {
-    this.props.getCartItems(this.props.match.params.id);
+    this.props.fetchCart(this.props.match.params.id);
   }
   handleChange(evt) {
     evt.preventdefault();
@@ -50,6 +51,8 @@ export class Cart extends Component {
   }
   render() {
     //const { cart } = this.props;
+    const { items } = this.props;
+
     const itemTotal = dummyCart.reduce((acc, curr) => {
       return acc + curr.price;
     }, 0);
@@ -72,11 +75,12 @@ export class Cart extends Component {
 }
 
 const mapState = (state) => ({
-  cart: state.cart,
+  items: state.cart,
 });
 
 const mapDispatch = (dispatch) => ({
-  getCartItems: () => dispatch(addToCart()),
+  // getCartItems: () => dispatch(addToCart()),
+  fetchCart: () => dispatch(fetchCart()),
   removeFromCart: (vehicle) => dispatch(removeFromCart(vehicle)),
 });
 
