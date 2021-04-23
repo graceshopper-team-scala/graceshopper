@@ -3,7 +3,7 @@ import history from "../history";
 
 const TOKEN = "token";
 const ID = "id";
-const ORDERID = "order_id"
+const ORDERID = "order_id";
 
 /**
  * ACTION TYPES
@@ -27,25 +27,26 @@ export const me = () => async (dispatch, state) => {
         authorization: token,
       },
     });
-    const { data:orders } = await axios.get(`api/users/orders/${res.data.id}`);
-    console.log(orders)
+    const { data: orders } = await axios.get(`api/users/orders/${res.data.id}`);
+    console.log(orders);
     //user object returned
     window.localStorage.setItem(ID, res.data.id);
-    window.localStorage.setItem(ORDERID, orders[0].id)
+    window.localStorage.setItem(ORDERID, orders[0].id);
 
     return dispatch(setAuth(res.data));
   }
 };
 
-export const authenticate = (username, password, method) => async (
+export const authenticate = (username, password, method, history) => async (
   dispatch
 ) => {
   try {
     const res = await axios.post(`/auth/${method}`, { username, password });
     window.localStorage.setItem(TOKEN, res.data.token);
-
     dispatch(me());
+    history.push("/home");
   } catch (authError) {
+    history.push("/login");
     return dispatch(setAuth({ error: authError }));
   }
 };

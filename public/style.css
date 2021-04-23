@@ -2,6 +2,7 @@
 @import "./cssModules/singleVehicle.css";
 @import "./cssModules/cart.css";
 @import "./cssModules/home.css";
+@import "./cssModules/authForm.css";
 
 body {
   font-family: sans-serif;
@@ -24,7 +25,48 @@ nav a {
   margin: 1em;
 }
 
+.auth-form form {
+  padding-top: 5rem;
+  background-color: rgba(0, 0, 0, 0.65);
+  margin-top: 6rem;
+  width: 20%;
+  height: 25rem;
+}
 form div {
-  margin: 1em;
-  display: inline-block;
+  margin: auto;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+form input {
+  width: 50%;
+}
+
+big {
+  color: white;
+}
+
+.login-error {
+  color: yellow;
+  animation: shake 0.3s;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(25px);
+  }
+
+  50% {
+    transform: translateX(-25px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
 }
