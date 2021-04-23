@@ -129,6 +129,84 @@ const vehicles = [
     description:
       "If you're a farmer in one of the close-knit communities on the shores of the Alamo Sea, chances are you're legally blind. But apart from that it's your lucky day, because not only does Nagasaki's latest quad come with weapons, it's also fully amphibious, so you can career off the road and into the highly infectious water without a second thought.",
   },
+  {
+    make: "Nagasaki",
+    model: "Blazer Aqua",
+    class: "offroad",
+    price: 9000,
+    quantity: 20,
+    logoUrl:
+      "https://vignette.wikia.nocookie.net/gtawiki/images/4/4e/Nagasaki-GTAV-Logo.png/revision/latest/scale-to-width-down/210",
+    imageUrl:
+      "https://vignette.wikia.nocookie.net/gtawiki/images/2/29/BlazerAqua-GTAO-FrontQuarter.png/revision/latest/scale-to-width-down/700",
+    description:
+      "If you're a farmer in one of the close-knit communities on the shores of the Alamo Sea, chances are you're legally blind. But apart from that it's your lucky day, because not only does Nagasaki's latest quad come with weapons, it's also fully amphibious, so you can career off the road and into the highly infectious water without a second thought.",
+  },
+  {
+    make: "Nagasaki",
+    model: "Blazer Aqua",
+    class: "offroad",
+    price: 9000,
+    quantity: 20,
+    logoUrl:
+      "https://vignette.wikia.nocookie.net/gtawiki/images/4/4e/Nagasaki-GTAV-Logo.png/revision/latest/scale-to-width-down/210",
+    imageUrl:
+      "https://vignette.wikia.nocookie.net/gtawiki/images/2/29/BlazerAqua-GTAO-FrontQuarter.png/revision/latest/scale-to-width-down/700",
+    description:
+      "If you're a farmer in one of the close-knit communities on the shores of the Alamo Sea, chances are you're legally blind. But apart from that it's your lucky day, because not only does Nagasaki's latest quad come with weapons, it's also fully amphibious, so you can career off the road and into the highly infectious water without a second thought.",
+  },
+  {
+    make: "Nagasaki",
+    model: "Blazer Aqua",
+    class: "offroad",
+    price: 9000,
+    quantity: 20,
+    logoUrl:
+      "https://vignette.wikia.nocookie.net/gtawiki/images/4/4e/Nagasaki-GTAV-Logo.png/revision/latest/scale-to-width-down/210",
+    imageUrl:
+      "https://vignette.wikia.nocookie.net/gtawiki/images/2/29/BlazerAqua-GTAO-FrontQuarter.png/revision/latest/scale-to-width-down/700",
+    description:
+      "If you're a farmer in one of the close-knit communities on the shores of the Alamo Sea, chances are you're legally blind. But apart from that it's your lucky day, because not only does Nagasaki's latest quad come with weapons, it's also fully amphibious, so you can career off the road and into the highly infectious water without a second thought.",
+  },
+  {
+    make: "Nagasaki",
+    model: "Blazer Aqua",
+    class: "offroad",
+    price: 9000,
+    quantity: 20,
+    logoUrl:
+      "https://vignette.wikia.nocookie.net/gtawiki/images/4/4e/Nagasaki-GTAV-Logo.png/revision/latest/scale-to-width-down/210",
+    imageUrl:
+      "https://vignette.wikia.nocookie.net/gtawiki/images/2/29/BlazerAqua-GTAO-FrontQuarter.png/revision/latest/scale-to-width-down/700",
+    description:
+      "If you're a farmer in one of the close-knit communities on the shores of the Alamo Sea, chances are you're legally blind. But apart from that it's your lucky day, because not only does Nagasaki's latest quad come with weapons, it's also fully amphibious, so you can career off the road and into the highly infectious water without a second thought.",
+  },
+  {
+    make: "Nagasaki",
+    model: "Blazer Aqua",
+    class: "offroad",
+    price: 9000,
+    quantity: 20,
+    logoUrl:
+      "https://vignette.wikia.nocookie.net/gtawiki/images/4/4e/Nagasaki-GTAV-Logo.png/revision/latest/scale-to-width-down/210",
+    imageUrl:
+      "https://vignette.wikia.nocookie.net/gtawiki/images/2/29/BlazerAqua-GTAO-FrontQuarter.png/revision/latest/scale-to-width-down/700",
+    description:
+      "If you're a farmer in one of the close-knit communities on the shores of the Alamo Sea, chances are you're legally blind. But apart from that it's your lucky day, because not only does Nagasaki's latest quad come with weapons, it's also fully amphibious, so you can career off the road and into the highly infectious water without a second thought.",
+  },
+  {
+    make: "Nagasaki",
+    model: "Blazer Aqua",
+    class: "offroad",
+    price: 9000,
+    quantity: 20,
+    logoUrl:
+      "https://vignette.wikia.nocookie.net/gtawiki/images/4/4e/Nagasaki-GTAV-Logo.png/revision/latest/scale-to-width-down/210",
+    imageUrl:
+      "https://vignette.wikia.nocookie.net/gtawiki/images/2/29/BlazerAqua-GTAO-FrontQuarter.png/revision/latest/scale-to-width-down/700",
+    description:
+      "If you're a farmer in one of the close-knit communities on the shores of the Alamo Sea, chances are you're legally blind. But apart from that it's your lucky day, because not only does Nagasaki's latest quad come with weapons, it's also fully amphibious, so you can career off the road and into the highly infectious water without a second thought.",
+  },
 ];
 
 module.exports = vehicles;

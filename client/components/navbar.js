@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { logout } from "../store";
+import { logout, cartLogout } from "../store";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function ButtonAppBar({ handleClick, isLoggedIn }) {
+export function ButtonAppBar({ handleClick, isLoggedIn, clearState }) {
   const classes = useStyles();
   if (isLoggedIn) {
     return (
@@ -52,7 +52,13 @@ export function ButtonAppBar({ handleClick, isLoggedIn }) {
               All Vehicles
             </Button>
 
-            <Button color="inherit" onClick={handleClick}>
+            <Button
+              color="inherit"
+              onClick={() => {
+                handleClick();
+                clearState();
+              }}
+            >
               Logout
             </Button>
 
@@ -128,6 +134,9 @@ const mapDispatch = (dispatch) => {
   return {
     handleClick() {
       dispatch(logout());
+    },
+    clearState() {
+      dispatch(cartLogout());
     },
   };
 };

@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { addToCart, removeFromCart, setCart } from '../store/cart';
-import { connect } from 'react-redux';
-import CartItems from './CartItems';
-
+import React, { Component } from "react";
+import { addToCart, removeFromCart, setCart } from "../store/cart";
+import { connect } from "react-redux";
+import CartItems from "./CartItems";
+import Button from "react-bootstrap/Button";
 
 export class Cart extends Component {
   constructor() {
@@ -10,18 +10,12 @@ export class Cart extends Component {
     this.state = {
       quantity: 0,
     };
-    this.handleClick = this.handleClick.bind(this);
   }
-  handleClick(id) {
-
-    dummyCart.filter((item) => item.id !== id);
-    console.log(dummyCart.filter((item) => item.id === id));
-  }
-
   componentDidMount() {
-    // this.props.addCartItems(this.props.match.params.id);
-    this.props.getCart(this.props.auth.id)
+    const userId = window.localStorage.getItem("id");
+    this.props.getCart(+userId);
   }
+
   handleChange(evt) {
     evt.preventdefault();
     this.setState = {
@@ -29,40 +23,45 @@ export class Cart extends Component {
     };
   }
   render() {
-    const { cart } = this.props;
-    console.log(this.props.auth.id);
-
+    const cart = this.props.cart.vehicles || [];
     const itemTotal = cart.reduce((acc, curr) => {
       return acc + curr.price;
     }, 0);
+
     return (
-      <div className="cartscreen">
-        <p> My Cart</p>
-        <div>
-          <div className="cart-buttons">
-            <button> Continue Shopping</button>3<button> Checkout </button>
+      <>
+        <div className="cart-container">
+          <div className="cart-area">
+            <div className="cart-top">
+              <p> My Cart</p>
+              <div>
+                <Button variant="warning"> Continue Shopping</Button>
+                <Button variant="warning"> Checkout </Button>
+              </div>
+            </div>
+            <CartItems items={cart} />
+            <div className="cart-total">
+              <p>Subtotal ({cart.length}) items</p>
+              <p>Total: ${itemTotal}</p>
+            </div>
           </div>
-          <CartItems items={cart} handleClick={this.handleClick} />
         </div>
-        <div>
-          <p>Subtotal ({cart.length}) items</p>
-          <p>Total: ${itemTotal}</p>
-        </div>
-      </div>
+      </>
     );
   }
 }
 
-const mapState = (state) => ({
-  cart: state.cart,
-  auth: state.auth
-});
+const mapState = (state) => {
+  return {
+    cart: state.cart,
+    isLoggedIn: !!state.auth.id,
+  };
+};
 
 const mapDispatch = (dispatch) => ({
   addCartItems: () => dispatch(addToCart()),
   removeFromCart: (vehicle) => dispatch(removeFromCart(vehicle)),
-  getCart: (userId)=> dispatch(setCart(userId))
-
+  getCart: (id) => dispatch(setCart(id)),
 });
 
 export default connect(mapState, mapDispatch)(Cart);
