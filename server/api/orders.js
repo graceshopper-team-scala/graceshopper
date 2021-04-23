@@ -94,35 +94,6 @@ router.post('/', async (req, res, next) => {
   });
 
 
-
-//PUT /api/orders/quantity
-//Updates quantity of vehicle in cart
-/*
-  This route will update the quantity alone. It needs data in the following format:
-  {
-    "orderId": 1,
-    "vehicleId": 1,
-    "quantity": 2
-  }
-*/
-// router.put('/quantity', async (req, res, next) => {
-//   try {
-//     const orderId = req.body.orderId
-//     const vehicleId = req.body.vehicleId
-//     const quantityToUpdate = await Order_Vehicle.findOne({
-//       where: {
-//         orderId,
-//         vehicleId,
-//       }
-//     })
-    
-//     quantityToUpdate.update(req.body)
-//     res.send('reached');
-// } catch (error) {
-//   next(error);
-// }
-// })
-
 //PUT /api/orders/add_vehicle
 //adds vehicle to cart/order; this includes updating quantity of a vehicle in an order
 /*
@@ -141,7 +112,7 @@ router.put('/add_vehicle', async (req, res, next) => {
 
     await order.addVehicle(vehicle, {through: {quantity}})
 
-    res.send(vehicle)
+    res.send(order)
 } catch (error) {
   next(error);
 }
@@ -164,13 +135,14 @@ router.put('/remove_vehicle', async (req, res, next) => {
 
     await order.removeVehicle(vehicle)
 
-    res.send(vehicle)
+    res.send(order)
 } catch (error) {
   next(error);
 }
 })
 
 //PUT /api/:orderId/complete
+//updates status of order to 'completed'
 router.put('/:orderId/complete', async (req, res, next) => {
   try {
     const order = await Order.findByPk(req.params.orderId)
@@ -182,7 +154,7 @@ router.put('/:orderId/complete', async (req, res, next) => {
 }
 })
 
-// DELETE /api/orders/id
+// DELETE /api/orders/:id
 router.delete('/:id', async (req, res, next) => {
     try {
       const order = await Order.findByPk(req.params.id);
