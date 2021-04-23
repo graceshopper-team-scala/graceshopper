@@ -27,7 +27,8 @@ router.get("/orders/:userId", async (req, res, next) => {
         where: {
           userId: req.params.userId,
           status: 'pending'
-        }
+        },
+        include: [{ model: Vehicle }],
       });
     res.json(orders);
   } catch (error) {
