@@ -7,7 +7,8 @@ const Order_Vehicle = db.define("order_vehicle", {
     defaultValue: 1,
     allowNull: false,
     validate: {
-      min: 0
+      min: 0,
+      max: 3
     }
   },
 });

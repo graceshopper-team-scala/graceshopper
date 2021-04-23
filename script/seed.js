@@ -16,31 +16,31 @@ async function seed() {
 
   // Creating Users
   const users = await Promise.all([
-    User.create({ username: "cody", password: "cody_pw" }),
-    User.create({ username: "murphy", password: "cody_pw" }),
+    User.create({ username: "cody", password: "cody_pw", isAdmin: false }),
+    User.create({ username: "lisa", password: "lisa_pw", isAdmin: false }),
+    User.create({ username: "alan", password: "admin", isAdmin: true }),
   ]);
   const vehicles = await Vehicle.bulkCreate(cardata);
 
-//seeding dummy order data
+  //seeding dummy order data
   const orders = await Promise.all([
-    Order.create({status: 'pending'}),
-    Order.create({status:'completed'}),
-    Order.create({status: 'pending' }),
-    Order.create({status: 'completed'})
-  ])
+    Order.create({ status: "pending" }),
+    Order.create({ status: "completed" }),
+    Order.create({ status: "pending" }),
+    Order.create({ status: "completed" }),
+  ]);
 
+  const [cody, murphy] = users;
+  const [codyOrder, codyOrder2, murphyOrder, murphyOrder2] = orders;
+  const [Nagasaki, Pegassi] = vehicles;
 
-    const [cody, murphy] = users
-    const [codyOrder, codyOrder2, murphyOrder, murphyOrder2] = orders
-    const [Nagasaki, Pegassi] = vehicles
-
-    await cody.setOrders([codyOrder, codyOrder2])
-    await codyOrder.addVehicle(Nagasaki)
-    await codyOrder.addVehicle(Pegassi)
-    await codyOrder2.addVehicle(Pegassi, {through: {quantity:2}})
-    await murphy.setOrders([murphyOrder, murphyOrder2])
-    await murphyOrder.addVehicle(Nagasaki, {through: {quantity:5}})
-    await murphyOrder2.addVehicle(Pegassi)
+  await cody.setOrders([codyOrder, codyOrder2]);
+  await codyOrder.addVehicle(Nagasaki);
+  await codyOrder.addVehicle(Pegassi);
+  await codyOrder2.addVehicle(Pegassi, { through: { quantity: 2 } });
+  await murphy.setOrders([murphyOrder, murphyOrder2]);
+  await murphyOrder.addVehicle(Nagasaki, { through: { quantity: 3 } });
+  await murphyOrder2.addVehicle(Pegassi);
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${users.length} users`);

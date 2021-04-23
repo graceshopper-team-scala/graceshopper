@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 export default class CartItems extends Component {
   render() {
     const { items } = this.props;
-    console.log('items in cartItem >>> ', this.props);
 
     return (
       <table className="cart-items">
@@ -18,9 +17,9 @@ export default class CartItems extends Component {
             return (
               <tr className="single-cart-item" key={item.id}>
                 <td>
-                  <img src={item.imageUrl} />
+                  <img className="cart-img" src={item.imageUrl} />
                   <Link to={`/vehicles/${item.id}`} className="cartitem_name">
-                    {item.make} {item.model}{' '}
+                    {item.make} {item.model}{" "}
                   </Link>
                 </td>
                 <td>
@@ -29,10 +28,7 @@ export default class CartItems extends Component {
                     <option value="2">2</option>
                     <option value="3">3</option>
                   </select>
-                  <button
-                    className="remove"
-                    onClick={() => handleClick(item.id)}
-                  >
+                  <button className="remove">
                     <i className="fas fa-trash"></i>
                   </button>
                 </td>
