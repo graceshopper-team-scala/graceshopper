@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { getSingleVehicleThunk } from '../store/singleVehicle';
-import { Link } from 'react-router-dom';
-import { addToCartThunk } from '../store/cart';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { getSingleVehicleThunk } from "../store/singleVehicle";
+import { withSnackbar } from "notistack";
+import { Link } from "react-router-dom";
+import { addToCartThunk } from "../store/cart";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import PropTypes from "prop-types";
 
-import '../../public/style.css';
+import "../../public/style.css";
 
 class SingleVehicleScreen extends Component {
   constructor() {
@@ -18,8 +19,17 @@ class SingleVehicleScreen extends Component {
 
     this.handleAddCartItem = this.handleAddCartItem.bind(this);
     this.handleQtyChange = this.handleQtyChange.bind(this);
+    this.handleSnackbar = this.handleSnackbar.bind(this);
   }
 
+  handleSnackbar() {
+    this.key = this.props.enqueueSnackbar(
+      "Your Vehicle was added to the cart!",
+      {
+        variant: "success",
+      }
+    );
+  }
   componentDidMount() {
     this.props.getSingleVehicle(this.props.match.params.id);
   }
@@ -27,7 +37,7 @@ class SingleVehicleScreen extends Component {
   handleAddCartItem(evt) {
     evt.preventDefault();
 
-    const userId = window.localStorage.getItem('id');
+    const userId = window.localStorage.getItem("id");
 
     // console.log('orderId>>>', orderId);
     // console.log('vehicleId>>>', this.props.match.params.id);
@@ -38,7 +48,6 @@ class SingleVehicleScreen extends Component {
       this.props.match.params.id,
       this.state.quantity
     );
-    alert('Your sweet ride has been added to cart!');
   }
 
   handleQtyChange(evt) {
@@ -47,7 +56,7 @@ class SingleVehicleScreen extends Component {
 
   render() {
     const { vehicle } = this.props;
-
+    console.log(this.props);
     return (
       <div className="singlevehicle">
         <div className="container">
@@ -70,7 +79,11 @@ class SingleVehicleScreen extends Component {
                       <option value="2">2</option>
                       <option value="3">3</option>
                     </select>
-                    <Button variant="warning" type="submit">
+                    <Button
+                      variant="warning"
+                      type="submit"
+                      onClick={this.handleSnackbar}
+                    >
                       Add to cart
                     </Button>
                   </form>
@@ -99,4 +112,6 @@ const mapDispatch = (dispatch) => ({
     dispatch(addToCartThunk(userId, vehicleId, quantity)),
 });
 
-export default connect(mapState, mapDispatch)(SingleVehicleScreen);
+export default withSnackbar(
+  connect(mapState, mapDispatch)(SingleVehicleScreen)
+);

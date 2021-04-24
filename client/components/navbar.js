@@ -24,8 +24,53 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function ButtonAppBar({ handleClick, isLoggedIn, clearState }) {
+export function ButtonAppBar({ handleClick, isLoggedIn, clearState, isAdmin }) {
   const classes = useStyles();
+
+  // ADMIN NAVBAR
+  if (isLoggedIn && isAdmin) {
+    return (
+      <div className={classes.root}>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="menu"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography
+              variant="h6"
+              className={classes.title}
+              component={Link}
+              to="/home"
+            >
+              GraceHopper Motors
+            </Typography>
+
+            <Button color="inherit" component={Link} to="/vehicles">
+              Users
+            </Button>
+            <Button color="inherit" component={Link} to="/manage_vehicles">
+              Vehicles
+            </Button>
+
+            <Button
+              color="inherit"
+              onClick={() => {
+                handleClick();
+              }}
+            >
+              Logout
+            </Button>
+          </Toolbar>
+        </AppBar>
+      </div>
+    );
+  }
+  // USER NAVBAR
   if (isLoggedIn) {
     return (
       <div className={classes.root}>
@@ -128,6 +173,7 @@ export function ButtonAppBar({ handleClick, isLoggedIn, clearState }) {
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.auth.id,
+    isAdmin: state.auth.isAdmin,
   };
 };
 const mapDispatch = (dispatch) => {
