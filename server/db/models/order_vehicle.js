@@ -7,12 +7,10 @@ const Order_Vehicle = db.define("order_vehicle", {
     defaultValue: 1,
     allowNull: false,
     validate: {
-      min: 0,
-      max: 3
-    }
+      min: 1,
+      max: 3,
+    },
   },
 });
-
-
 
 module.exports = Order_Vehicle;

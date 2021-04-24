@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { getSingleVehicleThunk } from "../store/singleVehicle";
-import { Link } from "react-router-dom";
-import { addToCart } from "../store/cart";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { getSingleVehicleThunk } from '../store/singleVehicle';
+import { Link } from 'react-router-dom';
+import { addToCartThunk } from '../store/cart';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import PropTypes from 'prop-types';
 
-import "../../public/style.css";
+import '../../public/style.css';
 
 class SingleVehicleScreen extends Component {
   constructor() {
@@ -26,8 +26,19 @@ class SingleVehicleScreen extends Component {
 
   handleAddCartItem(evt) {
     evt.preventDefault();
-    this.props.addToCart(this.props.match.params.id, this.state.quantity);
-    alert("Your sweet ride has been added to cart!");
+
+    const orderId = window.localStorage.getItem('order_id');
+
+    // console.log('orderId>>>', orderId);
+    // console.log('vehicleId>>>', this.props.match.params.id);
+    // console.log('quantity>>>', this.state.quantity);
+
+    this.props.addNewToCart(
+      orderId,
+      this.props.match.params.id,
+      this.state.quantity
+    );
+    alert('Your sweet ride has been added to cart!');
   }
 
   handleQtyChange(evt) {
@@ -36,7 +47,6 @@ class SingleVehicleScreen extends Component {
 
   render() {
     const { vehicle } = this.props;
-    console.log("single vehicle props >>> ", this);
 
     return (
       <div className="singlevehicle">
@@ -54,7 +64,7 @@ class SingleVehicleScreen extends Component {
               <div className="img-description-right">
                 <p className="vechicle-description">{vehicle.description}</p>
                 <div className="vehicle-form">
-                  <form onClick={this.handleAddCartItem}>
+                  <form onSubmit={this.handleAddCartItem}>
                     <select className="vehicle-form-select">
                       <option value="1">1</option>
                       <option value="2">2</option>
@@ -80,11 +90,13 @@ SingleVehicleScreen.propTypes = {
 
 const mapState = (state) => ({
   vehicle: state.vehicle,
+  auth: state.auth,
 });
 
 const mapDispatch = (dispatch) => ({
   getSingleVehicle: (id) => dispatch(getSingleVehicleThunk(id)),
-  addToCart: (id, quantity) => dispatch(addToCart(id, quantity)),
+  addNewToCart: (orderId, vehicleId, quantity) =>
+    dispatch(addToCartThunk(orderId, vehicleId, quantity)),
 });
 
 export default connect(mapState, mapDispatch)(SingleVehicleScreen);

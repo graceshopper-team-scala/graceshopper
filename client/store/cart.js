@@ -1,20 +1,21 @@
-import axios from "axios";
+import axios from 'axios';
 // Action Types
-const ADD_ITEM = "ADD_ITEM";
-const REMOVE_FROM_CART = "REMOVE_FROM_CART";
-const CART_RESET = "CART_RESET";
-const SET_CART = "SET_CART";
+const ADD_TO_CART = 'ADD_TO_CART';
+const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
+const CART_RESET = 'CART_RESET';
+const SET_CART = 'SET_CART';
 
 // Action Creators
-const addItem = (id) => ({
-  type: ADD_ITEM,
-  id,
+const addToCart = (cartItem) => ({
+  type: ADD_TO_CART,
+  cartItem,
 });
 
-export const _removeFromCart = (vehicle) => {
+export const _removeFromCart = (vehicleId, orderId) => {
   return {
     type: REMOVE_FROM_CART,
-    vehicle,
+    vehicleId,
+    orderId,
   };
 };
 export const _setCart = (cart) => {
@@ -25,36 +26,46 @@ export const _setCart = (cart) => {
 };
 
 // Thunk Creators
-export const addToCart = (id, qty) => {
+
+export const addToCartThunk = (orderId, vehicleId, quantity) => {
   return async (dispatch) => {
     try {
-      // const { data: item } = await axios.get(`/api/vehicles/${id}`);
-      dispatch(addItem(item));
+      const { data: cart } = await axios.put(`/api/orders/add_vehicle`, {
+        orderId,
+        vehicleId,
+        quantity,
+      });
+      console.log('api cart>>>', cart);
+      dispatch(addToCart(cart));
     } catch (error) {
-      console.log("Error fetching cars from server");
+      console.error(error);
     }
   };
 };
 
-export const removeFromCart = (id, history) => {
+export const removeFromCart = (vehicleId, orderId) => {
   return async (dispatch) => {
     //change to remove from through table
-
-    // const {data} =  await axios.put(`/api/orders/${id}`, {
-    //   vehicles:
-    // });
-
-    // dispatch(_removeFromCart(data));
-    history.push("/vehicle");
+    try {
+      const { data } = await axios.put(`/api/orders/remove_vehicle`, {
+        orderId: orderId,
+        vehicleId: vehicleId,
+      });
+      console.log('vehicleId---->', vehicleId);
+      dispatch(_removeFromCart(vehicleId, orderId));
+    } catch (error) {
+      console.log('Error deleting cars from server', error);
+    }
   };
 };
+
 export const setCart = (userId) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`api/users/orders/${userId}`);
-      dispatch(_setCart(data[0]));
+      dispatch(_setCart(data[0].vehicles));
     } catch (error) {
-      console.log("Error fetching cars from server", error);
+      console.log('Error fetching cars from server', error);
     }
   };
 };
@@ -69,15 +80,19 @@ export const cartLogout = () => {
 //reducer
 export default function (state = [], action) {
   switch (action.type) {
-    case ADD_ITEM:
-      return [...state, action.newItem];
+    case ADD_TO_CART:
+      return action.cartItem;
+
     case REMOVE_FROM_CART:
-      return [
-        ...state,
-        state.filter((vehicle) => vehicle.id !== action.vehicle.id),
-      ];
+      const filterCars = state.filter(
+        (vehicle) => vehicle.id !== action.vehicleId
+      );
+      console.log(filterCars);
+      return filterCars;
+
     case SET_CART:
       return action.cart;
+
     default:
       return state;
   }
