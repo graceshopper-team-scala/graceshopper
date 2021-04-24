@@ -59,29 +59,29 @@ router.get('/:id', async (req, res, next) => {
       }]
   }
   */
-router.post('/', async (req, res, next) => {
-  try {
-    //create new order
-    const newOrder = await Order.create(req.body);
-    //associate user to order
-    const user = await User.findByPk(newOrder.userId);
-    await user.addOrder(newOrder);
-    //associate order to vehicles
-    //pull vehicles in order from req.body
-    const newVehicles = req.body.vehicles;
-    //map through vehicles and associate each with order in the database
+// router.post('/', async (req, res, next) => {
+//   try {
+//     //create new order
+//     const newOrder = await Order.create(req.body);
+//     //associate user to order
+//     const user = await User.findByPk(newOrder.userId);
+//     await user.addOrder(newOrder);
+//     //associate order to vehicles
+//     //pull vehicles in order from req.body
+//     const newVehicles = req.body.vehicles;
+//     //map through vehicles and associate each with order in the database
 
-    newVehicles.map(async (vehicle) => {
-      const quantity = vehicle.quantity;
-      const addVehicle = await Vehicle.findByPk(vehicle.id);
-      await newOrder.addVehicle(addVehicle, { through: { quantity } });
-    });
+//     newVehicles.map(async (vehicle) => {
+//       const quantity = vehicle.quantity;
+//       const addVehicle = await Vehicle.findByPk(vehicle.id);
+//       await newOrder.addVehicle(addVehicle, { through: { quantity } });
+//     });
 
-    res.send(newOrder);
-  } catch (error) {
-    next(error);
-  }
-});
+//     res.send(newOrder);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 //PUT /api/orders/add_vehicle
 //adds vehicle to cart/order; this includes updating quantity of a vehicle in an order
@@ -89,9 +89,9 @@ router.post('/', async (req, res, next) => {
   Example of required data:
   {
     "userId": 1
-    "orderId": 3,
     "vehicleId": 1,
     "quantity": 3
+    "fromCart": true
 }
 */
 router.put('/add_vehicle', async (req, res, next) => {
@@ -128,16 +128,11 @@ router.put('/add_vehicle', async (req, res, next) => {
                 vehicleId: vehicle.id
               }
             })
-            await quantityToUpdate.update({quantity: quantityToUpdate.quantity + quantity})
+            let newQuantity; 
+            if(req.body.fromCart) newQuantity = quantity
+            else newQuantity = quantityToUpdate.quantity + quantity
+            await quantityToUpdate.update({quantity: newQuantity})
             res.send(await order[0].getVehicles())
-            // if(quantityToUpdate.quantity<quantity) {
-            //   await order.addVehicle(vehicle, {through: {quantity}})
-            //   res.send(await order.getVehicles())
-            // }
-          
-            // else{
-            //   res.send("Cannot decrement on this put route")
-            // }
         }
     }
       

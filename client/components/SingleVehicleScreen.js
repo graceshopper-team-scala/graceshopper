@@ -27,14 +27,14 @@ class SingleVehicleScreen extends Component {
   handleAddCartItem(evt) {
     evt.preventDefault();
 
-    const orderId = window.localStorage.getItem('order_id');
+    const userId = window.localStorage.getItem('id');
 
     // console.log('orderId>>>', orderId);
     // console.log('vehicleId>>>', this.props.match.params.id);
     // console.log('quantity>>>', this.state.quantity);
 
     this.props.addNewToCart(
-      orderId,
+      userId,
       this.props.match.params.id,
       this.state.quantity
     );
@@ -95,8 +95,8 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => ({
   getSingleVehicle: (id) => dispatch(getSingleVehicleThunk(id)),
-  addNewToCart: (orderId, vehicleId, quantity) =>
-    dispatch(addToCartThunk(orderId, vehicleId, quantity)),
+  addNewToCart: (userId, vehicleId, quantity) =>
+    dispatch(addToCartThunk(userId, vehicleId, quantity)),
 });
 
 export default connect(mapState, mapDispatch)(SingleVehicleScreen);

@@ -65,14 +65,7 @@ const mapDispatch = (dispatch, { history }) => {
       const formName = evt.target.name;
       const username = evt.target.username.value;
       const password = evt.target.password.value;
-<<<<<<< HEAD
-      dispatch(authenticate(username, password, formName));
-      const { data:orders } = await axios.get(`api/users/orders/${res.data.id}`);
-      setCart(orders[0].id)
-      history.push("/home");
-=======
       dispatch(authenticate(username, password, formName, history));
->>>>>>> main
     },
   };
 };
