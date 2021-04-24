@@ -59,67 +59,89 @@ router.get('/:id', async (req, res, next) => {
       }]
   }
   */
-router.post('/', async (req, res, next) => {
-  try {
-    //create new order
-    const newOrder = await Order.create(req.body);
-    //associate user to order
-    const user = await User.findByPk(newOrder.userId);
-    await user.addOrder(newOrder);
-    //associate order to vehicles
-    //pull vehicles in order from req.body
-    const newVehicles = req.body.vehicles;
-    //map through vehicles and associate each with order in the database
+// router.post('/', async (req, res, next) => {
+//   try {
+//     //create new order
+//     const newOrder = await Order.create(req.body);
+//     //associate user to order
+//     const user = await User.findByPk(newOrder.userId);
+//     await user.addOrder(newOrder);
+//     //associate order to vehicles
+//     //pull vehicles in order from req.body
+//     const newVehicles = req.body.vehicles;
+//     //map through vehicles and associate each with order in the database
 
-    newVehicles.map(async (vehicle) => {
-      const quantity = vehicle.quantity;
-      const addVehicle = await Vehicle.findByPk(vehicle.id);
-      await newOrder.addVehicle(addVehicle, { through: { quantity } });
-    });
+//     newVehicles.map(async (vehicle) => {
+//       const quantity = vehicle.quantity;
+//       const addVehicle = await Vehicle.findByPk(vehicle.id);
+//       await newOrder.addVehicle(addVehicle, { through: { quantity } });
+//     });
 
-    res.send(newOrder);
-  } catch (error) {
-    next(error);
-  }
-});
+//     res.send(newOrder);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 //PUT /api/orders/add_vehicle
 //adds vehicle to cart/order; this includes updating quantity of a vehicle in an order
 /*
-Example of required data:
-{
-  "orderId": 3,
-  "vehicleId": 1,
-  "quantity": 3
+  Example of required data:
+  {
+    "userId": 1
+    "vehicleId": 1,
+    "quantity": 3
+    "fromCart": true
 }
 */
 router.put('/add_vehicle', async (req, res, next) => {
   try {
-    const order = await Order.findByPk(req.body.orderId);
-    const vehicle = await Vehicle.findByPk(req.body.vehicleId);
-    const quantity = req.body.quantity;
-    const alreadyInCart = await order.hasVehicle(vehicle);
-    if (!alreadyInCart) {
-      await order.addVehicle(vehicle, { through: { quantity } });
-      res.send(await order.getVehicles());
-    } else {
-      const quantityToUpdate = await Order_Vehicle.findOne({
-        where: {
-          orderId: order.id,
-          vehicleId: vehicle.id,
-        },
-      });
-      if (quantityToUpdate.quantity < quantity) {
-        await order.addVehicle(vehicle, { through: { quantity } });
-        res.send(await order.getVehicles());
-      } else {
-        res.send('Cannot decrement on this put route');
-      }
+    //if this is a new order: creates new order upon vehicle being added to cart
+    const user = await User.findByPk(req.body.userId)
+    const pendingOrder = await user.countOrders()
+   
+    if (pendingOrder===0) {
+      const newOrder = await Order.create({
+        userId: req.body.userId 
+      })
+      const addVehicle = await Vehicle.findByPk(req.body.vehicleId)
+        await newOrder.addVehicle(addVehicle, {through: {quantity:req.body.vehicleId}})
+        res.send(await newOrder.getVehicles())
     }
-  } catch (error) {
-    next(error);
-  }
-});
+
+    //else, see if vehicle is already in cart. if so, increment. if not, add new row to cart
+    else {
+        const order = await user.getOrders()
+        // const order = await Order.findByPk(req.body.orderId)
+        const vehicle = await Vehicle.findByPk(req.body.vehicleId)
+        const quantity = req.body.quantity
+        const alreadyInCart = await order[0].hasVehicle(vehicle)
+
+        if(!alreadyInCart){
+          await order[0].addVehicle(vehicle, {through: {quantity}})
+          res.send(await order[0].getVehicles())
+        }
+        else{
+          const quantityToUpdate = await Order_Vehicle.findOne({
+              where: {
+                orderId: order[0].id,
+                vehicleId: vehicle.id
+              }
+            })
+            let newQuantity; 
+            if(req.body.fromCart) newQuantity = quantity
+            else newQuantity = quantityToUpdate.quantity + quantity
+            await quantityToUpdate.update({quantity: newQuantity})
+            res.send(await order[0].getVehicles())
+        }
+    }
+      
+    
+} catch (error) {
+  next(error);
+}
+})
+
 
 //PUT /api/orders/remove_vehicle
 //remove vehicle from cart/order

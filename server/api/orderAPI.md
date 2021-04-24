@@ -5,7 +5,6 @@ The below is a summary of the routes in our order API.
 
 - GET /api/orders
 - GET /api/orders/:id
-- POST /api/orders
 - PUT /api/orders/add_vehicle
 - PUT /api/orders/remove_vehicle
 - PUT /api/:orderId/complete
@@ -35,13 +34,18 @@ POST /api/orders
 
 PUT /api/orders/add_vehicle
 - adds vehicle to cart/order; 
+    - if user does not have a car: route will create a new cart with the vehicle you 'added to cart'
     - can add a brand new vehicle to cart; or 
     - if vehicle is already existing then it can update the new quantity (i.e. increment)
+    - if request to add vehicle is coming from the CART, include key "fromCart" and set to true
+        - the logic is different depending on whether you're adding from the single vehicle view or 
+        if you're adding from the cart page
 - Example of required data:
     - {
-    "orderId": 3,
+    "userId": 2,
     "vehicleId": 1,
-    "quantity": 3
+    "quantity": 3,
+    "fromCart": true
     }
 - sends back an array of the new vehicles
 

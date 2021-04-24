@@ -28,9 +28,9 @@ export const me = () => async (dispatch, state) => {
       },
     });
     const { data: orders } = await axios.get(`api/users/orders/${res.data.id}`);
-    //user object returned
+    //user object is returned
     window.localStorage.setItem(ID, res.data.id);
-    window.localStorage.setItem(ORDERID, orders[0].id);
+    if(orders[0]!==undefined) window.localStorage.setItem(ORDERID, orders[0].id);
 
     return dispatch(setAuth(res.data));
   }
