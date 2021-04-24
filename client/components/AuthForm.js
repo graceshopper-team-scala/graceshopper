@@ -60,7 +60,7 @@ const mapSignup = (state) => {
 
 const mapDispatch = (dispatch, { history }) => {
   return {
-    async handleSubmit(evt) {
+    handleSubmit(evt) {
       evt.preventDefault();
       const formName = evt.target.name;
       const username = evt.target.username.value;
