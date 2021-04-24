@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { createCartItem, removeFromCart, setCart } from '../store/cart';
-import { connect } from 'react-redux';
-import CartItems from './CartItems';
-import Button from 'react-bootstrap/Button';
+import React, { Component } from "react";
+import { createCartItem, removeFromCart, setCart } from "../store/cart";
+import { connect } from "react-redux";
+import CartItems from "./CartItems";
+import Button from "react-bootstrap/Button";
 
 export class Cart extends Component {
   constructor(props) {
@@ -11,9 +11,10 @@ export class Cart extends Component {
       quantity: 0,
     };
     this.handleClick = this.handleClick.bind(this);
+    this.handleContinue = this.handleContinue.bind(this);
   }
   componentDidMount() {
-    const userId = window.localStorage.getItem('id');
+    const userId = window.localStorage.getItem("id");
     this.props.getCart(+userId);
   }
 
@@ -25,6 +26,9 @@ export class Cart extends Component {
   }
   handleClick(vehicleId, orderId) {
     this.props.removeFromCart(vehicleId, orderId);
+  }
+  handleContinue() {
+    this.props.history.push("/vehicles");
   }
   render() {
     const cart = this.props.cart || [];
@@ -39,7 +43,10 @@ export class Cart extends Component {
             <div className="cart-top">
               <p> My Cart</p>
               <div>
-                <Button variant="warning"> Continue Shopping</Button>
+                <Button variant="warning" onClick={this.handleContinue}>
+                  {" "}
+                  Continue Shopping
+                </Button>
                 <Button variant="warning"> Checkout </Button>
               </div>
             </div>

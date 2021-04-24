@@ -8,6 +8,7 @@ import SingleVehicleScreen from "./components/SingleVehicleScreen";
 import { me } from "./store";
 import AllVehiclesScreen from "./components/AllVehiclesScreen";
 import Cart from "./components/Cart";
+import ManageVehicles from "./components/admin/ManageVehicles";
 /**
  * COMPONENT
  */
@@ -17,7 +18,7 @@ class Routes extends Component {
   }
 
   render() {
-    const { isLoggedIn } = this.props;
+    const { isLoggedIn, isAdmin } = this.props;
 
     return (
       <div>
@@ -29,6 +30,15 @@ class Routes extends Component {
             <Switch>
               {/* Routes placed here are only available after logging in */}
               <Route path="/home" component={UserHome} />
+              {isLoggedIn && isAdmin && (
+                <Switch>
+                  {/* Routes placed here are only available after logging in */}
+                  <Route path="/home" component={UserHome} />
+                  <Route path="/vehicles" component={AllVehiclesScreen} />
+                  <Route path="/manage_vehicles" component={ManageVehicles} />
+                  <Route path="/users" component={AllVehiclesScreen} />
+                </Switch>
+              )}
               <Route
                 exact
                 path="/vehicles/:id"
@@ -38,6 +48,7 @@ class Routes extends Component {
               <Route path="/cart" component={Cart} />
             </Switch>
           )}
+
           <Route path="/signup" component={Signup} />
           <Route exact path="/vehicles/:id" component={SingleVehicleScreen} />
           <Route path="/vehicles" component={AllVehiclesScreen} />
@@ -56,6 +67,7 @@ const mapState = (state) => {
     // Being 'logged in' for our purposes will be defined has having a state.auth that has a truthy id.
     // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
     isLoggedIn: !!state.auth.id,
+    isAdmin: state.auth.isAdmin,
   };
 };
 

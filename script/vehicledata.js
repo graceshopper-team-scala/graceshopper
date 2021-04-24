@@ -130,82 +130,82 @@ const vehicles = [
       "If you're a farmer in one of the close-knit communities on the shores of the Alamo Sea, chances are you're legally blind. But apart from that it's your lucky day, because not only does Nagasaki's latest quad come with weapons, it's also fully amphibious, so you can career off the road and into the highly infectious water without a second thought.",
   },
   {
-    make: "Nagasaki",
-    model: "Blazer Aqua",
+    make: "Obey",
+    model: "9F Cabrio",
+    class: "sports",
+    price: 120000,
+    quantity: 25,
+    logoUrl:
+      "https://vignette.wikia.nocookie.net/gtawiki/images/3/38/Obey-Logo-Badge-GTAO.png/revision/latest/scale-to-width-down/210",
+    imageUrl:
+      "https://vignette.wikia.nocookie.net/gtawiki/images/6/64/9FCabrio-GTAV-FrontQuarter.png/revision/latest/scale-to-width-down/700",
+    description:
+      "There's nothing wrong with the standard Obey 9F, but this is San Andreas. Spend the extra 5k and get the convertible version. You spend enough of your life in air conditioning already.",
+  },
+  {
+    make: "Vapid",
+    model: "Guardian",
     class: "offroad",
-    price: 9000,
+    price: 52000,
+    quantity: 50,
+    logoUrl:
+      "https://vignette.wikia.nocookie.net/gtawiki/images/3/33/Vapid-GTAO-Logo.png/revision/latest/scale-to-width-down/210",
+    imageUrl:
+      "https://vignette.wikia.nocookie.net/gtawiki/images/3/3c/Guardian-GTAO-FrontQuarter.png/revision/latest/scale-to-width-down/700",
+    description:
+      "Medium-duty commercial truck for heavy-duty consumers. Finally, it's a pick-up to go with your two gallon sodas and twenty piece buckets for once. And the ultra-powerful engine can haul you out your bedroom when you weigh in at three tonnes.",
+  },
+  {
+    make: "Lampadati",
+    model: "Toro",
+    class: "boats",
+    price: 300000,
+    quantity: 15,
+    logoUrl:
+      "https://vignette.wikia.nocookie.net/gtawiki/images/3/3f/Lampadati-Logo-GTAO.png/revision/latest/scale-to-width-down/210",
+    imageUrl:
+      "https://vignette.wikia.nocookie.net/gtawiki/images/c/c2/Toro2-GTAO-FrontQuarter.png/revision/latest/scale-to-width-down/700",
+    description:
+      "From the Italian lakes to the Vespucci, Los Santos canals - experience a level of refinement that only blood money can buy: timber from protected rainforests, six inch lacquer finishing, and twin v12 engines that can cold-press juice a blue whale. This level of balls-out hedonism would be grotesque in a supercar but it's somehow acceptable in a super speedboat... right?",
+  },
+  {
+    make: "Benefactor",
+    model: "Dubsta 6X6",
+    class: "offroad",
+    price: 1500000,
+    quantity: 7,
+    logoUrl:
+      "https://vignette.wikia.nocookie.net/gtawiki/images/1/1d/Benefactor-GTAO-Logo.png/revision/latest/scale-to-width-down/210",
+    imageUrl:
+      "https://vignette.wikia.nocookie.net/gtawiki/images/9/9f/Dubsta6x6-GTAV-FrontQuarter.png/revision/latest/scale-to-width-down/700",
+    description:
+      "Is it an SUV? Is it a muscle car? Is it serious military hardware for the oligarch market? It's all of the above with six wheels and a bulletproof shell (if you pay for the extras). No dictator or business leader should be seen without it.",
+  },
+  {
+    make: "Ubermacht",
+    model: "Oracle XS",
+    class: "sedan",
+    price: 32000,
     quantity: 20,
     logoUrl:
-      "https://vignette.wikia.nocookie.net/gtawiki/images/4/4e/Nagasaki-GTAV-Logo.png/revision/latest/scale-to-width-down/210",
+      "https://vignette.wikia.nocookie.net/gtawiki/images/c/cc/Revolter-GTAV-detail.png/revision/latest/scale-to-width-down/210",
     imageUrl:
-      "https://vignette.wikia.nocookie.net/gtawiki/images/2/29/BlazerAqua-GTAO-FrontQuarter.png/revision/latest/scale-to-width-down/700",
+      "https://vignette.wikia.nocookie.net/gtawiki/images/2/2b/Oracle-GTAV-FrontQuarter.png/revision/latest/scale-to-width-down/700",
     description:
       "If you're a farmer in one of the close-knit communities on the shores of the Alamo Sea, chances are you're legally blind. But apart from that it's your lucky day, because not only does Nagasaki's latest quad come with weapons, it's also fully amphibious, so you can career off the road and into the highly infectious water without a second thought.",
   },
   {
-    make: "Nagasaki",
-    model: "Blazer Aqua",
-    class: "offroad",
-    price: 9000,
-    quantity: 20,
+    make: "Pegassi",
+    model: "Toros",
+    class: "suv",
+    price: 250000,
+    quantity: 30,
     logoUrl:
-      "https://vignette.wikia.nocookie.net/gtawiki/images/4/4e/Nagasaki-GTAV-Logo.png/revision/latest/scale-to-width-down/210",
+      "https://vignette.wikia.nocookie.net/gtawiki/images/d/db/Pegassi-Logo-GTAO.png/revision/latest/scale-to-width-down/210",
     imageUrl:
-      "https://vignette.wikia.nocookie.net/gtawiki/images/2/29/BlazerAqua-GTAO-FrontQuarter.png/revision/latest/scale-to-width-down/700",
+      "https://vignette.wikia.nocookie.net/gtawiki/images/5/50/Toros-GTAO-FrontQuarter.png/revision/latest/scale-to-width-down/700",
     description:
-      "If you're a farmer in one of the close-knit communities on the shores of the Alamo Sea, chances are you're legally blind. But apart from that it's your lucky day, because not only does Nagasaki's latest quad come with weapons, it's also fully amphibious, so you can career off the road and into the highly infectious water without a second thought.",
-  },
-  {
-    make: "Nagasaki",
-    model: "Blazer Aqua",
-    class: "offroad",
-    price: 9000,
-    quantity: 20,
-    logoUrl:
-      "https://vignette.wikia.nocookie.net/gtawiki/images/4/4e/Nagasaki-GTAV-Logo.png/revision/latest/scale-to-width-down/210",
-    imageUrl:
-      "https://vignette.wikia.nocookie.net/gtawiki/images/2/29/BlazerAqua-GTAO-FrontQuarter.png/revision/latest/scale-to-width-down/700",
-    description:
-      "If you're a farmer in one of the close-knit communities on the shores of the Alamo Sea, chances are you're legally blind. But apart from that it's your lucky day, because not only does Nagasaki's latest quad come with weapons, it's also fully amphibious, so you can career off the road and into the highly infectious water without a second thought.",
-  },
-  {
-    make: "Nagasaki",
-    model: "Blazer Aqua",
-    class: "offroad",
-    price: 9000,
-    quantity: 20,
-    logoUrl:
-      "https://vignette.wikia.nocookie.net/gtawiki/images/4/4e/Nagasaki-GTAV-Logo.png/revision/latest/scale-to-width-down/210",
-    imageUrl:
-      "https://vignette.wikia.nocookie.net/gtawiki/images/2/29/BlazerAqua-GTAO-FrontQuarter.png/revision/latest/scale-to-width-down/700",
-    description:
-      "If you're a farmer in one of the close-knit communities on the shores of the Alamo Sea, chances are you're legally blind. But apart from that it's your lucky day, because not only does Nagasaki's latest quad come with weapons, it's also fully amphibious, so you can career off the road and into the highly infectious water without a second thought.",
-  },
-  {
-    make: "Nagasaki",
-    model: "Blazer Aqua",
-    class: "offroad",
-    price: 9000,
-    quantity: 20,
-    logoUrl:
-      "https://vignette.wikia.nocookie.net/gtawiki/images/4/4e/Nagasaki-GTAV-Logo.png/revision/latest/scale-to-width-down/210",
-    imageUrl:
-      "https://vignette.wikia.nocookie.net/gtawiki/images/2/29/BlazerAqua-GTAO-FrontQuarter.png/revision/latest/scale-to-width-down/700",
-    description:
-      "If you're a farmer in one of the close-knit communities on the shores of the Alamo Sea, chances are you're legally blind. But apart from that it's your lucky day, because not only does Nagasaki's latest quad come with weapons, it's also fully amphibious, so you can career off the road and into the highly infectious water without a second thought.",
-  },
-  {
-    make: "Nagasaki",
-    model: "Blazer Aqua",
-    class: "offroad",
-    price: 9000,
-    quantity: 20,
-    logoUrl:
-      "https://vignette.wikia.nocookie.net/gtawiki/images/4/4e/Nagasaki-GTAV-Logo.png/revision/latest/scale-to-width-down/210",
-    imageUrl:
-      "https://vignette.wikia.nocookie.net/gtawiki/images/2/29/BlazerAqua-GTAO-FrontQuarter.png/revision/latest/scale-to-width-down/700",
-    description:
-      "If you're a farmer in one of the close-knit communities on the shores of the Alamo Sea, chances are you're legally blind. But apart from that it's your lucky day, because not only does Nagasaki's latest quad come with weapons, it's also fully amphibious, so you can career off the road and into the highly infectious water without a second thought.",
+      "What do a 23rd Century hypercar and a family-friendly SUV have in common? More than you might think. They both turn you into a leadfooted, tailgating sociopath the moment you touch the gas. And they both do roughly the same miles per gallon as a burning oil well. With all that shared DNA, it was only a matter of time before someone left them in a dark showroom to see if they would breed – and the Toros is the result.",
   },
 ];
 

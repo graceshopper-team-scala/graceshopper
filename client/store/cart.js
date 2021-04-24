@@ -1,9 +1,9 @@
-import axios from 'axios';
+import axios from "axios";
 // Action Types
-const ADD_TO_CART = 'ADD_TO_CART';
-const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
-const CART_RESET = 'CART_RESET';
-const SET_CART = 'SET_CART';
+const ADD_TO_CART = "ADD_TO_CART";
+const REMOVE_FROM_CART = "REMOVE_FROM_CART";
+const CART_RESET = "CART_RESET";
+const SET_CART = "SET_CART";
 
 // Action Creators
 const addToCart = (cartItem) => ({
@@ -35,7 +35,6 @@ export const addToCartThunk = (userId, vehicleId, quantity) => {
         vehicleId,
         quantity,
       });
-      console.log('api cart>>>', cart);
       dispatch(addToCart(cart));
     } catch (error) {
       console.error(error);
@@ -51,10 +50,9 @@ export const removeFromCart = (vehicleId, orderId) => {
         orderId: orderId,
         vehicleId: vehicleId,
       });
-      console.log('vehicleId---->', vehicleId);
       dispatch(_removeFromCart(vehicleId, orderId));
     } catch (error) {
-      console.log('Error deleting cars from server', error);
+      console.log("Error deleting cars from server", error);
     }
   };
 };
@@ -65,7 +63,7 @@ export const setCart = (userId) => {
       const { data } = await axios.get(`api/users/orders/${userId}`);
       dispatch(_setCart(data[0].vehicles));
     } catch (error) {
-      console.log('Error fetching cars from server', error);
+      console.log("Error fetching cars from server", error);
     }
   };
 };
