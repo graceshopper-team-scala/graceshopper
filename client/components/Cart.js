@@ -15,6 +15,7 @@ export class Cart extends Component {
   }
   componentDidMount() {
     const userId = window.localStorage.getItem("id");
+    
     this.props.getCart(+userId);
   }
 

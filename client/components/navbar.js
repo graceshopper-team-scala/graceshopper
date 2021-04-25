@@ -31,7 +31,7 @@ export function ButtonAppBar({ handleClick, isLoggedIn, clearState, isAdmin }) {
   if (isLoggedIn && isAdmin) {
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position="static" className="nav-color">
           <Toolbar>
             <IconButton
               edge="start"
@@ -47,7 +47,14 @@ export function ButtonAppBar({ handleClick, isLoggedIn, clearState, isAdmin }) {
               component={Link}
               to="/home"
             >
-              GraceHopper Motors
+              <a href="https://fontmeme.com/grand-theft-auto-font/">
+                <img
+                  src="https://fontmeme.com/permalink/210425/a657feadb66de7b6e16711eb5482c28a.png"
+                  alt="grand-theft-auto-font"
+                  border="0"
+                  className="ghm-logo"
+                />
+              </a>
             </Typography>
 
             <Button color="inherit" component={Link} to="/vehicles">
@@ -74,7 +81,7 @@ export function ButtonAppBar({ handleClick, isLoggedIn, clearState, isAdmin }) {
   if (isLoggedIn) {
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position="static" className="nav-color">
           <Toolbar>
             <IconButton
               edge="start"
@@ -90,7 +97,14 @@ export function ButtonAppBar({ handleClick, isLoggedIn, clearState, isAdmin }) {
               component={Link}
               to="/home"
             >
-              GraceHopper Motors
+              <a href="https://fontmeme.com/grand-theft-auto-font/">
+                <img
+                  src="https://fontmeme.com/permalink/210425/a657feadb66de7b6e16711eb5482c28a.png"
+                  alt="grand-theft-auto-font"
+                  border="0"
+                  className="ghm-logo"
+                />
+              </a>
             </Typography>
 
             <Button color="inherit" component={Link} to="/vehicles">
@@ -124,7 +138,7 @@ export function ButtonAppBar({ handleClick, isLoggedIn, clearState, isAdmin }) {
   }
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" className="nav-color">
         <Toolbar>
           <IconButton
             edge="start"
@@ -140,7 +154,14 @@ export function ButtonAppBar({ handleClick, isLoggedIn, clearState, isAdmin }) {
             component={Link}
             to="/home"
           >
-            GraceHopper Motors
+            <a href="https://fontmeme.com/grand-theft-auto-font/">
+              <img
+                src="https://fontmeme.com/permalink/210425/a657feadb66de7b6e16711eb5482c28a.png"
+                alt="grand-theft-auto-font"
+                border="0"
+                className="ghm-logo"
+              />
+            </a>
           </Typography>
 
           <Button color="inherit" component={Link} to="/vehicles">

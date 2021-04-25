@@ -27,7 +27,7 @@ export class ManageVehicles extends React.Component {
           <p className="p-header">Price</p>
           <Button variant="warning" className="add-vehicle">
             {" "}
-            Add New Vehicle
+            Add Vehicle
           </Button>
         </div>
         <div className="manage-table">
