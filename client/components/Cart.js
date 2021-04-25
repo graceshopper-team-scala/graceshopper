@@ -15,8 +15,13 @@ export class Cart extends Component {
   }
   componentDidMount() {
     const userId = window.localStorage.getItem("id");
-    
-    this.props.getCart(+userId);
+    if(userId){
+      this.props.getCart(+userId);
+    }else{
+      let item = JSON.parse(window.localStorage.getItem('GUESTCART'));
+      this.props.cart.push(item);
+    }
+
   }
 
   handleChange(evt) {
@@ -36,6 +41,7 @@ export class Cart extends Component {
     const itemTotal = cart.reduce((acc, curr) => {
       return acc + curr.price;
     }, 0);
+    console.log(cart)
 
     return (
       <>

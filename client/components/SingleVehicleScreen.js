@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { getSingleVehicleThunk } from "../store/singleVehicle";
 import { withSnackbar } from "notistack";
 import { Link } from "react-router-dom";
-import { addToCartThunk } from "../store/cart";
+import { addToCartThunk, guestAddThunk } from "../store/cart";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import PropTypes from "prop-types";
@@ -15,7 +15,9 @@ class SingleVehicleScreen extends Component {
     super();
     this.state = {
       quantity: 1,
+      guestCart: [],
     };
+    window.localStorage.setItem("GUESTCART", JSON.stringify([]));
 
     this.handleAddCartItem = this.handleAddCartItem.bind(this);
     this.handleQtyChange = this.handleQtyChange.bind(this);
@@ -38,7 +40,6 @@ class SingleVehicleScreen extends Component {
     evt.preventDefault();
 
     const orderId = window.localStorage.getItem("order_id");
-
     this.props.addNewToCart(
       orderId,
       this.props.match.params.id,
@@ -52,7 +53,7 @@ class SingleVehicleScreen extends Component {
 
   render() {
     const { vehicle } = this.props;
-    console.log(this.props);
+    console.log();
     return (
       <div className="singlevehicle">
         <div className="container">
@@ -118,6 +119,8 @@ const mapDispatch = (dispatch) => ({
   getSingleVehicle: (id) => dispatch(getSingleVehicleThunk(id)),
   addNewToCart: (userId, vehicleId, quantity) =>
     dispatch(addToCartThunk(userId, vehicleId, quantity)),
+  guestAddToCart: (vehicleId, quantity) =>
+    dispatch(guestAddThunk(vehicleId, quantity)),
 });
 
 export default withSnackbar(
