@@ -1,14 +1,19 @@
 import React from "react";
 import { connect } from "react-redux";
-import { fetchVehicles } from "../../store/allVehicles";
-import { Link } from "react-router-dom";
+import { fetchVehicles, deleteVehicle } from "../../store/allVehicles";
 import Button from "react-bootstrap/Button";
 
 export class ManageVehicles extends React.Component {
+  constructor() {
+    super();
+    this.handleDelete = this.handleDelete.bind(this);
+  }
   componentDidMount() {
     this.props.getVehicles();
   }
-
+  handleDelete(id) {
+    this.props.removeVehicle(id);
+  }
   render() {
     const vehicles = this.props.vehicles;
 
@@ -32,7 +37,7 @@ export class ManageVehicles extends React.Component {
         </div>
         <div className="manage-table">
           {vehicles.map((vehicle) => (
-            <div className="card-container">
+            <div key={vehicle.id} className="card-container">
               <div key={vehicle.id} className="manage-card">
                 <div className="img-col">
                   <img
@@ -47,7 +52,10 @@ export class ManageVehicles extends React.Component {
                   {priceFormatter.format(vehicle.price)}
                 </p>
               </div>
-              <Button variant="danger">
+              <Button
+                variant="danger"
+                onClick={() => this.handleDelete(vehicle.id)}
+              >
                 {" "}
                 <i className="fas fa-trash"></i>{" "}
               </Button>
@@ -68,6 +76,7 @@ const mapStatetoProps = (state) => {
 const mapDispatchtoProps = (dispatch) => {
   return {
     getVehicles: () => dispatch(fetchVehicles()),
+    removeVehicle: (id) => dispatch(deleteVehicle(id)),
   };
 };
 

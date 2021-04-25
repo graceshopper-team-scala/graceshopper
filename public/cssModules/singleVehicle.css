@@ -92,6 +92,8 @@
 }
 .single-car-sold-out big {
   color: #ffc107;
+  font-weight: 300;
+  font-style: italic;
 }
 
 .logo-footer {

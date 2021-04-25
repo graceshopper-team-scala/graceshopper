@@ -1,11 +1,12 @@
 .manage-table {
+  position: relative;
   background-color: white;
   width: 50%;
   margin: auto;
-  padding-top: 57rem;
+  padding-top: 52rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.56);
   max-height: 82vh;
@@ -26,6 +27,7 @@
   background: transparent;
 }
 .card-container {
+  padding-top: 1rem;
   width: 100%;
   display: flex;
   align-items: center;
@@ -41,7 +43,7 @@
 .manage-card {
   position: relative;
   width: 75%;
-  margin: 1rem;
+  margin: 0.5rem;
   margin-left: 4rem;
   display: flex;
   justify-content: space-between;
@@ -74,6 +76,7 @@ big {
   margin-left: 1rem;
 }
 .manage-vehicle-header {
+  position: relative;
   display: flex;
   align-items: center;
   margin: auto;
@@ -87,16 +90,32 @@ big {
 
 /* HEADERS */
 .v-header {
-  margin-left: 8rem;
+  position: absolute;
+  left: 8rem;
 }
 .qty-header {
-  margin-left: 24rem;
+  position: absolute;
+  left: 46%;
 }
 .p-header {
-  margin-left: 14rem;
+  position: absolute;
+  left: 74%;
 }
 
 .add-vehicle {
-  margin-left: 7rem;
+  position: absolute;
+  right: 2rem;
   margin-bottom: 0.9rem;
+}
+
+@media (min-width: 4857px) {
+  .manage-table {
+    padding-top: 52rem;
+  }
+}
+
+@media only screen and (max-width: 3840px) {
+  .manage-table {
+    padding-top: 58rem;
+  }
 }
