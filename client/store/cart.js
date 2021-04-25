@@ -27,11 +27,11 @@ export const _setCart = (cart) => {
 
 // Thunk Creators
 
-export const addToCartThunk = (userId, vehicleId, quantity) => {
+export const addToCartThunk = (orderId, vehicleId, quantity) => {
   return async (dispatch) => {
     try {
       const { data: cart } = await axios.put(`/api/orders/add_vehicle`, {
-        userId,
+        orderId,
         vehicleId,
         quantity,
       });
