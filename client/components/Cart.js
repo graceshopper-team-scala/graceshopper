@@ -1,24 +1,26 @@
 import React, { Component } from "react";
-import { createCartItem, removeFromCart, setCart } from "../store/cart";
+import { removeFromCart, setCart } from "../store/cart";
 import { connect } from "react-redux";
 import CartItems from "./CartItems";
 import Button from "react-bootstrap/Button";
+import ReactLoading from "react-loading";
 
 export class Cart extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      quantity: 0,
+      isLoading: true,
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleContinue = this.handleContinue.bind(this);
   }
   componentDidMount() {
     const userId = window.localStorage.getItem("id");
-    
     this.props.getCart(+userId);
+    this.setState({
+      isLoading: false,
+    });
   }
-
   handleChange(evt) {
     evt.preventdefault();
     this.setState = {
@@ -37,6 +39,19 @@ export class Cart extends Component {
       return acc + curr.price;
     }, 0);
 
+    console.log(cart);
+    if (this.state.isLoading) {
+      return (
+        <div className="loading-screen">
+          <ReactLoading
+            type={"spokes"}
+            color={"#ffc107"}
+            height={500}
+            width={250}
+          />
+        </div>
+      );
+    }
     return (
       <>
         <div className="cart-container">

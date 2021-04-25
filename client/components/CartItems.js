@@ -2,10 +2,15 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 export default class CartItems extends Component {
+  constructor() {
+    super();
+    this.state = {
+      
+    }
+  }
   render() {
     const { items, handleClick } = this.props;
     const orderId = window.localStorage.getItem("order_id");
-    // console.log(handleClick);
     return (
       <table className="cart-items">
         <tbody>
@@ -24,7 +29,7 @@ export default class CartItems extends Component {
                   </Link>
                 </td>
                 <td>
-                  <select>
+                  <select value={item.order_vehicle.quantity}>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>

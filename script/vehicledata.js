@@ -4,7 +4,7 @@ const vehicles = [
     model: "Dinghy",
     class: "boats",
     price: 12000,
-    quantity: 6,
+    quantity: 50,
     logoUrl:
       "https://vignette.wikia.nocookie.net/gtawiki/images/4/4e/Nagasaki-GTAV-Logo.png/revision/latest/scale-to-width-down/210",
     imageUrl:
@@ -17,7 +17,7 @@ const vehicles = [
     model: "Tempesta",
     class: "sports",
     price: 300000,
-    quantity: 3,
+    quantity: 27,
     logoUrl:
       "https://vignette.wikia.nocookie.net/gtawiki/images/d/db/Pegassi-Logo-GTAO.png/revision/latest/scale-to-width-down/210",
     imageUrl:
@@ -30,7 +30,7 @@ const vehicles = [
     model: "Tezeract",
     class: "sports",
     price: 400000,
-    quantity: 5,
+    quantity: 4,
     logoUrl:
       "https://vignette.wikia.nocookie.net/gtawiki/images/d/db/Pegassi-Logo-GTAO.png/revision/latest/scale-to-width-down/210",
     imageUrl:
@@ -43,7 +43,7 @@ const vehicles = [
     model: "Cavalcade",
     class: "suv",
     price: 50000,
-    quantity: 4,
+    quantity: 50,
     logoUrl:
       "https://vignette.wikia.nocookie.net/gtawiki/images/1/1a/Albany-GTAO-Logo.png/revision/latest/scale-to-width-down/210",
     imageUrl:
@@ -56,7 +56,7 @@ const vehicles = [
     model: "Raiden",
     class: "electric",
     price: 70000,
-    quantity: 2,
+    quantity: 20,
     logoUrl:
       "https://vignette.wikia.nocookie.net/gtawiki/images/5/5a/Coil-Logo-GTAO.png/revision/latest/scale-to-width-down/210",
     imageUrl:
@@ -69,7 +69,7 @@ const vehicles = [
     model: "Itali GTO",
     class: "sports",
     price: 130000,
-    quantity: 7,
+    quantity: 4,
     logoUrl:
       "https://vignette.wikia.nocookie.net/gtawiki/images/3/35/Grotti-GTAV-Logo.png/revision/latest/scale-to-width-down/210",
     imageUrl:
@@ -82,7 +82,7 @@ const vehicles = [
     model: "Furia",
     class: "sports",
     price: 120000,
-    quantity: 7,
+    quantity: 15,
     logoUrl:
       "https://vignette.wikia.nocookie.net/gtawiki/images/3/35/Grotti-GTAV-Logo.png/revision/latest/scale-to-width-down/210",
     imageUrl:
@@ -95,7 +95,7 @@ const vehicles = [
     model: "GP1",
     class: "sports",
     price: 160000,
-    quantity: 9,
+    quantity: 21,
     logoUrl:
       "https://vignette.wikia.nocookie.net/gtawiki/images/7/79/Progen-Logo-GTAO.png/revision/latest/scale-to-width-down/210",
     imageUrl:
@@ -108,7 +108,7 @@ const vehicles = [
     model: "P-996 Lazer",
     class: "planes",
     price: 1500000,
-    quantity: 5,
+    quantity: 3,
     logoUrl:
       "https://vignette.wikia.nocookie.net/gtawiki/images/6/6e/Name-IV-Jobuilt.png/revision/latest/scale-to-width-down/210",
     imageUrl:
@@ -121,7 +121,7 @@ const vehicles = [
     model: "Blazer Aqua",
     class: "offroad",
     price: 9000,
-    quantity: 20,
+    quantity: 30,
     logoUrl:
       "https://vignette.wikia.nocookie.net/gtawiki/images/4/4e/Nagasaki-GTAV-Logo.png/revision/latest/scale-to-width-down/210",
     imageUrl:
@@ -173,7 +173,7 @@ const vehicles = [
     model: "Dubsta 6X6",
     class: "offroad",
     price: 1500000,
-    quantity: 7,
+    quantity: 3,
     logoUrl:
       "https://vignette.wikia.nocookie.net/gtawiki/images/1/1d/Benefactor-GTAO-Logo.png/revision/latest/scale-to-width-down/210",
     imageUrl:

@@ -2,19 +2,17 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getSingleVehicleThunk } from "../store/singleVehicle";
 import { withSnackbar } from "notistack";
-import { Link } from "react-router-dom";
 import { addToCartThunk } from "../store/cart";
-import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import PropTypes from "prop-types";
-
-import "../../public/style.css";
+import ReactLoading from "react-loading";
 
 class SingleVehicleScreen extends Component {
   constructor() {
     super();
     this.state = {
       quantity: 1,
+      isLoading: true,
     };
 
     this.handleAddCartItem = this.handleAddCartItem.bind(this);
@@ -32,12 +30,19 @@ class SingleVehicleScreen extends Component {
   }
   componentDidMount() {
     this.props.getSingleVehicle(this.props.match.params.id);
+    this.setState({
+      isLoading: false,
+    });
   }
 
   handleAddCartItem(evt) {
     evt.preventDefault();
-
     const orderId = window.localStorage.getItem("order_id");
+
+    // window.localStorage.addItem("cart", "{1: 4}");
+    // window.localStorage.getItem("cart");
+    // newCart = { ...cart, vehicleId: quantity };
+    // window.localStorage.addItem("cart", "{1:2, 2:1}");
 
     this.props.addNewToCart(
       orderId,
@@ -52,7 +57,18 @@ class SingleVehicleScreen extends Component {
 
   render() {
     const { vehicle } = this.props;
-    console.log(this.props);
+    if (this.state.isLoading) {
+      return (
+        <div className="loading-screen">
+          <ReactLoading
+            type={"spokes"}
+            color={"#ffc107"}
+            height={500}
+            width={250}
+          />
+        </div>
+      );
+    }
     return (
       <div className="singlevehicle">
         <div className="container">
@@ -67,10 +83,6 @@ class SingleVehicleScreen extends Component {
             <div className="img-description">
               <img src={vehicle.imageUrl} />
               <img className="logo-img logo-footer" src={vehicle.logoUrl} />
-              {/* <img
-                src="https://www.vhv.rs/dpng/d/412-4128277_sold-out-banner-png-png-download-sold-out.png"
-                alt="sold out banner"
-              /> */}
               <div className="img-description-right">
                 <p className="vechicle-description">{vehicle.description}</p>
                 <div className="vehicle-form">
@@ -81,7 +93,10 @@ class SingleVehicleScreen extends Component {
                     </div>
                   ) : (
                     <form onSubmit={this.handleAddCartItem}>
-                      <select className="vehicle-form-select">
+                      <select
+                        className="vehicle-form-select"
+                        onChange={this.handleQtyChange}
+                      >
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
