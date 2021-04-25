@@ -48,93 +48,47 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-//POST /api/orders
-//req.body needs to include at least the fields below example:
-/*
-      {
-      "userId": 2,
-      "vehicles": [{
-          "id": 2,
-          "quantity": 3
-      }]
-  }
-  */
-// router.post('/', async (req, res, next) => {
-//   try {
-//     //create new order
-//     const newOrder = await Order.create(req.body);
-//     //associate user to order
-//     const user = await User.findByPk(newOrder.userId);
-//     await user.addOrder(newOrder);
-//     //associate order to vehicles
-//     //pull vehicles in order from req.body
-//     const newVehicles = req.body.vehicles;
-//     //map through vehicles and associate each with order in the database
-
-//     newVehicles.map(async (vehicle) => {
-//       const quantity = vehicle.quantity;
-//       const addVehicle = await Vehicle.findByPk(vehicle.id);
-//       await newOrder.addVehicle(addVehicle, { through: { quantity } });
-//     });
-
-//     res.send(newOrder);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
 
 //PUT /api/orders/add_vehicle
 //adds vehicle to cart/order; this includes updating quantity of a vehicle in an order
 /*
   Example of required data:
   {
-    "userId": 1
+    "userId": 1,
+    "orderId": 2,
     "vehicleId": 1,
-    "quantity": 3
+    "quantity": 3,
     "fromCart": true
 }
 */
 router.put("/add_vehicle", async (req, res, next) => {
   try {
-    //if this is a new order: creates new order upon vehicle being added to cart
-    const user = await User.findByPk(req.body.userId);
-    const pendingOrder = await user.countOrders();
-
-    if (pendingOrder === 0) {
-      const newOrder = await Order.create({
-        userId: req.body.userId,
-      });
-      const addVehicle = await Vehicle.findByPk(req.body.vehicleId);
-      await newOrder.addVehicle(addVehicle, {
-        through: { quantity: req.body.quantity },
-      });
-      res.send(await newOrder.getVehicles());
-    }
-
-    //else, see if vehicle is already in cart. if so, increment. if not, add new row to cart
+    const quantity = req.body.quantity;
+    const userId = req.body.userId
+    const vehicle = await Vehicle.findByPk(req.body.vehicleId);
+    const order = await Order.findByPk(req.body.orderId)
+    // const order = await Order.findOrCreate({
+    //   where: {
+    //     userId,
+    //     status: "pending" 
+    //   }
+    // })
+    const currentVehicles = await order.getVehicles()
+    const alreadyInCart = currentVehicles
+                          .filter(singleVehicle=>singleVehicle.id===vehicle.id)
+    console.log('!---->', alreadyInCart[0].order_vehicle.quantity)
+    if (!alreadyInCart.length) {
+      await order.addVehicle(vehicle, { through: { quantity } });
+        res.send(await order.getVehicles());
+      } 
     else {
-      const order = await user.getOrders();
-      // const order = await Order.findByPk(req.body.orderId)
-      const vehicle = await Vehicle.findByPk(req.body.vehicleId);
-      const quantity = req.body.quantity;
-      const alreadyInCart = await order[0].hasVehicle(vehicle);
-
-      if (!alreadyInCart) {
-        await order[0].addVehicle(vehicle, { through: { quantity } });
-        res.send(await order[0].getVehicles());
-      } else {
-        const quantityToUpdate = await Order_Vehicle.findOne({
-          where: {
-            orderId: order[0].id,
-            vehicleId: vehicle.id,
-          },
-        });
+        const currentQuantity = alreadyInCart[0].order_vehicle.quantity                         
         let newQuantity;
         if (req.body.fromCart) newQuantity = quantity;
-        else newQuantity = quantityToUpdate.quantity + quantity;
-        await quantityToUpdate.update({ quantity: newQuantity });
-        res.send(await order[0].getVehicles());
-      }
+        else newQuantity = currentQuantity + quantity;
+        alreadyInCart[0].order_vehicle.quantity = newQuantity
+        await alreadyInCart[0].order_vehicle.save()
+        res.send(await order.getVehicles());
     }
   } catch (error) {
     next(error);
@@ -160,8 +114,9 @@ router.put("/remove_vehicle", async (req, res, next) => {
   try {
     const order = await Order.findByPk(+req.body.orderId);
     const vehicle = await Vehicle.findByPk(req.body.vehicleId);
-
-    if (!req.body.quantity || req.body.quantity === 0) {
+    console.log('------>ID',order.id)
+    if (!req.body.quantity) {
+      console.log('-----> HIT')
       await order.removeVehicle(vehicle);
       res.send("Vehicle removed from order");
     } else {
