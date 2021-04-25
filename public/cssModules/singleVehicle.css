@@ -14,8 +14,11 @@
 }
 
 /* HEADER BOX */
+.singlevehicle {
+  margin-top: 5rem;
+}
 .top-info {
-  background-color: rgb(12, 12, 12, 0.6);
+  background-color: rgb(12, 12, 12, 0.9);
   color: white;
   display: flex;
   align-items: center;
@@ -24,8 +27,8 @@
 }
 
 .logo-img {
-  width: 4rem;
-  margin-left: 1rem;
+  width: 5rem;
+  margin-left: 0.6rem;
 }
 
 .vehicle-price {
@@ -35,24 +38,26 @@
 /* VEHICLE BOX */
 .vehicle-name {
   margin-left: 2rem;
-  font-size: 2rem;
+  padding-top: 2rem;
+  font-size: 2.5rem;
 }
 
 .vehicle-card {
   display: flex;
 }
-.img-desription {
+.img-description {
   display: flex;
+  position: relative;
 }
 .img-description-right {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: rgb(36, 36, 36);
+  background-color: rgba(182, 182, 182, 0.9);
   color: white;
 }
 .img-description-right p {
-  color: white;
+  color: black;
   padding: 1.5rem;
 }
 
@@ -79,6 +84,19 @@
 .vehicle-form-select {
   margin-bottom: 4rem;
   margin-left: 4rem;
+}
+
+.single-car-sold-out {
+  margin-bottom: 5rem;
+  font-size: x-large;
+}
+.single-car-sold-out big {
+  color: #ffc107;
+}
+
+.logo-footer {
+  position: absolute;
+  bottom: 0.6rem;
 }
 
 /* @media (max-width: 960px) {
