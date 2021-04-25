@@ -45,6 +45,7 @@
 }
 .Card-image {
   align-items: center;
+  position: relative;
   height: 180px;
 }
 .Card img:hover {
@@ -56,4 +57,12 @@
 
 .Card img {
   max-width: 100%;
+}
+
+/* SOLD OUT */
+.sold-out {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
 }

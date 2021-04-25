@@ -25,6 +25,12 @@ export class AllVehicles extends React.Component {
             <Link to={`/vehicles/${vehicle.id}`}>
               <div className="Card-image">
                 <img src={vehicle.imageUrl} alt={vehicle.model} />
+                {vehicle.quantity < 5 && (
+                  <img
+                    className="sold-out"
+                    src="https://pngimg.com/uploads/sold_out/sold_out_PNG77.png"
+                  />
+                )}
               </div>
             </Link>
             <div className="Card-data">

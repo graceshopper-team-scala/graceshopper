@@ -39,10 +39,6 @@ class SingleVehicleScreen extends Component {
 
     const userId = window.localStorage.getItem("id");
 
-    // console.log('orderId>>>', orderId);
-    // console.log('vehicleId>>>', this.props.match.params.id);
-    // console.log('quantity>>>', this.state.quantity);
-
     this.props.addNewToCart(
       userId,
       this.props.match.params.id,
@@ -68,25 +64,37 @@ class SingleVehicleScreen extends Component {
             <span className="vehicle-price">${vehicle.price}</span>
           </div>
           <div className="vehicle-card">
-            <div className="img-desription">
+            <div className="img-description">
               <img src={vehicle.imageUrl} />
+              <img className="logo-img logo-footer" src={vehicle.logoUrl} />
+              {/* <img
+                src="https://www.vhv.rs/dpng/d/412-4128277_sold-out-banner-png-png-download-sold-out.png"
+                alt="sold out banner"
+              /> */}
               <div className="img-description-right">
                 <p className="vechicle-description">{vehicle.description}</p>
                 <div className="vehicle-form">
-                  <form onSubmit={this.handleAddCartItem}>
-                    <select className="vehicle-form-select">
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                    </select>
-                    <Button
-                      variant="warning"
-                      type="submit"
-                      onClick={this.handleSnackbar}
-                    >
-                      Add to cart
-                    </Button>
-                  </form>
+                  {vehicle.quantity < 5 ? (
+                    <div className="single-car-sold-out">
+                      {" "}
+                      <big> SOLD OUT </big>
+                    </div>
+                  ) : (
+                    <form onSubmit={this.handleAddCartItem}>
+                      <select className="vehicle-form-select">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                      </select>
+                      <Button
+                        variant="warning"
+                        type="submit"
+                        onClick={this.handleSnackbar}
+                      >
+                        Add to cart
+                      </Button>
+                    </form>
+                  )}
                 </div>
               </div>
             </div>

@@ -27,7 +27,6 @@ export const me = () => async (dispatch, state) => {
         authorization: token,
       },
     });
-    console.log("user ---> ", res.data);
     const { data: orders } = await axios.get(`api/users/orders/${res.data.id}`);
     //user object is returned
     window.localStorage.setItem(ID, res.data.id);
@@ -47,7 +46,7 @@ export const authenticate = (username, password, method, history) => async (
     dispatch(me());
     history.push("/home");
   } catch (authError) {
-    history.push("/login");
+    history.push(`/${method}`);
     return dispatch(setAuth({ error: authError }));
   }
 };

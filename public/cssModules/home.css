@@ -3,3 +3,8 @@
   margin: auto;
   margin-top: 6rem;
 }
+
+.nav-color {
+  background-color: black !important;
+  color: #ffc107 !important;
+}
