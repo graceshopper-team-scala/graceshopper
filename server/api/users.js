@@ -23,7 +23,7 @@ router.get("/", async (req, res, next) => {
 router.get("/orders/:userId", async (req, res, next) => {
   try {
     console.log(req.params.userId);
-    const orders = await Order.findAll({
+    const orders = await Order.findOrCreate({
         where: {
           userId: req.params.userId,
           status: 'pending'

@@ -42,7 +42,7 @@ PUT /api/orders/add_vehicle
         if you're adding from the cart page
 - Example of required data:
     - {
-    "userId": 2,
+    "orderId": 2,
     "vehicleId": 1,
     "quantity": 3,
     "fromCart": true
