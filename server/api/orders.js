@@ -69,7 +69,6 @@ router.put("/add_vehicle", async (req, res, next) => {
     const currentVehicles = await order.getVehicles()
     const alreadyInCart = currentVehicles
                           .filter(singleVehicle=>singleVehicle.id===vehicle.id)
-    console.log('!---->', alreadyInCart[0].order_vehicle.quantity)
     if (!alreadyInCart.length) {
       await order.addVehicle(vehicle, { through: { quantity } });
         res.send(await order.getVehicles());
