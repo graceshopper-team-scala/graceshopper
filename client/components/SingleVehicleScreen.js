@@ -39,11 +39,6 @@ class SingleVehicleScreen extends Component {
     evt.preventDefault();
     const orderId = window.localStorage.getItem("order_id");
 
-    // window.localStorage.addItem("cart", "{1: 4}");
-    // window.localStorage.getItem("cart");
-    // newCart = { ...cart, vehicleId: quantity };
-    // window.localStorage.addItem("cart", "{1:2, 2:1}");
-
     this.props.addNewToCart(
       orderId,
       this.props.match.params.id,
