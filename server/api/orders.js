@@ -54,7 +54,6 @@ router.get("/:id", async (req, res, next) => {
 /*
   Example of required data:
   {
-    "userId": 1,
     "orderId": 2,
     "vehicleId": 1,
     "quantity": 3,
@@ -67,12 +66,6 @@ router.put("/add_vehicle", async (req, res, next) => {
     const userId = req.body.userId
     const vehicle = await Vehicle.findByPk(req.body.vehicleId);
     const order = await Order.findByPk(req.body.orderId)
-    // const order = await Order.findOrCreate({
-    //   where: {
-    //     userId,
-    //     status: "pending" 
-    //   }
-    // })
     const currentVehicles = await order.getVehicles()
     const alreadyInCart = currentVehicles
                           .filter(singleVehicle=>singleVehicle.id===vehicle.id)
@@ -114,9 +107,7 @@ router.put("/remove_vehicle", async (req, res, next) => {
   try {
     const order = await Order.findByPk(+req.body.orderId);
     const vehicle = await Vehicle.findByPk(req.body.vehicleId);
-    console.log('------>ID',order.id)
     if (!req.body.quantity) {
-      console.log('-----> HIT')
       await order.removeVehicle(vehicle);
       res.send("Vehicle removed from order");
     } else {
