@@ -60,7 +60,10 @@ export const removeFromCart = (vehicleId, orderId) => {
 export const setCart = (userId) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`api/users/orders/${userId}`);
+      const { data } = await axios.get(
+        `http://localhost:8080/api/users/orders/${userId}`
+      );
+      console.log(data);
       dispatch(_setCart(data[0].vehicles));
     } catch (error) {
       console.log("Error fetching cars from server", error);
@@ -85,7 +88,6 @@ export default function (state = [], action) {
       const filterCars = state.filter(
         (vehicle) => vehicle.id !== action.vehicleId
       );
-      console.log(filterCars);
       return filterCars;
 
     case SET_CART:

@@ -48,7 +48,6 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-
 //PUT /api/orders/add_vehicle
 //adds vehicle to cart/order; this includes updating quantity of a vehicle in an order
 /*
@@ -63,24 +62,24 @@ router.get("/:id", async (req, res, next) => {
 router.put("/add_vehicle", async (req, res, next) => {
   try {
     const quantity = req.body.quantity;
-    const userId = req.body.userId
+    const userId = req.body.userId;
     const vehicle = await Vehicle.findByPk(req.body.vehicleId);
-    const order = await Order.findByPk(req.body.orderId)
-    const currentVehicles = await order.getVehicles()
-    const alreadyInCart = currentVehicles
-                          .filter(singleVehicle=>singleVehicle.id===vehicle.id)
+    const order = await Order.findByPk(req.body.orderId);
+    const currentVehicles = await order.getVehicles();
+    const alreadyInCart = currentVehicles.filter(
+      (singleVehicle) => singleVehicle.id === vehicle.id
+    );
     if (!alreadyInCart.length) {
       await order.addVehicle(vehicle, { through: { quantity } });
-        res.send(await order.getVehicles());
-      } 
-    else {
-        const currentQuantity = alreadyInCart[0].order_vehicle.quantity                         
-        let newQuantity;
-        if (req.body.fromCart) newQuantity = quantity;
-        else newQuantity = currentQuantity + quantity;
-        alreadyInCart[0].order_vehicle.quantity = newQuantity
-        await alreadyInCart[0].order_vehicle.save()
-        res.send(await order.getVehicles());
+      res.send(await order.getVehicles());
+    } else {
+      const currentQuantity = alreadyInCart[0].order_vehicle.quantity;
+      let newQuantity;
+      if (req.body.fromCart) newQuantity = quantity;
+      else newQuantity = currentQuantity + quantity;
+      alreadyInCart[0].order_vehicle.quantity = newQuantity;
+      await alreadyInCart[0].order_vehicle.save();
+      res.send(await order.getVehicles());
     }
   } catch (error) {
     next(error);
@@ -128,13 +127,20 @@ router.put("/remove_vehicle", async (req, res, next) => {
   }
 });
 
-//PUT /api/:orderId/complete
+//PUT /api/orders/:orderId/complete
 //updates status of order to 'completed'
 router.put("/:orderId/complete", async (req, res, next) => {
   try {
+    const { vehicles } = req.body;
+    vehicles.forEach(async (vehicle) => {
+      const dBVehicle = await Vehicle.findByPk(vehicle.id);
+      dBVehicle.decrement("quantity", {
+        by: +vehicle.order_vehicle.quantity,
+      });
+    });
     const order = await Order.findByPk(req.params.orderId);
     await order.update({ status: "completed" });
-    res.send(await order.getVehicles());
+    res.sendStatus(200);
   } catch (error) {
     next(error);
   }
