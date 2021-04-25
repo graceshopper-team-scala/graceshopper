@@ -29,7 +29,7 @@ export const me = () => async (dispatch, state) => {
     });
     const { data: orders } = await axios.get(`api/users/orders/${res.data.id}`);
     //user object is returned
-    console.log(orders);
+
     //if no user id--> it creates a new usesr id
     //with that new user id, now create an order
     //store that order in local storage

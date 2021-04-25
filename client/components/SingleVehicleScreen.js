@@ -2,7 +2,13 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getSingleVehicleThunk } from "../store/singleVehicle";
 import { withSnackbar } from "notistack";
+
+import { Link } from "react-router-dom";
+import { addToCartThunk, guestAddThunk } from "../store/cart";
+import Form from "react-bootstrap/Form";
+
 import { addToCartThunk } from "../store/cart";
+
 import Button from "react-bootstrap/Button";
 import PropTypes from "prop-types";
 import ReactLoading from "react-loading";
@@ -12,8 +18,13 @@ class SingleVehicleScreen extends Component {
     super();
     this.state = {
       quantity: 1,
+
+      guestCart: [],
+
       isLoading: true,
+
     };
+    window.localStorage.setItem("GUESTCART", JSON.stringify([]));
 
     this.handleAddCartItem = this.handleAddCartItem.bind(this);
     this.handleQtyChange = this.handleQtyChange.bind(this);
@@ -38,12 +49,6 @@ class SingleVehicleScreen extends Component {
   handleAddCartItem(evt) {
     evt.preventDefault();
     const orderId = window.localStorage.getItem("order_id");
-
-    // window.localStorage.addItem("cart", "{1: 4}");
-    // window.localStorage.getItem("cart");
-    // newCart = { ...cart, vehicleId: quantity };
-    // window.localStorage.addItem("cart", "{1:2, 2:1}");
-
     this.props.addNewToCart(
       orderId,
       this.props.match.params.id,
@@ -57,6 +62,9 @@ class SingleVehicleScreen extends Component {
 
   render() {
     const { vehicle } = this.props;
+
+    console.log();
+
     if (this.state.isLoading) {
       return (
         <div className="loading-screen">
@@ -69,6 +77,7 @@ class SingleVehicleScreen extends Component {
         </div>
       );
     }
+
     return (
       <div className="singlevehicle">
         <div className="container">
@@ -133,6 +142,8 @@ const mapDispatch = (dispatch) => ({
   getSingleVehicle: (id) => dispatch(getSingleVehicleThunk(id)),
   addNewToCart: (userId, vehicleId, quantity) =>
     dispatch(addToCartThunk(userId, vehicleId, quantity)),
+  guestAddToCart: (vehicleId, quantity) =>
+    dispatch(guestAddThunk(vehicleId, quantity)),
 });
 
 export default withSnackbar(

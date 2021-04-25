@@ -17,10 +17,18 @@ export class Cart extends Component {
   }
   componentDidMount() {
     const userId = window.localStorage.getItem("id");
+
+    if(userId){
+      this.props.getCart(+userId);
+    }else{
+      let item = JSON.parse(window.localStorage.getItem('GUESTCART'));
+      this.props.cart.push(item);
+    }
     this.props.getCart(+userId);
     this.setState({
       isLoading: false,
     });
+
   }
   handleClick(vehicleId, orderId) {
     this.props.removeFromCart(vehicleId, orderId);
@@ -36,6 +44,7 @@ export class Cart extends Component {
     const itemTotal = cart.reduce((acc, curr) => {
       return acc + curr.price;
     }, 0);
+    console.log(cart)
 
     console.log(cart);
     if (this.state.isLoading) {
