@@ -98,42 +98,39 @@ export const guestAddToCartThunk = (vehicleId, quantity) => {
       const item = {
         vehicleId: vehicleId,
         quantity: quantity,
-<<<<<<< HEAD
-        vehicle: {},
-=======
->>>>>>> 12f0bc17977af767d8d690473e61dead08081c37
       };
 
       let guestCart = JSON.parse(window.localStorage.getItem("GUESTCART"));
 
       guestCart.push(item);
       window.localStorage.setItem("GUESTCART", JSON.stringify(guestCart));
-
     } catch (error) {
       console.error(error);
     }
   };
 };
-export const  guestSetCart = () => {
+export const guestSetCart = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`api/vehicles`);
-
 
       let guestCart = JSON.parse(window.localStorage.getItem("GUESTCART"));
       guestCart.map(
         (element) => (element.vehicleId = parseInt(element.vehicleId))
       );
-      const cart=[];
-      for(let element of guestCart){
-        let {data: singlecar} = await axios.get(`/api/vehicles/${element.vehicleId}`);
-        singlecar = {...singlecar, order_vehicle: {quantity: element.quantity}}
-        cart.push(singlecar)
+      const cart = [];
+      for (let element of guestCart) {
+        let { data: singlecar } = await axios.get(
+          `/api/vehicles/${element.vehicleId}`
+        );
+        singlecar = {
+          ...singlecar,
+          order_vehicle: { quantity: element.quantity },
+        };
+        cart.push(singlecar);
       }
 
-      dispatch(
-        _guestSetCart(cart)
-      );
+      dispatch(_guestSetCart(cart));
 
       for (let i = 0; i < data.length; i++) {
         guestCart.map((element) => {
