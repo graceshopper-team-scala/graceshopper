@@ -43,7 +43,7 @@ export default class StatusForm extends Component {
         <div>
             {completed ?
             <span>
-                <button disabled type="submit">Update Status</button>
+                <button disabled type="submit">Mark complete</button>
             </span>
             :
             <span>
