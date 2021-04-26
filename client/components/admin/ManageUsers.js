@@ -45,7 +45,7 @@ export class ManageUsers extends React.Component {
             {user.orders.map(order => (
               <div>
               <Link to={{
-                  pathname: '/manage_users/orders',
+                  pathname: `/manage_users/orders/${order.id}`,
                   state: {
                     vehicles: order.vehicles,
                     orderId: order.id

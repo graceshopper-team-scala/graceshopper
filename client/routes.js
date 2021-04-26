@@ -37,7 +37,8 @@ class Routes extends Component {
                   <Route path="/home" component={Home} />
                   <Route path="/vehicles" component={AllVehiclesScreen} />
                   <Route path="/manage_vehicles" component={ManageVehicles} />
-                  <Route path="/manage_users/orders" component={ManageSingleOrder} />
+                  {/* <Route path="/manage_users/orders" component={ManageSingleOrder} /> */}
+                  <Route path="/manage_users/orders/:orderId" component={ManageSingleOrder} />
                   <Route path="/manage_users" component={ManageUsers} />
                   {/* <Route path="/users" component={AllVehiclesScreen} /> */}
                 </Switch>
