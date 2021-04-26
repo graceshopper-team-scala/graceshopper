@@ -134,8 +134,8 @@ router.put("/remove_vehicle", async (req, res, next) => {
 router.put("/:orderId/complete", async (req, res, next) => {
   try {
     const order = await Order.findByPk(req.params.orderId);
-    await order.update({ status: "completed" });
-    res.send(await order.getVehicles());
+      await order.update({ status: "completed" });
+      res.send(await order.getVehicles());
   } catch (error) {
     next(error);
   }

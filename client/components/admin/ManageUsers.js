@@ -36,10 +36,6 @@ export class ManageUsers extends React.Component {
           <p className="v-header">User</p>
           <p className="qty-header">Order</p>
           <p className="p-header">Status</p>
-          {/* <Button variant="warning" className="add-vehicle">
-            {" "}
-            Add User
-          </Button> */}
         </div>
         <div className="manage-table">
           {users.map((user) => (
