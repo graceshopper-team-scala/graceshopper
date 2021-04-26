@@ -2,13 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getSingleVehicleThunk } from "../store/singleVehicle";
 import { withSnackbar } from "notistack";
-
-import { Link } from "react-router-dom";
-import { addToCartThunk, guestAddThunk } from "../store/cart";
-import Form from "react-bootstrap/Form";
-
 import { addToCartThunk } from "../store/cart";
-
 import Button from "react-bootstrap/Button";
 import PropTypes from "prop-types";
 import ReactLoading from "react-loading";
@@ -22,7 +16,6 @@ class SingleVehicleScreen extends Component {
       guestCart: [],
 
       isLoading: true,
-
     };
     window.localStorage.setItem("GUESTCART", JSON.stringify([]));
 

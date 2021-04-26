@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { checkOut, setCheckout } from "../store/checkout";
+import { checkOut, setCheckout } from "../../store/checkout";
+import { cartCheckout } from "../../store/cart";
 import Button from "react-bootstrap/Button";
 
 export class Checkout extends Component {
@@ -17,6 +18,7 @@ export class Checkout extends Component {
   handleComplete(vehicles) {
     const orderId = window.localStorage.getItem("order_id");
     this.props.checkOutCart(orderId, vehicles);
+    this.props.cleartCart();
   }
   handleGoBack() {
     this.props.history.push("./cart");
@@ -57,7 +59,7 @@ export class Checkout extends Component {
 
 const mapState = (state) => {
   return {
-    vehicles: state.checkout,
+    vehicles: state.checkout.vehicles,
     isLoggedIn: !!state.auth.id,
   };
 };
@@ -65,5 +67,6 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => ({
   checkOutCart: (id, items) => dispatch(checkOut(id, items)),
   fetchCart: (id) => dispatch(setCheckout(id)),
+  cleartCart: () => dispatch(cartCheckout()),
 });
 export default connect(mapState, mapDispatch)(Checkout);

@@ -8,7 +8,7 @@ import { me } from "./store";
 import AllVehiclesScreen from "./components/AllVehiclesScreen";
 import Cart from "./components/Cart";
 import ManageVehicles from "./components/admin/ManageVehicles";
-import Checkout from "./components/Checkout";
+import Checkout from "./components/checkout/Checkout";
 /**
  * COMPONENT
  */
@@ -18,7 +18,8 @@ class Routes extends Component {
   }
 
   render() {
-    const { isLoggedIn, isAdmin } = this.props;
+    console.log("checkout state --->", this.props.checkout);
+    const { isLoggedIn, isAdmin, readyToCheckout, isCartEmpty } = this.props;
 
     return (
       <div>
@@ -46,7 +47,16 @@ class Routes extends Component {
               />
               <Route path="/vehicles" component={AllVehiclesScreen} />
               <Route path="/cart" component={Cart} />
-              <Route path="/checkout" component={Checkout} />
+              {readyToCheckout ? (
+                <Route path="/confirmation" component={Checkout} />
+              ) : (
+                <Redirect to="/home" component={Home} />
+              )}
+              {isCartEmpty ? (
+                <Redirect to="/home" component={Home} />
+              ) : (
+                <Route exact path="/checkout" component={Checkout} />
+              )}
             </Switch>
           )}
 
@@ -70,6 +80,8 @@ const mapState = (state) => {
     // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
     isLoggedIn: !!state.auth.id,
     isAdmin: state.auth.isAdmin,
+    readyToCheckout: state.checkout.isReady,
+    isCartEmpty: state.cart > 0,
   };
 };
 

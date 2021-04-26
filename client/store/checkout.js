@@ -34,7 +34,6 @@ export const checkOut = (orderId, vehicles) => {
 export const setCheckout = (userId) => {
   return async (dispatch) => {
     try {
-      console.log("user ID redux --->", userId);
       const { data } = await axios.get(
         `http://localhost:8080/api/users/orders/${userId}`
       );
@@ -46,12 +45,20 @@ export const setCheckout = (userId) => {
   };
 };
 //reducer
-export default function (state = [], action) {
+const initialState = {
+  isReady: false,
+  vehicles: [],
+};
+export default function (state = initialState, action) {
   switch (action.type) {
     case CHECKED_OUT:
-      return action.checkout;
+      return { ...state, vehicles: action.checkout, isReady: true };
     case SET_CHECKOUT_ITEMS:
-      return action.items;
+      return {
+        ...state,
+        vehicles: action.items,
+        isReady: action.items.length > 0 ? true : false,
+      };
     default:
       return state;
   }
