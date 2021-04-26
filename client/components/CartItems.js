@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 export default class CartItems extends Component {
   render() {
-    const { items, handleClick } = this.props;
+    const { items, handleClick, } = this.props;
+    console.log(items);
     const orderId = window.localStorage.getItem("order_id");
-    // console.log(items);
     return (
       <table className="cart-items">
         <tbody>
@@ -16,11 +16,11 @@ export default class CartItems extends Component {
           </tr>
           {items.map((item) => {
             return (
-              <tr className="single-cart-item" key={item.id}>
+              <tr className="single-cart-item" key={item.vehicle.id}>
                 <td>
-                  <img className="cart-img" src={item.imageUrl} />
+                  <img className="cart-img" src={item.vehicle.imageUrl} />
                   <Link to={`/vehicles/${item.id}`} className="cartitem_name">
-                    {item.make} {item.model}{" "}
+                    {item.vehicle.make} {item.vehicle.model}{" "}
                   </Link>
                 </td>
                 <td>
@@ -36,7 +36,7 @@ export default class CartItems extends Component {
                     <i className="fas fa-trash"></i>
                   </button>
                 </td>
-                <td>{item.price}</td>
+                <td>{item.vehicle.price}</td>
               </tr>
             );
           })}

@@ -37,11 +37,9 @@ export class Cart extends Component {
   }
   render() {
     const cart = this.props.cart || [];
-    cart.map((element) => element.vehicleId = parseInt(element.vehicleId))
     const itemTotal = cart.reduce((acc, curr) => {
       return acc + curr.price;
     }, 0);
-    console.log('---->',cart)
 
     return (
       <>
