@@ -20,7 +20,8 @@ class Routes extends Component {
   }
 
   render() {
-    const { isLoggedIn, isAdmin } = this.props;
+    // console.log("checkout state --->", this.props.checkout);
+    const { isLoggedIn, isAdmin, readyToCheckout, isCartEmpty } = this.props;
     return (
       <div>
         <Switch>

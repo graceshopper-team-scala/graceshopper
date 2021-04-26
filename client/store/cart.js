@@ -75,13 +75,6 @@ export const cartLogout = () => {
   };
 };
 
-export const cartCheckout = () => {
-  return {
-    type: SET_CART,
-    cart: [],
-  };
-};
-
 export const addToCartThunk = (orderId, vehicleId, quantity) => {
   return async (dispatch) => {
     try {
@@ -105,30 +98,34 @@ export const guestAddToCartThunk = (vehicleId, quantity) => {
       const item = {
         vehicleId: vehicleId,
         quantity: quantity,
-        vehicle: {},
       };
 
       let guestCart = JSON.parse(window.localStorage.getItem("GUESTCART"));
 
       guestCart.push(item);
       window.localStorage.setItem("GUESTCART", JSON.stringify(guestCart));
-      dispatch(
-        guestToCart(JSON.parse(window.localStorage.getItem("GUESTCART")))
-      );
+
     } catch (error) {
       console.error(error);
     }
   };
 };
-
-export const guestSetCart = () => {
+export const  guestSetCart = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`api/vehicles`);
-
       let guestCart = JSON.parse(window.localStorage.getItem("GUESTCART"));
       guestCart.map(
         (element) => (element.vehicleId = parseInt(element.vehicleId))
+      );
+      const cart=[];
+      for(let element of guestCart){
+        let {data: singlecar} = await axios.get(`/api/vehicles/${element.vehicleId}`);
+        singlecar = {...singlecar, order_vehicle: {quantity: element.quantity}}
+        cart.push(singlecar)
+      }
+      dispatch(
+        _guestSetCart(cart)
       );
 
       for (let i = 0; i < data.length; i++) {
@@ -155,16 +152,18 @@ export default function (state = [], action) {
       const filterCars = state.filter(
         (vehicle) => vehicle.id !== action.vehicleId
       );
+      console.log(filterCars);
       return filterCars;
 
     case SET_CART:
       return action.cart;
-
+      
     case GUEST_TO_CART:
       return state.push(action.cartItem);
-
+      
     case GUEST_CART:
       return action.cart;
+      
     default:
       return state;
   }
