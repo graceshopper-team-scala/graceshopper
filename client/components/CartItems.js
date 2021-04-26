@@ -13,8 +13,8 @@ export default class CartItems extends Component {
       <table className="cart-items">
         <tbody>
           <tr>
-            <th>Item</th>
-            <th>Quantity</th>
+            <th></th>
+            <th></th>
             <th>Price</th>
           </tr>
           {items.map((item) => {
@@ -23,6 +23,7 @@ export default class CartItems extends Component {
               <SingleCartItem
                 key={item.id}
                 vehicle={item}
+                item={item.vehicle}
                 handleClick={handleClick}
                 orderId={orderId}
               />

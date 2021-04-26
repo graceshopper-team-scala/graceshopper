@@ -39,8 +39,8 @@ class SingleVehicleScreen extends Component {
   handleAddCartItem(evt) {
     evt.preventDefault();
     const orderId = window.localStorage.getItem("order_id");
-    const userId = window.localStorage.getItem("id")
-    if (orderId && userId ) {
+    const userId = window.localStorage.getItem("id");
+    if (orderId && userId) {
       this.props.addNewToCart(
         orderId,
         this.props.match.params.id,

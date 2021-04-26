@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-
 export class SingleCartItem extends Component {
   constructor() {
     super();
@@ -39,5 +37,5 @@ export class SingleCartItem extends Component {
       </>
     );
   }
-}export default SingleCartItem;
-
+}
+export default SingleCartItem;

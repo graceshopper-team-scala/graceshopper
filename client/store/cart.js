@@ -113,7 +113,7 @@ export const guestAddToCartThunk = (vehicleId, quantity) => {
 export const  guestSetCart = () => {
   return async (dispatch) => {
     try {
-
+      const { data } = await axios.get(`api/vehicles`);
 
       let guestCart = JSON.parse(window.localStorage.getItem("GUESTCART"));
       guestCart.map(
@@ -129,6 +129,8 @@ export const  guestSetCart = () => {
       dispatch(
         _guestSetCart(cart)
       );
+      
+      dispatch(_guestSetCart(guestCart));
     } catch (error) {
       console.log("Error fetching cars from server", error);
     }

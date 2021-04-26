@@ -21,7 +21,7 @@ export class Checkout extends Component {
     this.props.cleartCart();
   }
   handleGoBack() {
-    this.props.history.push("./cart");
+    this.props.history.push("/cart");
   }
   render() {
     const vehicles = this.props.vehicles || [];

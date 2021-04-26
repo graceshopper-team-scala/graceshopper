@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { createCartItem, removeFromCart, setCart, guestSetCart } from "../store/cart";
+import {
+  createCartItem,
+  removeFromCart,
+  setCart,
+  guestSetCart,
+} from "../store/cart";
 
 import { connect } from "react-redux";
 import CartItems from "./CartItems";
@@ -21,7 +26,7 @@ export class Cart extends Component {
 
     if (userId) {
       this.props.getCart(userId);
-    }else{
+    } else {
       this.props.guestCart();
     }
     this.setState({
@@ -39,11 +44,10 @@ export class Cart extends Component {
   }
   render() {
     const cart = this.props.cart || [];
-    cart.map((element) => element.vehicleId = parseInt(element.vehicleId))
+    cart.map((element) => (element.vehicleId = parseInt(element.vehicleId)));
     const itemTotal = cart.reduce((acc, curr) => {
       return acc + curr.price;
     }, 0);
-    console.log('---->',cart)
 
     if (this.state.isLoading) {
       return (
@@ -62,7 +66,7 @@ export class Cart extends Component {
         <div className="cart-container">
           <div className="cart-area">
             <div className="cart-top">
-              <p> My Cart</p>
+              <big className="cart-title"> My Cart</big>
               <div>
                 <Button variant="warning" onClick={this.handleContinue}>
                   {" "}
@@ -76,8 +80,9 @@ export class Cart extends Component {
             </div>
             <CartItems items={cart} handleClick={this.handleClick} />
             <div className="cart-total">
-              <p>Subtotal ({cart.length}) items</p>
-              <p>Total: ${itemTotal}</p>
+              <p>
+                Subtotal ({cart.length}) items: ${itemTotal}
+              </p>
             </div>
           </div>
         </div>
