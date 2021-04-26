@@ -115,7 +115,6 @@ export const  guestSetCart = () => {
     try {
       const { data } = await axios.get(`api/vehicles`);
 
-
       let guestCart = JSON.parse(window.localStorage.getItem("GUESTCART"));
       guestCart.map(
         (element) => (element.vehicleId = parseInt(element.vehicleId))
