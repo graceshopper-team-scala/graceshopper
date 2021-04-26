@@ -129,7 +129,7 @@ router.put("/remove_vehicle", async (req, res, next) => {
   }
 });
 
-//PUT /api/:orderId/complete
+//PUT /api/orders/:orderId/complete
 //updates status of order to 'completed'
 router.put("/:orderId/complete", async (req, res, next) => {
   try {

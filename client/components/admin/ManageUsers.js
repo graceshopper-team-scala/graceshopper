@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { fetchUsers, deleteUser } from "../../store/allUsers";
 import Button from "react-bootstrap/Button";
 import ManageUserVehicles from "./ManageSingleOrder";
+import axios from "axios";
 
 import { Link } from "react-router-dom";
 
@@ -10,6 +11,7 @@ export class ManageUsers extends React.Component {
   constructor() {
     super();
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleComplete = this.handleComplete.bind(this);
   }
   componentDidMount() {
     this.props.getUsers();
@@ -17,7 +19,9 @@ export class ManageUsers extends React.Component {
   handleDelete(id) {
     this.props.removeUser(id);
   }
-
+  async handleComplete(orderId){
+    await axios.put(`/api/orders/${orderId}/complete`)
+  }
   render() {
     const users = this.props.users;
     console.log(users) 
@@ -52,6 +56,13 @@ export class ManageUsers extends React.Component {
               <div>{order.id}</div>
               </Link>
               <div>{order.status}</div> 
+              <Button variant="warning" 
+              className="add-vehicle"
+              onClick={()=> this.handleComplete(order.id)}
+              >
+            {" "}
+            Change Status
+          </Button>
               </div>
             ))} </p>
             </div>
