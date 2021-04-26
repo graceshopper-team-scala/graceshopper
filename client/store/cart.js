@@ -5,9 +5,11 @@ const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 const CART_RESET = "CART_RESET";
 const SET_CART = "SET_CART";
 
+
 //Guest action types
 const GUEST_TO_CART = "GUEST_TO_CART";
 const GUEST_CART = "GUEST_CART";
+
 
 // Action Creators
 const addToCart = (cartItem) => ({
@@ -40,6 +42,7 @@ export const _guestSetCart = (cart) => {
   };
 };
 
+
 // Thunk Creators
 
 export const removeFromCart = (vehicleId, orderId) => {
@@ -60,8 +63,19 @@ export const removeFromCart = (vehicleId, orderId) => {
 export const setCart = (userId) => {
   return async (dispatch) => {
     try {
+
         const { data } = await axios.get(`api/users/orders/${userId}`);
         dispatch(_setCart(data[0].vehicles));
+
+
+      if (userId) {
+        const { data } = await axios.get(`api/users/orders/${userId}`);
+        dispatch(_setCart(data[0].vehicles));
+      } else {
+        dispatch(
+          _setCart(JSON.parse(window.localStorage.getItem("GUESTCART")))
+        );
+      }
 
     } catch (error) {
       console.log("Error fetching cars from server", error);
@@ -89,16 +103,24 @@ export const addToCartThunk = (orderId, vehicleId, quantity) => {
       } else {
         const item = { vehicleId: vehicleId, quantity: quantity };
 
+
         window.localStorage.setItem("GUESTCART", JSON.stringify(item));
 
         let guestCart = JSON.parse(window.localStorage.getItem("GUESTCART"));
         dispatch(addToCart(guestCart));
+
+        window.localStorage.setItem("GUESTCART", JSON.stringify(item));
+
+        let guestCart = JSON.parse(window.localStorage.getItem("GUESTCART"));
+        console.log("guestCart----->", guestCart);
+
       }
     } catch (error) {
       console.error(error);
     }
   };
 };
+
 
 //guest THINKS
 
@@ -128,6 +150,7 @@ export const guestSetCart = () => {
   };
 };
 
+
 //reducer
 export default function (state = [], action) {
   switch (action.type) {
@@ -137,7 +160,6 @@ export default function (state = [], action) {
       const filterCars = state.filter(
         (vehicle) => vehicle.id !== action.vehicleId
       );
-      console.log(filterCars);
       return filterCars;
     case SET_CART:
       return action.cart;

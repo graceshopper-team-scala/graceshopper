@@ -1,14 +1,14 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Login, Signup } from "./components/AuthForm";
 import Home from "./components/home";
-import UserHome from "./components/userHome";
 import SingleVehicleScreen from "./components/SingleVehicleScreen";
 import { me } from "./store";
 import AllVehiclesScreen from "./components/AllVehiclesScreen";
 import Cart from "./components/Cart";
 import ManageVehicles from "./components/admin/ManageVehicles";
+import Checkout from "./components/Checkout";
 /**
  * COMPONENT
  */
@@ -23,17 +23,17 @@ class Routes extends Component {
     return (
       <div>
         <Switch>
-          <Route exact path="/" exact component={Home} />
-          <Route path="/Home" exact component={Home} />
+          <Route exact path="/" component={Home} />
+          <Route path="/home" exact component={Home} />
           <Route path="/login" component={Login} />
           {isLoggedIn && (
             <Switch>
               {/* Routes placed here are only available after logging in */}
-              <Route path="/home" component={UserHome} />
+              <Route path="/home" component={Home} />
               {isLoggedIn && isAdmin && (
                 <Switch>
                   {/* Routes placed here are only available after logging in */}
-                  <Route path="/home" component={UserHome} />
+                  <Route path="/home" component={Home} />
                   <Route path="/vehicles" component={AllVehiclesScreen} />
                   <Route path="/manage_vehicles" component={ManageVehicles} />
                   <Route path="/users" component={AllVehiclesScreen} />
@@ -46,6 +46,7 @@ class Routes extends Component {
               />
               <Route path="/vehicles" component={AllVehiclesScreen} />
               <Route path="/cart" component={Cart} />
+              <Route path="/checkout" component={Checkout} />
             </Switch>
           )}
 
@@ -53,6 +54,7 @@ class Routes extends Component {
           <Route exact path="/vehicles/:id" component={SingleVehicleScreen} />
           <Route path="/vehicles" component={AllVehiclesScreen} />
           <Route path="/cart" component={Cart} />
+          <Route path="/checkout" component={Checkout} />
         </Switch>
       </div>
     );
