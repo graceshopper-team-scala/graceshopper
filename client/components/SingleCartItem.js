@@ -13,7 +13,7 @@ export class SingleCartItem extends Component {
     return (
       <>
         {window.localStorage.getItem('id') ? (
-          <tr ke={vehicle.id} className="single-cart-item" key={vehicle.id}>
+          <tr className="single-cart-item" key={vehicle.id}>
             <td>
               <img className="cart-img" src={vehicle.imageUrl} />
               <Link to={`/vehicles/${vehicle.id}`} className="cartitem_name">
@@ -36,7 +36,7 @@ export class SingleCartItem extends Component {
             <td>{vehicle.price}</td>
           </tr>
         ) : (
-          <tr ke={vehicle.id} className="single-cart-item" key={vehicle.id}>
+          <tr className="single-cart-item" key={vehicle.id}>
             <td>
               <img className="cart-img" src={item.imageUrl} />
               <Link to={`/vehicles/${vehicle.id}`} className="cartitem_name">
