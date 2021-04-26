@@ -1,3 +1,4 @@
+import { Loop } from "@material-ui/icons";
 import axios from "axios";
 // Action Types
 const ADD_TO_CART = "ADD_TO_CART";
@@ -63,8 +64,13 @@ export const removeFromCart = (vehicleId, orderId) => {
 export const setCart = (userId) => {
   return async (dispatch) => {
     try {
+<<<<<<< HEAD
       const { data } = await axios.get(`api/users/orders/${userId}`);
       dispatch(_setCart(data[0].vehicles));
+=======
+        const { data } = await axios.get(`api/users/orders/${userId}`);
+        dispatch(_setCart(data[0].vehicles));
+>>>>>>> 24b576859495a5aa377cf8442c8eee12854dbb12
     } catch (error) {
       console.log("Error fetching cars from server", error);
     }
@@ -127,6 +133,7 @@ export const guestAddToCartThunk = (vehicleId, quantity) => {
 export const guestSetCart = () => {
   return async (dispatch) => {
     try {
+<<<<<<< HEAD
       const { data } = await axios.get(`api/vehicles`);
 
       let guestCart = JSON.parse(window.localStorage.getItem("GUESTCART"));
@@ -141,6 +148,8 @@ export const guestSetCart = () => {
           }
         });
       }
+=======
+>>>>>>> 24b576859495a5aa377cf8442c8eee12854dbb12
 
       dispatch(
         _guestSetCart(guestCart)
@@ -157,17 +166,25 @@ export default function (state = [], action) {
   switch (action.type) {
     case ADD_TO_CART:
       return action.cartItem;
+      
     case REMOVE_FROM_CART:
       const filterCars = state.filter(
         (vehicle) => vehicle.id !== action.vehicleId
       );
       return filterCars;
+      
     case SET_CART:
       return action.cart;
+      
     case GUEST_TO_CART:
       return state.push(action.cartItem);
+      
     case GUEST_CART:
       return action.cart;
+<<<<<<< HEAD
+=======
+      
+>>>>>>> 24b576859495a5aa377cf8442c8eee12854dbb12
     default:
       return state;
   }
