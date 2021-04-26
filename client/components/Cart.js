@@ -5,7 +5,6 @@ import {
   setCart,
   guestSetCart,
 } from '../store/cart';
-
 import { connect } from 'react-redux';
 import CartItems from './CartItems';
 import Button from 'react-bootstrap/Button';
@@ -24,13 +23,11 @@ export class Cart extends Component {
 
   componentDidMount() {
     const userId = window.localStorage.getItem('id');
-
     if (userId) {
       this.props.getCart(+userId);
     } else {
       this.props.guestCart();
     }
-    this.props.getCart(+userId);
     this.setState({
       isLoading: false,
     });
@@ -55,13 +52,12 @@ export class Cart extends Component {
       return acc + curr.price;
     }, 0);
     console.log('---->', cart);
-
     if (this.state.isLoading) {
       return (
         <div className="loading-screen">
           <ReactLoading
             type={'spokes'}
-            color={'#ffc107'}
+            color={'#FFC107'}
             height={500}
             width={250}
           />
@@ -97,12 +93,10 @@ export class Cart extends Component {
   }
 }
 
-const mapState = (state) => {
-  return {
-    cart: state.cart,
-    isLoggedIn: !!state.auth.id,
-  };
-};
+const mapState = (state) => ({
+  cart: state.cart,
+  isLoggedIn: !!state.auth.id,
+});
 
 const mapDispatch = (dispatch) => ({
   addCartItems: () => dispatch(addToCart()),

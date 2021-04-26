@@ -49,6 +49,7 @@ const initialState = {
   isReady: false,
   vehicles: [],
 };
+
 export default function (state = initialState, action) {
   switch (action.type) {
     case CHECKED_OUT:

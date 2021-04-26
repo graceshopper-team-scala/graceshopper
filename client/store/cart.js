@@ -105,10 +105,10 @@ export const guestAddToCartThunk = (vehicleId, quantity) => {
       const item = {
         vehicleId: vehicleId,
         quantity: quantity,
+        vehicle: {},
       };
       let guestCart = JSON.parse(window.localStorage.getItem('GUESTCART'));
       guestCart.push(item);
-
       window.localStorage.setItem('GUESTCART', JSON.stringify(guestCart));
       dispatch(
         guestToCart(JSON.parse(window.localStorage.getItem('GUESTCART')))
@@ -118,13 +118,22 @@ export const guestAddToCartThunk = (vehicleId, quantity) => {
     }
   };
 };
-
 export const guestSetCart = () => {
   return async (dispatch) => {
     try {
-      dispatch(
-        _guestSetCart(JSON.parse(window.localStorage.getItem('GUESTCART')))
+      const { data } = await axios.get(`api/vehicles`);
+      let guestCart = JSON.parse(window.localStorage.getItem('GUESTCART'));
+      guestCart.map(
+        (element) => (element.vehicleId = parseInt(element.vehicleId))
       );
+      for (let i = 0; i < data.length; i++) {
+        guestCart.map((element) => {
+          if (element.vehicleId === data[i].id) {
+            element.vehicle = data[i];
+          }
+        });
+      }
+      dispatch(_guestSetCart(guestCart));
     } catch (error) {
       console.log('Error fetching cars from server', error);
     }
@@ -136,17 +145,22 @@ export default function (state = [], action) {
   switch (action.type) {
     case ADD_TO_CART:
       return action.cartItem;
+
     case REMOVE_FROM_CART:
       const filterCars = state.filter(
         (vehicle) => vehicle.id !== action.vehicleId
       );
       return filterCars;
+
     case SET_CART:
       return action.cart;
+
     case GUEST_TO_CART:
       return state.push(action.cartItem);
+
     case GUEST_CART:
       return action.cart;
+
     default:
       return state;
   }
