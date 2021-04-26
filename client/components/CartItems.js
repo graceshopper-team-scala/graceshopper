@@ -7,6 +7,7 @@ export default class CartItems extends Component {
   render() {
     const { items, handleClick } = this.props;
     const orderId = window.localStorage.getItem('order_id');
+    console.log('ITEMS----->', items);
     return (
       <table className="cart-items">
         <tbody>
@@ -16,6 +17,7 @@ export default class CartItems extends Component {
             <th>Price</th>
           </tr>
           {items.map((item) => {
+            console.log(item);
             return (
               <SingleCartItem
                 key={item.id}

@@ -18,7 +18,7 @@ class Routes extends Component {
   }
 
   render() {
-    console.log("checkout state --->", this.props.checkout);
+    // console.log("checkout state --->", this.props.checkout);
     const { isLoggedIn, isAdmin, readyToCheckout, isCartEmpty } = this.props;
 
     return (
