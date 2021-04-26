@@ -9,6 +9,7 @@ import AllVehiclesScreen from "./components/AllVehiclesScreen";
 import Cart from "./components/Cart";
 import ManageVehicles from "./components/admin/ManageVehicles";
 import ManageUsers from "./components/admin/ManageUsers";
+import ManageSingleOrder from "./components/admin/ManageSingleOrder";
 /**
  * COMPONENT
  */
@@ -36,8 +37,9 @@ class Routes extends Component {
                   <Route path="/home" component={Home} />
                   <Route path="/vehicles" component={AllVehiclesScreen} />
                   <Route path="/manage_vehicles" component={ManageVehicles} />
+                  <Route path="/manage_users/orders" component={ManageSingleOrder} />
                   <Route path="/manage_users" component={ManageUsers} />
-                  <Route path="/users" component={AllVehiclesScreen} />
+                  {/* <Route path="/users" component={AllVehiclesScreen} /> */}
                 </Switch>
               )}
               <Route

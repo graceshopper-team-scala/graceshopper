@@ -16,7 +16,7 @@ router.get("/", async (req, res, next) => {
           through: {
             attributes: ["quantity"],
           },
-        },
+        }
       ],
     });
     res.json(orders);
@@ -103,6 +103,7 @@ If quantity === 0, the vehicle will also be removed from order/cart
 }
 */
 router.put("/remove_vehicle", async (req, res, next) => {
+  console.log('reached!!!')
   try {
     const order = await Order.findByPk(+req.body.orderId);
     const vehicle = await Vehicle.findByPk(req.body.vehicleId);

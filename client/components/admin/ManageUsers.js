@@ -2,8 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import { fetchUsers, deleteUser } from "../../store/allUsers";
 import Button from "react-bootstrap/Button";
-import ManageUserVehicles from "./ManageUserVehicles";
+import ManageUserVehicles from "./ManageSingleOrder";
 
+import { Link } from "react-router-dom";
 
 export class ManageUsers extends React.Component {
   constructor() {
@@ -40,8 +41,20 @@ export class ManageUsers extends React.Component {
             <div key={user.id} className="card-container">
             <div key={user.id} className="manage-card">
             <p className="img-col">{user.username}</p>
-            <p className="qty-col"><ManageUserVehicles userId={user.id}/></p>
-            
+            <p className="price-col">
+            {user.orders.map(order => (
+              <div>
+              <Link to={{
+                  pathname: '/manage_users/orders',
+                  state: {
+                    vehicles: order.vehicles,
+                    orderId: order.id
+                  }}}>
+              <div>{order.id}</div>
+              </Link>
+              <div>{order.status}</div> 
+              </div>
+            ))} </p>
             </div>
               
             </div>

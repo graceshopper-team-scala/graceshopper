@@ -4,40 +4,33 @@ import { fetchVehicles, deleteVehicle } from "../../store/allVehicles";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
 
-export default class ManageUserVehicles extends React.Component {
+
+export default class ManageSingleOrder extends React.Component {
   constructor(props) {
     super(props);
+    
     this.state = {
-        vehicles: [],
-        orderId: null
+      vehicles: []
     }
 
-    this.handleDelete = this.handleDelete.bind(this);
+    // this.handleDelete = this.handleDelete.bind(this);
   }
 async componentDidMount() {
-    const {data: userOrders} = await axios.get(`/api/users/orders/${this.props.userId}`) // this only gets all pending...
-    const vehicles = userOrders[0].vehicles
-    const orderId = userOrders[0].id
     await this.setState({
-        vehicles,
-        orderId 
+      vehicles: this.props.location.state.vehicles
     })
   }
   async handleDelete(id) {
-    const newState = this.state.vehicles.filter(vehicle=>vehicle.id!==id) 
-    console.log('before....', this.state)
-    await this.setState({
-        vehicles: newState
-    })
-    console.log('after...', this.state)
-    await axios.put(`api/orders/remove_vehicle`, {
-        orderId: this.state.orderId,
+    await axios.put("/api/orders/remove_vehicle", {
+        orderId: this.props.location.state.orderId,
         vehicleId: id
+    })
+    await this.setState({
+      vehicles: this.state.vehicles.filter(vehicle=>vehicle.id!==id)
     })
   }
   render() {
-    const vehicles = this.state.vehicles;
-   
+    const vehicles = this.state.vehicles
     return (
       <div>
         <div className="manage-vehicle-header">

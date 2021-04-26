@@ -18,7 +18,7 @@ const removedUser = (user) => ({
 export const fetchUsers = () => {
   return async (dispatch) => {
     try {
-      const { data: users } = await axios.get("/api/users");
+      const { data: users } = await axios.get("/api/users/admin");
       dispatch(gotUsers(users));
     } catch (error) {
       console.log("Error fetching users from server");
