@@ -98,10 +98,6 @@ export const guestAddToCartThunk = (vehicleId, quantity) => {
       const item = {
         vehicleId: vehicleId,
         quantity: quantity,
-<<<<<<< HEAD
-        vehicle: {},
-=======
->>>>>>> 12f0bc17977af767d8d690473e61dead08081c37
       };
 
       let guestCart = JSON.parse(window.localStorage.getItem("GUESTCART"));
@@ -134,14 +130,7 @@ export const  guestSetCart = () => {
       dispatch(
         _guestSetCart(cart)
       );
-
-      for (let i = 0; i < data.length; i++) {
-        guestCart.map((element) => {
-          if (element.vehicleId === data[i].id) {
-            element.vehicle = data[i];
-          }
-        });
-      }
+      
       dispatch(_guestSetCart(guestCart));
     } catch (error) {
       console.log("Error fetching cars from server", error);
