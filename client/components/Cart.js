@@ -67,7 +67,7 @@ export class Cart extends Component {
         <div className="cart-container">
           <div className="cart-area">
             <div className="cart-top">
-              <p> My Cart</p>
+              <big className="cart-title"> My Cart</big>
               <div>
                 <Button variant="warning" onClick={this.handleContinue}>
                   {" "}
@@ -81,8 +81,9 @@ export class Cart extends Component {
             </div>
             <CartItems items={cart} handleClick={this.handleClick} />
             <div className="cart-total">
-              <p>Subtotal ({cart.length}) items</p>
-              <p>Total: ${itemTotal}</p>
+              <p>
+                Subtotal ({cart.length}) items: ${itemTotal}
+              </p>
             </div>
           </div>
         </div>
