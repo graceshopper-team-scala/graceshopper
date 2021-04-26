@@ -5,11 +5,9 @@ const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 const CART_RESET = "CART_RESET";
 const SET_CART = "SET_CART";
 
-
 //Guest action types
 const GUEST_TO_CART = "GUEST_TO_CART";
 const GUEST_CART = "GUEST_CART";
-
 
 // Action Creators
 const addToCart = (cartItem) => ({
@@ -42,7 +40,6 @@ export const _guestSetCart = (cart) => {
   };
 };
 
-
 // Thunk Creators
 
 export const removeFromCart = (vehicleId, orderId) => {
@@ -63,18 +60,8 @@ export const removeFromCart = (vehicleId, orderId) => {
 export const setCart = (userId) => {
   return async (dispatch) => {
     try {
-<<<<<<< HEAD
       const { data } = await axios.get(`api/users/orders/${userId}`);
       dispatch(_setCart(data[0].vehicles));
-=======
-<<<<<<< HEAD
-      const { data } = await axios.get(`api/users/orders/${userId}`);
-      dispatch(_setCart(data[0].vehicles));
-=======
-        const { data } = await axios.get(`api/users/orders/${userId}`);
-        dispatch(_setCart(data[0].vehicles));
->>>>>>> 24b576859495a5aa377cf8442c8eee12854dbb12
->>>>>>> 53894e91a1fb54b80c8dc54ae3d751c7f48b1891
     } catch (error) {
       console.log("Error fetching cars from server", error);
     }
@@ -137,9 +124,6 @@ export const guestAddToCartThunk = (vehicleId, quantity) => {
 export const guestSetCart = () => {
   return async (dispatch) => {
     try {
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
       const { data } = await axios.get(`api/vehicles`);
 
       let guestCart = JSON.parse(window.localStorage.getItem("GUESTCART"));
@@ -154,19 +138,12 @@ export const guestSetCart = () => {
           }
         });
       }
-=======
->>>>>>> 24b576859495a5aa377cf8442c8eee12854dbb12
-
->>>>>>> 53894e91a1fb54b80c8dc54ae3d751c7f48b1891
-      dispatch(
-        _guestSetCart(guestCart)
-      );
+      dispatch(_guestSetCart(guestCart));
     } catch (error) {
       console.log("Error fetching cars from server", error);
     }
   };
 };
-
 
 //reducer
 export default function (state = [], action) {
@@ -188,14 +165,6 @@ export default function (state = [], action) {
 
     case GUEST_CART:
       return action.cart;
-<<<<<<< HEAD
-
-=======
-<<<<<<< HEAD
-=======
-      
->>>>>>> 24b576859495a5aa377cf8442c8eee12854dbb12
->>>>>>> 53894e91a1fb54b80c8dc54ae3d751c7f48b1891
     default:
       return state;
   }

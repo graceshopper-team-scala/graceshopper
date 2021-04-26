@@ -7,7 +7,6 @@ const ORDERID = "order_id";
 
 // Action Creators
 export const checkedOut = () => {
-  window.localStorage.removeItem(ORDERID);
   history.push("/confirmation");
   return {
     type: CHECKED_OUT,
@@ -25,9 +24,15 @@ export const gotItems = (items) => {
 export const checkOut = (orderId, vehicles) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(`api/orders/${orderId}/complete`, {
-        vehicles,
-      });
+      const userId = window.localStorage.getItem("id");
+      const { data: order } = await axios.put(
+        `api/orders/${orderId}/complete`,
+        {
+          vehicles,
+          userId,
+        }
+      );
+      window.localStorage.setItem(ORDERID, order.id);
       dispatch(checkedOut());
     } catch (error) {
       console.log("Error fetching cars from server", error);
@@ -53,10 +58,6 @@ const initialState = {
   isReady: false,
   vehicles: [],
 };
-<<<<<<< HEAD
-=======
-
->>>>>>> 24b576859495a5aa377cf8442c8eee12854dbb12
 export default function (state = initialState, action) {
   switch (action.type) {
     case CHECKED_OUT:
