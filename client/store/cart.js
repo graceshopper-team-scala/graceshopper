@@ -67,16 +67,6 @@ export const setCart = (userId) => {
         const { data } = await axios.get(`api/users/orders/${userId}`);
         dispatch(_setCart(data[0].vehicles));
 
-
-      if (userId) {
-        const { data } = await axios.get(`api/users/orders/${userId}`);
-        dispatch(_setCart(data[0].vehicles));
-      } else {
-        dispatch(
-          _setCart(JSON.parse(window.localStorage.getItem("GUESTCART")))
-        );
-      }
-
     } catch (error) {
       console.log("Error fetching cars from server", error);
     }
@@ -100,34 +90,17 @@ export const cartCheckout = () => {
 export const addToCartThunk = (orderId, vehicleId, quantity) => {
   return async (dispatch) => {
     try {
-      if (orderId) {
         const { data: cart } = await axios.put(`/api/orders/add_vehicle`, {
           orderId,
           vehicleId,
           quantity,
         });
         dispatch(addToCart(cart));
-      } else {
-        const item = { vehicleId: vehicleId, quantity: quantity };
-
-
-        window.localStorage.setItem("GUESTCART", JSON.stringify(item));
-
-        let guestCart = JSON.parse(window.localStorage.getItem("GUESTCART"));
-        dispatch(addToCart(guestCart));
-
-        window.localStorage.setItem("GUESTCART", JSON.stringify(item));
-
-        let guestCart = JSON.parse(window.localStorage.getItem("GUESTCART"));
-        console.log("guestCart----->", guestCart);
-
-      }
     } catch (error) {
       console.error(error);
     }
   };
 };
-
 
 //guest THINKS
 
@@ -145,6 +118,7 @@ export const guestAddToCartThunk = (vehicleId, quantity) => {
     }
   };
 };
+
 export const guestSetCart = () => {
   return async (dispatch) => {
     try {
@@ -171,7 +145,6 @@ export default function (state = [], action) {
     case SET_CART:
       return action.cart;
     case GUEST_TO_CART:
-      console.log(action.cartItem)
       return state.push(action.cartItem);
     case GUEST_CART:
       return action.cart
