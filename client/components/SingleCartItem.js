@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { checkOut } from "../store";
+
 export class SingleCartItem extends Component {
   constructor() {
     super();

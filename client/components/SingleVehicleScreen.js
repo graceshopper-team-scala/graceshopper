@@ -2,13 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getSingleVehicleThunk } from "../store/singleVehicle";
 import { withSnackbar } from "notistack";
-
-import { Link } from "react-router-dom";
 import { addToCartThunk, guestAddToCartThunk } from "../store/cart";
-import Form from "react-bootstrap/Form";
-
-import { addToCartThunk } from "../store/cart";
-
 import Button from "react-bootstrap/Button";
 import PropTypes from "prop-types";
 import ReactLoading from "react-loading";
@@ -20,7 +14,6 @@ class SingleVehicleScreen extends Component {
       quantity: 1,
 
       isLoading: true,
-
     };
 
     this.handleAddCartItem = this.handleAddCartItem.bind(this);
@@ -46,18 +39,19 @@ class SingleVehicleScreen extends Component {
   handleAddCartItem(evt) {
     evt.preventDefault();
     const orderId = window.localStorage.getItem("order_id");
-    if(orderId){
+    if (orderId) {
       this.props.addNewToCart(
-      orderId,
-      this.props.match.params.id,
-      this.state.quantity
-    )
-    }else{
-      this.props.guestAddToCart(this.props.match.params.id,
-        this.state.quantity)
-        console.log(this.state)
+        orderId,
+        this.props.match.params.id,
+        this.state.quantity
+      );
+    } else {
+      this.props.guestAddToCart(
+        this.props.match.params.id,
+        this.state.quantity
+      );
+      console.log(this.state);
     }
-
   }
 
   handleQtyChange(evt) {

@@ -19,7 +19,7 @@ export class Cart extends Component {
   componentDidMount() {
     const userId = window.localStorage.getItem("id");
 
-    if(userId){
+    if (userId) {
       this.props.getCart(+userId);
     }else{
       this.props.guestCart();
@@ -28,7 +28,6 @@ export class Cart extends Component {
     this.setState({
       isLoading: false,
     });
-
   }
   handleClick(vehicleId, orderId) {
     this.props.removeFromCart(vehicleId, orderId);
@@ -47,7 +46,6 @@ export class Cart extends Component {
     }, 0);
     console.log('---->',cart)
 
-    console.log(cart);
     if (this.state.isLoading) {
       return (
         <div className="loading-screen">

@@ -90,6 +90,13 @@ export const cartLogout = () => {
   };
 };
 
+export const cartCheckout = () => {
+  return {
+    type: SET_CART,
+    cart: [],
+  };
+};
+
 export const addToCartThunk = (orderId, vehicleId, quantity) => {
   return async (dispatch) => {
     try {
