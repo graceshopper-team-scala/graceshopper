@@ -41,10 +41,6 @@ async componentDidMount() {
         <div className="manage-vehicle-header">
           <p className="v-header">Vehicle</p>
           <p className="qty-header">Quantity</p>
-          <Button variant="warning" className="add-vehicle">
-            {" "}
-            Add Vehicle
-          </Button>
         </div>
         <div className="manage-table">
           {vehicles.map((vehicle) => (

@@ -55,7 +55,7 @@ export default class ManageSingleUserForm extends Component {
 
         <StatusForm user={user} order={order}/>
 
-          
+        
           </div>
         ))} </span>    
         </div>
