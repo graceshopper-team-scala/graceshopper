@@ -39,6 +39,10 @@ export class ManageUsers extends React.Component {
           <p className="v-header">User</p>
           <p className="qty-header">Order</p>
           <p className="p-header">Status</p>
+          <Button variant="warning" className="add-vehicle">
+            {" "}
+            Add User
+          </Button>
         </div>
         <div className="manage-table">
           {users.map((user) => (
@@ -65,6 +69,17 @@ export class ManageUsers extends React.Component {
           </Button>
               </div>
             ))} </p>
+
+              {/* <p className="price-col">
+                  <Button variant="warning" 
+                    className="add-vehicle"
+                    onClick={()=> this.handleComplete(order.id)}
+                    >
+                    {" "}
+                    Change Status
+                  </Button>
+              </p> */}
+           
             </div>
               
             </div>
