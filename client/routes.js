@@ -8,6 +8,7 @@ import { me } from "./store";
 import AllVehiclesScreen from "./components/AllVehiclesScreen";
 import Cart from "./components/Cart";
 import ManageVehicles from "./components/admin/ManageVehicles";
+import Checkout from "./components/Checkout";
 /**
  * COMPONENT
  */
@@ -45,6 +46,7 @@ class Routes extends Component {
               />
               <Route path="/vehicles" component={AllVehiclesScreen} />
               <Route path="/cart" component={Cart} />
+              <Route path="/checkout" component={Checkout} />
             </Switch>
           )}
 
@@ -52,6 +54,7 @@ class Routes extends Component {
           <Route exact path="/vehicles/:id" component={SingleVehicleScreen} />
           <Route path="/vehicles" component={AllVehiclesScreen} />
           <Route path="/cart" component={Cart} />
+          <Route path="/checkout" component={Checkout} />
         </Switch>
       </div>
     );

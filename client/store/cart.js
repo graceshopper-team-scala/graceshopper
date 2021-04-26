@@ -5,8 +5,6 @@ const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 const CART_RESET = "CART_RESET";
 const SET_CART = "SET_CART";
 
-
-
 // Action Creators
 const addToCart = (cartItem) => ({
   type: ADD_TO_CART,
@@ -28,7 +26,6 @@ export const _setCart = (cart) => {
 
 // Thunk Creators
 
-
 export const removeFromCart = (vehicleId, orderId) => {
   return async (dispatch) => {
     //change to remove from through table
@@ -47,11 +44,13 @@ export const removeFromCart = (vehicleId, orderId) => {
 export const setCart = (userId) => {
   return async (dispatch) => {
     try {
-      if(orderId){
-      const { data } = await axios.get(`api/users/orders/${userId}`);
-      dispatch(_setCart(data[0].vehicles));}
-      else{
-      dispatch(_setCart(JSON.parse(window.localStorage.getItem('GUESTCART'))))
+      if (userId) {
+        const { data } = await axios.get(`api/users/orders/${userId}`);
+        dispatch(_setCart(data[0].vehicles));
+      } else {
+        dispatch(
+          _setCart(JSON.parse(window.localStorage.getItem("GUESTCART")))
+        );
       }
     } catch (error) {
       console.log("Error fetching cars from server", error);
@@ -69,31 +68,25 @@ export const cartLogout = () => {
 export const addToCartThunk = (orderId, vehicleId, quantity) => {
   return async (dispatch) => {
     try {
-      if(orderId){
+      if (orderId) {
         const { data: cart } = await axios.put(`/api/orders/add_vehicle`, {
           orderId,
           vehicleId,
           quantity,
         });
         dispatch(addToCart(cart));
-      }else{
-        const item = {vehicleId: vehicleId,
-        quantity: quantity}
-        window.localStorage.setItem('GUESTCART', JSON.stringify(item));
+      } else {
+        const item = { vehicleId: vehicleId, quantity: quantity };
+        window.localStorage.setItem("GUESTCART", JSON.stringify(item));
 
-        let guestCart = JSON.parse(window.localStorage.getItem('GUESTCART'));
-        console.log('guestCart----->', guestCart)
-
+        let guestCart = JSON.parse(window.localStorage.getItem("GUESTCART"));
+        console.log("guestCart----->", guestCart);
       }
-
     } catch (error) {
       console.error(error);
     }
   };
 };
-
-
-
 
 //reducer
 export default function (state = [], action) {
@@ -104,7 +97,6 @@ export default function (state = [], action) {
       const filterCars = state.filter(
         (vehicle) => vehicle.id !== action.vehicleId
       );
-      console.log(filterCars);
       return filterCars;
     case SET_CART:
       return action.cart;

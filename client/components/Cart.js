@@ -13,6 +13,7 @@ export class Cart extends Component {
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleContinue = this.handleContinue.bind(this);
+    this.goToCheckout = this.goToCheckout.bind(this);
   }
   componentDidMount() {
     const userId = window.localStorage.getItem("id");
@@ -29,17 +30,14 @@ export class Cart extends Component {
     });
 
   }
-  handleChange(evt) {
-    evt.preventdefault();
-    this.setState = {
-      [evt.target.name]: [evt.target.value],
-    };
-  }
   handleClick(vehicleId, orderId) {
     this.props.removeFromCart(vehicleId, orderId);
   }
   handleContinue() {
     this.props.history.push("/vehicles");
+  }
+  goToCheckout() {
+    this.props.history.push("/checkout");
   }
   render() {
     const cart = this.props.cart || [];
@@ -72,7 +70,10 @@ export class Cart extends Component {
                   {" "}
                   Continue Shopping
                 </Button>
-                <Button variant="warning"> Checkout </Button>
+                <Button variant="warning" onClick={this.goToCheckout}>
+                  {" "}
+                  Checkout{" "}
+                </Button>
               </div>
             </div>
             <CartItems items={cart} handleClick={this.handleClick} />
