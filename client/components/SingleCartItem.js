@@ -64,3 +64,4 @@ export class SingleCartItem extends Component {
     );
   }
 }export default SingleCartItem;
+
