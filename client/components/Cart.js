@@ -29,7 +29,6 @@ export class Cart extends Component {
     } else {
       this.props.guestCart();
     }
-
     this.setState({
       isLoading: false,
     });
