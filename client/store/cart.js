@@ -61,7 +61,7 @@ export const setCart = (userId) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`api/users/orders/${userId}`);
-      dispatch(_setCart(data[0].vehicles || []));
+      dispatch(_setCart(data[0].vehicles));
     } catch (error) {
       console.log("Error fetching cars from server", error);
     }
@@ -85,21 +85,12 @@ export const cartCheckout = () => {
 export const addToCartThunk = (orderId, vehicleId, quantity) => {
   return async (dispatch) => {
     try {
-      if (orderId) {
-        const { data: cart } = await axios.put(`/api/orders/add_vehicle`, {
-          orderId,
-          vehicleId,
-          quantity,
-        });
-        dispatch(addToCart(cart));
-      } else {
-        const item = { vehicleId: vehicleId, quantity: quantity };
-
-        window.localStorage.setItem("GUESTCART", JSON.stringify(item));
-
-        let guestCart = JSON.parse(window.localStorage.getItem("GUESTCART"));
-        dispatch(addToCart(guestCart));
-      }
+      const { data: cart } = await axios.put(`/api/orders/add_vehicle`, {
+        orderId,
+        vehicleId,
+        quantity,
+      });
+      dispatch(addToCart(cart));
     } catch (error) {
       console.error(error);
     }
@@ -128,15 +119,6 @@ export const guestAddToCartThunk = (vehicleId, quantity) => {
 export const guestSetCart = () => {
   return async (dispatch) => {
     try {
-      // window.localStorage.getItem("GUESTCART"))
-      // newArray = convert(localStorageObject to ARRAY) // {vid: 1, qty: 1}
-      // allCars = []
-      // Loop(newArray){
-      //   vehciel = await axios.get('vehicle/route')
-      //   allcars.push({...vehicle, order_vehicle: {quantity: vehicleQuantity}})
-      // }
-      // allcars= [{}, {}, {}]
-
       dispatch(
         _guestSetCart(JSON.parse(window.localStorage.getItem("GUESTCART")))
       );
@@ -151,18 +133,22 @@ export default function (state = [], action) {
   switch (action.type) {
     case ADD_TO_CART:
       return action.cartItem;
+
     case REMOVE_FROM_CART:
       const filterCars = state.filter(
         (vehicle) => vehicle.id !== action.vehicleId
       );
       return filterCars;
+
     case SET_CART:
       return action.cart;
+
     case GUEST_TO_CART:
-      console.log(action.cartItem);
       return state.push(action.cartItem);
+
     case GUEST_CART:
       return action.cart;
+
     default:
       return state;
   }
