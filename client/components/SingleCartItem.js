@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-
 export class SingleCartItem extends Component {
   constructor() {
     super();
@@ -11,17 +10,21 @@ export class SingleCartItem extends Component {
   }
   render() {
     const { vehicle, handleClick, orderId } = this.props;
+    console.log("vehicle --->", vehicle);
     return (
       <>
         <tr ke={vehicle.id} className="single-cart-item" key={vehicle.id}>
           <td>
-            <img className="cart-img" src={vehicle.imageUrl} />
-            <Link to={`/vehicles/${vehicle.id}`} className="cartitem_name">
-              {vehicle.make} {vehicle.model}{" "}
+            <img className="cart-img" src={vehicle.imageUrl || ""} />
+            <Link
+              to={`/vehicles/${vehicle.id || ""}`}
+              className="cartitem_name"
+            >
+              {vehicle.make || ""} {vehicle.model || ""}{" "}
             </Link>
           </td>
           <td>
-            <select value={vehicle.order_vehicle.quantity}>
+            <select value={vehicle.order_vehicle.quantity || 0}>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>

@@ -5,10 +5,12 @@ import { Login, Signup } from "./components/AuthForm";
 import Home from "./components/home";
 import SingleVehicleScreen from "./components/SingleVehicleScreen";
 import { me } from "./store";
+import { setCart } from "./store/cart";
 import AllVehiclesScreen from "./components/AllVehiclesScreen";
 import Cart from "./components/Cart";
 import ManageVehicles from "./components/admin/ManageVehicles";
 import Checkout from "./components/checkout/Checkout";
+import CheckoutConfirmation from "./components/checkout/CheckoutConfirmation";
 /**
  * COMPONENT
  */
@@ -18,9 +20,7 @@ class Routes extends Component {
   }
 
   render() {
-    console.log("checkout state --->", this.props.checkout);
-    const { isLoggedIn, isAdmin, readyToCheckout, isCartEmpty } = this.props;
-
+    const { isLoggedIn, isAdmin } = this.props;
     return (
       <div>
         <Switch>
@@ -47,16 +47,8 @@ class Routes extends Component {
               />
               <Route path="/vehicles" component={AllVehiclesScreen} />
               <Route path="/cart" component={Cart} />
-              {readyToCheckout ? (
-                <Route path="/confirmation" component={Checkout} />
-              ) : (
-                <Redirect to="/home" component={Home} />
-              )}
-              {isCartEmpty ? (
-                <Redirect to="/home" component={Home} />
-              ) : (
-                <Route exact path="/checkout" component={Checkout} />
-              )}
+              <Route exact path="/checkout" component={Checkout} />
+              <Route path="/confirmation" component={CheckoutConfirmation} />
             </Switch>
           )}
 
@@ -81,7 +73,7 @@ const mapState = (state) => {
     isLoggedIn: !!state.auth.id,
     isAdmin: state.auth.isAdmin,
     readyToCheckout: state.checkout.isReady,
-    isCartEmpty: state.cart > 0,
+    cart: state.cart,
   };
 };
 
@@ -89,6 +81,9 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData() {
       dispatch(me());
+    },
+    loadCart(id) {
+      dispatch(setCart(id));
     },
   };
 };

@@ -1,4 +1,3 @@
-import { Loop } from "@material-ui/icons";
 import axios from "axios";
 // Action Types
 const ADD_TO_CART = "ADD_TO_CART";
@@ -62,16 +61,7 @@ export const setCart = (userId) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`api/users/orders/${userId}`);
-      dispatch(_setCart(data[0].vehicles));
-
-      if (userId) {
-        const { data } = await axios.get(`api/users/orders/${userId}`);
-        dispatch(_setCart(data[0].vehicles));
-      } else {
-        dispatch(
-          _setCart(JSON.parse(window.localStorage.getItem("GUESTCART")))
-        );
-      }
+      dispatch(_setCart(data[0].vehicles || []));
     } catch (error) {
       console.log("Error fetching cars from server", error);
     }
@@ -109,11 +99,6 @@ export const addToCartThunk = (orderId, vehicleId, quantity) => {
 
         let guestCart = JSON.parse(window.localStorage.getItem("GUESTCART"));
         dispatch(addToCart(guestCart));
-
-        window.localStorage.setItem("GUESTCART", JSON.stringify(item));
-
-        let guestCart = JSON.parse(window.localStorage.getItem("GUESTCART"));
-        console.log("guestCart----->", guestCart);
       }
     } catch (error) {
       console.error(error);

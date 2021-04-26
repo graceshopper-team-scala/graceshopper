@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { createCartItem, removeFromCart, setCart, guestSetCart } from "../store/cart";
+import {
+  createCartItem,
+  removeFromCart,
+  setCart,
+  guestSetCart,
+} from "../store/cart";
 
 import { connect } from "react-redux";
 import CartItems from "./CartItems";
@@ -21,7 +26,7 @@ export class Cart extends Component {
 
     if (userId) {
       this.props.getCart(+userId);
-    }else{
+    } else {
       this.props.guestCart();
     }
     this.props.getCart(+userId);
@@ -40,11 +45,10 @@ export class Cart extends Component {
   }
   render() {
     const cart = this.props.cart || [];
-    cart.map((element) => element.vehicleId = parseInt(element.vehicleId))
+    cart.map((element) => (element.vehicleId = parseInt(element.vehicleId)));
     const itemTotal = cart.reduce((acc, curr) => {
       return acc + curr.price;
     }, 0);
-    console.log('---->',cart)
 
     if (this.state.isLoading) {
       return (

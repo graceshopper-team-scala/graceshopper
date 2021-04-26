@@ -8,15 +8,17 @@
   background-color: azure;
   display: flex;
   flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.56);
 }
 /* CART TOP */
 .cart-top {
   display: flex;
   justify-content: space-between;
-  margin-top: 1rem;
   margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid black;
+  padding-top: 1.5rem;
+  height: 5rem;
+  background-color: black;
+  color: white;
 }
 .cart-top button {
   margin-left: 0.5rem;
