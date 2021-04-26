@@ -26,6 +26,7 @@ export const fetchVehicles = () => {
   };
 };
 
+
 export const deleteVehicle = (id) => {
   return async (dispatch) => {
     try {
