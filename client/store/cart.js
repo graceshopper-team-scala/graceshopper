@@ -5,9 +5,11 @@ const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 const CART_RESET = "CART_RESET";
 const SET_CART = "SET_CART";
 
+
 //Guest action types
 const GUEST_TO_CART = "GUEST_TO_CART";
 const GUEST_CART = "GUEST_CART";
+
 
 // Action Creators
 const addToCart = (cartItem) => ({
@@ -40,6 +42,7 @@ export const _guestSetCart = (cart) => {
   };
 };
 
+
 // Thunk Creators
 
 export const removeFromCart = (vehicleId, orderId) => {
@@ -60,6 +63,7 @@ export const removeFromCart = (vehicleId, orderId) => {
 export const setCart = (userId) => {
   return async (dispatch) => {
     try {
+
         const { data } = await axios.get(`api/users/orders/${userId}`);
         dispatch(_setCart(data[0].vehicles));
 
@@ -70,6 +74,13 @@ export const setCart = (userId) => {
 };
 
 export const cartLogout = () => {
+  return {
+    type: SET_CART,
+    cart: [],
+  };
+};
+
+export const cartCheckout = () => {
   return {
     type: SET_CART,
     cart: [],
@@ -107,6 +118,7 @@ export const guestAddToCartThunk = (vehicleId, quantity) => {
     }
   };
 };
+
 export const guestSetCart = () => {
   return async (dispatch) => {
     try {
@@ -119,6 +131,7 @@ export const guestSetCart = () => {
   };
 };
 
+
 //reducer
 export default function (state = [], action) {
   switch (action.type) {
@@ -128,7 +141,6 @@ export default function (state = [], action) {
       const filterCars = state.filter(
         (vehicle) => vehicle.id !== action.vehicleId
       );
-      console.log(filterCars);
       return filterCars;
     case SET_CART:
       return action.cart;

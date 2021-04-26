@@ -5,7 +5,7 @@ import ReactLoading from "react-loading";
 /**
  * COMPONENT
  */
-export const userHome = (props) => {
+export const UserHome = (props) => {
   const { username } = props;
   const [isLoading, setIsLoading] = useState(true);
 
@@ -26,10 +26,11 @@ export const userHome = (props) => {
       </div>
     );
   }
+
   return (
     <div>
       <div>
-        <h2>Welcome back, {username}!</h2>
+        <big>Welcome back, {username}!</big>
       </div>
       <div
         id="carouselExampleControls"
@@ -97,4 +98,4 @@ const mapState = (state) => {
   };
 };
 
-export default connect(mapState)(userHome);
+export default connect(mapState)(UserHome);

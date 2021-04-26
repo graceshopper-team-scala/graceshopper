@@ -58,7 +58,13 @@ big {
   color: #ffc107;
   animation: shake 0.3s;
 }
-
+.loading-screen {
+  width: 100%;
+}
+.loading-screen > * {
+  margin: auto;
+  margin-top: 10%;
+}
 @keyframes shake {
   0% {
     transform: translateX(0);
