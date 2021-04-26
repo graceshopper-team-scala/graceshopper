@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Button from "react-bootstrap/Button";
-import { connect } from 'react-redux';
 import axios from "axios";
 
 
@@ -14,7 +13,7 @@ export default class ManageSingleOrderForm extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
+   
   }
 
   handleChange(evt) {
@@ -35,27 +34,20 @@ export default class ManageSingleOrderForm extends Component {
     })
   }
 
-  async handleDelete() {
-    await axios.put("/api/orders/remove_vehicle", {
-        orderId: this.props.vehicle.order_vehicle.orderId,
-        vehicleId: this.props.vehicle.id
-    })
-    await this.setState({
-      vehicles: this.state.vehicles.filter(vehicle=>vehicle.id!==id)
-    })
-  }
+//   async handleDelete() {
+//     await axios.put("/api/orders/remove_vehicle", {
+//         orderId: this.props.vehicle.order_vehicle.orderId,
+//         vehicleId: this.props.vehicle.id
+//     })
+//     await this.setState({
+//       vehicles: this.state.vehicles.filter(vehicle=>vehicle.id!==id)
+//     })
+//   }
 
   render() {
     console.log(this.props)
     const vehicle = this.props.vehicle
     return (
-    //   <form onSubmit={handleSubmit}>
-    //     <label htmlFor="Quantity">Quantity: </label>
-    //     <input name="Quantity" onChange={handleChange} value={this.state.title} />
-
-    //     <button type="submit">Change Quantity </button>
-    //   </form>
-
     <div key={vehicle.id} className="card-container">
     <div key={vehicle.id} className="manage-card">
       <div className="img-col">
@@ -69,16 +61,7 @@ export default class ManageSingleOrderForm extends Component {
   </form>
       
     </div>
-    {/* <Button
-      variant="danger"
-      onClick={() => this.handleDelete()}
-    >
-      {" "}
-      <i className="fas fa-trash"></i>{" "}
-    </Button> */}
   </div>
-
-
     );
   }
 }

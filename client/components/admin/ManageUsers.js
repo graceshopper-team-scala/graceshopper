@@ -4,14 +4,19 @@ import { fetchUsers, deleteUser } from "../../store/allUsers";
 import Button from "react-bootstrap/Button";
 import ManageUserVehicles from "./ManageSingleOrder";
 import axios from "axios";
+import ManageSingleUserForm from "./ManageSingleUserForm"
 
 import { Link } from "react-router-dom";
 
 export class ManageUsers extends React.Component {
   constructor() {
     super();
+    this.state = {
+      parentListen: 'off'
+    }
     this.handleDelete = this.handleDelete.bind(this);
     this.handleComplete = this.handleComplete.bind(this);
+    this.parentListen = this.parentListen.bind(this);
   }
   componentDidMount() {
     this.props.getUsers();
@@ -22,10 +27,16 @@ export class ManageUsers extends React.Component {
   async handleComplete(orderId){
     await axios.put(`/api/orders/${orderId}/complete`)
   }
+
+  parentListen(){
+    console.log('parentlisten called!!!!!')
+    this.forceUpdate();
+    // return this.state.parentListen = !this.state.parentListen
+  }
   render() {
     const users = this.props.users;
     console.log(users) 
-
+    console.log('parent rendering!!!!!!')
     //priceFormatter converts integer price value from DB into dollar currency format
     // const priceFormatter = new Intl.NumberFormat("en-US", {
     //   style: "currency",
@@ -46,43 +57,16 @@ export class ManageUsers extends React.Component {
         </div>
         <div className="manage-table">
           {users.map((user) => (
-            <div key={user.id} className="card-container">
-            <div key={user.id} className="manage-card">
-            <p className="img-col">{user.username}</p>
-            <p className="price-col">
-            {user.orders.map(order => (
-              <div>
-              <Link to={{
-                  pathname: `/manage_users/orders/${order.id}`,
-                  state: {
-                    vehicles: order.vehicles
-                  }}}>
-              <div>{order.id}</div>
-              </Link>
-              <div>{order.status}</div> 
-              <Button variant="warning" 
-              className="add-vehicle"
-              onClick={()=> this.handleComplete(order.id)}
-              >
-            {" "}
-            Change Status
-          </Button>
+            <div key={user.id}>
+            <ManageSingleUserForm user={user} parentListen={this.parentListen}/>
+            <Button
+                  variant="danger"
+                  onClick={() => this.handleDelete(order.id)}///
+                >
+                  {" "}
+                  <i className="fas fa-trash"></i>{" "}
+              </Button>
               </div>
-            ))} </p>
-
-              {/* <p className="price-col">
-                  <Button variant="warning" 
-                    className="add-vehicle"
-                    onClick={()=> this.handleComplete(order.id)}
-                    >
-                    {" "}
-                    Change Status
-                  </Button>
-              </p> */}
-           
-            </div>
-              
-            </div>
           ))}
         </div>
       </div>

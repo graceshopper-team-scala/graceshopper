@@ -33,7 +33,10 @@ router.get("/admin", async (req, res, next) => {
         include: [{
           model: Vehicle
         }]
-      }]
+      }],
+      where: {
+        isAdmin: false
+      }
     });
     res.json(users);
   } catch (err) {

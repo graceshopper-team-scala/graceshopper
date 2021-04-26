@@ -1,6 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
-import { fetchVehicles, deleteVehicle } from "../../store/allVehicles";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
 import ManageSingleOrderForm from "./ManageSingleOrderForm"
@@ -51,28 +49,6 @@ async componentDidMount() {
         <div className="manage-table">
           {vehicles.map((vehicle) => (
             <div key={vehicle.id} className="card-container">
-
-              
-              {/* <div key={vehicle.id} className="manage-card">
-                <div className="img-col">
-                  <big>{vehicle.vehicleName}</big>
-                </div>
-                <form>
-                
-                <input name="quantity" value={vehicle.order_vehicle.quantity} />
-
-                <button type="submit">Update Quantity</button>
-            </form>
-                
-              </div>
-              <Button
-                variant="danger"
-                onClick={() => this.handleDelete(vehicle.id)}
-              >
-                {" "}
-                <i className="fas fa-trash"></i>{" "}
-              </Button> */}
-
               <ManageSingleOrderForm vehicle={vehicle}/>
               <Button
                   variant="danger"
@@ -89,18 +65,3 @@ async componentDidMount() {
     );
   }
 }
-
-// const mapStatetoProps = (state) => {
-//   return {
-//     vehicles: state.vehicles,
-//   };
-// };
-
-// const mapDispatchtoProps = (dispatch) => {
-//   return {
-//     getVehicles: () => dispatch(fetchVehicles()),
-//     removeVehicle: (id) => dispatch(deleteVehicle(id)),
-//   };
-// };
-
-// export default connect(mapStatetoProps, mapDispatchtoProps)(ManageUserVehicles);
