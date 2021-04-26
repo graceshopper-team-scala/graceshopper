@@ -107,7 +107,9 @@ export const guestAddToCartThunk = (vehicleId, quantity) => {
         quantity: quantity,
         vehicle: {},
       };
+
       let guestCart = JSON.parse(window.localStorage.getItem('GUESTCART'));
+
       guestCart.push(item);
       window.localStorage.setItem('GUESTCART', JSON.stringify(guestCart));
       dispatch(
@@ -122,10 +124,12 @@ export const guestSetCart = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`api/vehicles`);
+
       let guestCart = JSON.parse(window.localStorage.getItem('GUESTCART'));
       guestCart.map(
         (element) => (element.vehicleId = parseInt(element.vehicleId))
       );
+
       for (let i = 0; i < data.length; i++) {
         guestCart.map((element) => {
           if (element.vehicleId === data[i].id) {
@@ -145,22 +149,17 @@ export default function (state = [], action) {
   switch (action.type) {
     case ADD_TO_CART:
       return action.cartItem;
-
     case REMOVE_FROM_CART:
       const filterCars = state.filter(
         (vehicle) => vehicle.id !== action.vehicleId
       );
       return filterCars;
-
     case SET_CART:
       return action.cart;
-
     case GUEST_TO_CART:
       return state.push(action.cartItem);
-
     case GUEST_CART:
       return action.cart;
-
     default:
       return state;
   }
