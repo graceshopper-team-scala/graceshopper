@@ -22,14 +22,36 @@ router.get("/", async (req, res, next) => {
 //GET api/users/orders/:userId
 router.get("/orders/:userId", async (req, res, next) => {
   try {
-    console.log(req.params.userId);
     const orders = await Order.findOrCreate({
-        where: {
-          userId: req.params.userId,
-          status: 'pending'
+      where: {
+        userId: req.params.userId,
+        status: "pending",
+      },
+      include: [{ model: Vehicle }],
+    });
+    res.json(orders);
+  } catch (error) {
+    next(error);
+  }
+});
+
+//GET api/users/orders/:userId
+router.get("/orders/history/:userId", async (req, res, next) => {
+  try {
+    const orders = await Order.findAll({
+      attributes: ["id", "userId"],
+      where: {
+        userId: req.params.userId,
+        status: "completed",
+      },
+      include: [
+        {
+          model: Vehicle,
+          through: { attributes: ["quantity"] },
+          attributes: ["id", "make", "model", "price", "imageUrl"],
         },
-        include: [{ model: Vehicle }],
-      });
+      ],
+    });
     res.json(orders);
   } catch (error) {
     next(error);

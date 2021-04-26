@@ -1,11 +1,14 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { SingleCartItem } from "./SingleCartItem";
 
 export default class CartItems extends Component {
+  constructor() {
+    super();
+  }
   render() {
-    const { items, handleClick, } = this.props;
-    console.log(items);
+    const { items, handleClick } = this.props;
     const orderId = window.localStorage.getItem("order_id");
+
     return (
       <table className="cart-items">
         <tbody>
@@ -16,28 +19,13 @@ export default class CartItems extends Component {
           </tr>
           {items.map((item) => {
             return (
-              <tr className="single-cart-item" key={item.vehicle.id}>
-                <td>
-                  <img className="cart-img" src={item.vehicle.imageUrl} />
-                  <Link to={`/vehicles/${item.id}`} className="cartitem_name">
-                    {item.vehicle.make} {item.vehicle.model}{" "}
-                  </Link>
-                </td>
-                <td>
-                  <select>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                  </select>
-                  <button
-                    className="remove"
-                    onClick={() => handleClick(item.id, orderId)}
-                  >
-                    <i className="fas fa-trash"></i>
-                  </button>
-                </td>
-                <td>{item.vehicle.price}</td>
-              </tr>
+              <SingleCartItem
+                key={item.id}
+                vehicle={item}
+                item={item.vehicle}
+                handleClick={handleClick}
+                orderId={orderId}
+              />
             );
           })}
         </tbody>
