@@ -1,3 +1,4 @@
+import { Loop } from "@material-ui/icons";
 import axios from "axios";
 // Action Types
 const ADD_TO_CART = "ADD_TO_CART";
@@ -5,11 +6,9 @@ const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 const CART_RESET = "CART_RESET";
 const SET_CART = "SET_CART";
 
-
 //Guest action types
 const GUEST_TO_CART = "GUEST_TO_CART";
 const GUEST_CART = "GUEST_CART";
-
 
 // Action Creators
 const addToCart = (cartItem) => ({
@@ -42,7 +41,6 @@ export const _guestSetCart = (cart) => {
   };
 };
 
-
 // Thunk Creators
 
 export const removeFromCart = (vehicleId, orderId) => {
@@ -63,10 +61,8 @@ export const removeFromCart = (vehicleId, orderId) => {
 export const setCart = (userId) => {
   return async (dispatch) => {
     try {
-
-        const { data } = await axios.get(`api/users/orders/${userId}`);
-        dispatch(_setCart(data[0].vehicles));
-
+      const { data } = await axios.get(`api/users/orders/${userId}`);
+      dispatch(_setCart(data[0].vehicles));
 
       if (userId) {
         const { data } = await axios.get(`api/users/orders/${userId}`);
@@ -76,7 +72,6 @@ export const setCart = (userId) => {
           _setCart(JSON.parse(window.localStorage.getItem("GUESTCART")))
         );
       }
-
     } catch (error) {
       console.log("Error fetching cars from server", error);
     }
@@ -110,7 +105,6 @@ export const addToCartThunk = (orderId, vehicleId, quantity) => {
       } else {
         const item = { vehicleId: vehicleId, quantity: quantity };
 
-
         window.localStorage.setItem("GUESTCART", JSON.stringify(item));
 
         let guestCart = JSON.parse(window.localStorage.getItem("GUESTCART"));
@@ -120,14 +114,12 @@ export const addToCartThunk = (orderId, vehicleId, quantity) => {
 
         let guestCart = JSON.parse(window.localStorage.getItem("GUESTCART"));
         console.log("guestCart----->", guestCart);
-
       }
     } catch (error) {
       console.error(error);
     }
   };
 };
-
 
 //guest THINKS
 
@@ -139,15 +131,27 @@ export const guestAddToCartThunk = (vehicleId, quantity) => {
       guestCart.push(item);
 
       window.localStorage.setItem("GUESTCART", JSON.stringify(guestCart));
-      dispatch(guestToCart(JSON.parse(window.localStorage.getItem("GUESTCART"))));
+      dispatch(
+        guestToCart(JSON.parse(window.localStorage.getItem("GUESTCART")))
+      );
     } catch (error) {
       console.error(error);
     }
   };
 };
+
 export const guestSetCart = () => {
   return async (dispatch) => {
     try {
+      // window.localStorage.getItem("GUESTCART"))
+      // newArray = convert(localStorageObject to ARRAY) // {vid: 1, qty: 1}
+      // allCars = []
+      // Loop(newArray){
+      //   vehciel = await axios.get('vehicle/route')
+      //   allcars.push({...vehicle, order_vehicle: {quantity: vehicleQuantity}})
+      // }
+      // allcars= [{}, {}, {}]
+
       dispatch(
         _guestSetCart(JSON.parse(window.localStorage.getItem("GUESTCART")))
       );
@@ -156,7 +160,6 @@ export const guestSetCart = () => {
     }
   };
 };
-
 
 //reducer
 export default function (state = [], action) {
@@ -171,10 +174,10 @@ export default function (state = [], action) {
     case SET_CART:
       return action.cart;
     case GUEST_TO_CART:
-      console.log(action.cartItem)
+      console.log(action.cartItem);
       return state.push(action.cartItem);
     case GUEST_CART:
-      return action.cart
+      return action.cart;
     default:
       return state;
   }
