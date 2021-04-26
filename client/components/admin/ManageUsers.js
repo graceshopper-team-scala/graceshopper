@@ -47,8 +47,7 @@ export class ManageUsers extends React.Component {
               <Link to={{
                   pathname: `/manage_users/orders/${order.id}`,
                   state: {
-                    vehicles: order.vehicles,
-                    orderId: order.id
+                    vehicles: order.vehicles
                   }}}>
               <div>{order.id}</div>
               </Link>

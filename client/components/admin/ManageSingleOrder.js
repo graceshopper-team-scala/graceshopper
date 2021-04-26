@@ -22,7 +22,7 @@ async componentDidMount() {
   }
   async handleDelete(id) {
     await axios.put("/api/orders/remove_vehicle", {
-        orderId: this.props.location.state.orderId,
+        orderId: this.props.match.params.orderId,
         vehicleId: id
     })
     await this.setState({
