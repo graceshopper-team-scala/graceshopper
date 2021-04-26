@@ -22,6 +22,7 @@ export default class CartItems extends Component {
               <SingleCartItem
                 key={item.id}
                 vehicle={item}
+                item={item.vehicle}
                 handleClick={handleClick}
                 orderId={orderId}
               />

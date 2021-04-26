@@ -24,7 +24,10 @@ export class Cart extends Component {
     }else{
       this.props.guestCart();
     }
+<<<<<<< HEAD
+=======
     this.props.getCart(+userId);
+>>>>>>> 24b576859495a5aa377cf8442c8eee12854dbb12
     this.setState({
       isLoading: false,
     });
@@ -40,11 +43,9 @@ export class Cart extends Component {
   }
   render() {
     const cart = this.props.cart || [];
-    cart.map((element) => element.vehicleId = parseInt(element.vehicleId))
     const itemTotal = cart.reduce((acc, curr) => {
       return acc + curr.price;
     }, 0);
-    console.log('---->',cart)
 
     if (this.state.isLoading) {
       return (
