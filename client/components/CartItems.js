@@ -8,6 +8,7 @@ export default class CartItems extends Component {
   render() {
     const { items, handleClick } = this.props;
     const orderId = window.localStorage.getItem("order_id");
+
     return (
       <table className="cart-items">
         <tbody>

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { removeFromCart, setCart } from "../store/cart";
+import { createCartItem, removeFromCart, setCart, guestSetCart } from "../store/cart";
+
 import { connect } from "react-redux";
 import CartItems from "./CartItems";
 import Button from "react-bootstrap/Button";
@@ -20,9 +21,8 @@ export class Cart extends Component {
 
     if (userId) {
       this.props.getCart(+userId);
-    } else {
-      let item = JSON.parse(window.localStorage.getItem("GUESTCART"));
-      this.props.cart.push(item);
+    }else{
+      this.props.guestCart();
     }
     this.props.getCart(+userId);
     this.setState({
@@ -40,9 +40,11 @@ export class Cart extends Component {
   }
   render() {
     const cart = this.props.cart || [];
+    cart.map((element) => element.vehicleId = parseInt(element.vehicleId))
     const itemTotal = cart.reduce((acc, curr) => {
       return acc + curr.price;
     }, 0);
+    console.log('---->',cart)
 
     if (this.state.isLoading) {
       return (
@@ -97,6 +99,7 @@ const mapDispatch = (dispatch) => ({
   removeFromCart: (vehicleId, orderId) =>
     dispatch(removeFromCart(vehicleId, orderId)),
   getCart: (id) => dispatch(setCart(id)),
+  guestCart: () => dispatch(guestSetCart()),
 });
 
 export default connect(mapState, mapDispatch)(Cart);
