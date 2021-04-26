@@ -1,10 +1,15 @@
-import React, { Component } from "react";
-import { createCartItem, removeFromCart, setCart, guestSetCart } from "../store/cart";
+import React, { Component } from 'react';
+import {
+  createCartItem,
+  removeFromCart,
+  setCart,
+  guestSetCart,
+} from '../store/cart';
 
-import { connect } from "react-redux";
-import CartItems from "./CartItems";
-import Button from "react-bootstrap/Button";
-import ReactLoading from "react-loading";
+import { connect } from 'react-redux';
+import CartItems from './CartItems';
+import Button from 'react-bootstrap/Button';
+import ReactLoading from 'react-loading';
 
 export class Cart extends Component {
   constructor(props) {
@@ -16,12 +21,13 @@ export class Cart extends Component {
     this.handleContinue = this.handleContinue.bind(this);
     this.goToCheckout = this.goToCheckout.bind(this);
   }
+
   componentDidMount() {
-    const userId = window.localStorage.getItem("id");
+    const userId = window.localStorage.getItem('id');
 
     if (userId) {
       this.props.getCart(+userId);
-    }else{
+    } else {
       this.props.guestCart();
     }
     this.props.getCart(+userId);
@@ -29,29 +35,33 @@ export class Cart extends Component {
       isLoading: false,
     });
   }
+
   handleClick(vehicleId, orderId) {
     this.props.removeFromCart(vehicleId, orderId);
   }
+
   handleContinue() {
-    this.props.history.push("/vehicles");
+    this.props.history.push('/vehicles');
   }
+
   goToCheckout() {
-    this.props.history.push("/checkout");
+    this.props.history.push('/checkout');
   }
+
   render() {
     const cart = this.props.cart || [];
-    cart.map((element) => element.vehicleId = parseInt(element.vehicleId))
+    cart.map((element) => (element.vehicleId = parseInt(element.vehicleId)));
     const itemTotal = cart.reduce((acc, curr) => {
       return acc + curr.price;
     }, 0);
-    console.log('---->',cart)
+    console.log('---->', cart);
 
     if (this.state.isLoading) {
       return (
         <div className="loading-screen">
           <ReactLoading
-            type={"spokes"}
-            color={"#ffc107"}
+            type={'spokes'}
+            color={'#ffc107'}
             height={500}
             width={250}
           />
@@ -66,12 +76,12 @@ export class Cart extends Component {
               <p> My Cart</p>
               <div>
                 <Button variant="warning" onClick={this.handleContinue}>
-                  {" "}
+                  {' '}
                   Continue Shopping
                 </Button>
                 <Button variant="warning" onClick={this.goToCheckout}>
-                  {" "}
-                  Checkout{" "}
+                  {' '}
+                  Checkout{' '}
                 </Button>
               </div>
             </div>

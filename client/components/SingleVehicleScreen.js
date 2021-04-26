@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { getSingleVehicleThunk } from "../store/singleVehicle";
-import { withSnackbar } from "notistack";
-import { addToCartThunk, guestAddToCartThunk } from "../store/cart";
-import Button from "react-bootstrap/Button";
-import PropTypes from "prop-types";
-import ReactLoading from "react-loading";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { getSingleVehicleThunk } from '../store/singleVehicle';
+import { withSnackbar } from 'notistack';
+import { addToCartThunk, guestAddToCartThunk } from '../store/cart';
+import Button from 'react-bootstrap/Button';
+import PropTypes from 'prop-types';
+import ReactLoading from 'react-loading';
 
 class SingleVehicleScreen extends Component {
   constructor() {
@@ -23,9 +23,9 @@ class SingleVehicleScreen extends Component {
 
   handleSnackbar() {
     this.key = this.props.enqueueSnackbar(
-      "Your Vehicle was added to the cart!",
+      'Your Vehicle was added to the cart!',
       {
-        variant: "success",
+        variant: 'success',
       }
     );
   }
@@ -38,7 +38,7 @@ class SingleVehicleScreen extends Component {
 
   handleAddCartItem(evt) {
     evt.preventDefault();
-    const orderId = window.localStorage.getItem("order_id");
+    const orderId = window.localStorage.getItem('order_id');
     if (orderId) {
       this.props.addNewToCart(
         orderId,
@@ -67,8 +67,8 @@ class SingleVehicleScreen extends Component {
       return (
         <div className="loading-screen">
           <ReactLoading
-            type={"spokes"}
-            color={"#ffc107"}
+            type={'spokes'}
+            color={'#ffc107'}
             height={500}
             width={250}
           />
@@ -95,7 +95,7 @@ class SingleVehicleScreen extends Component {
                 <div className="vehicle-form">
                   {vehicle.quantity < 5 ? (
                     <div className="single-car-sold-out">
-                      {" "}
+                      {' '}
                       <big> SOLD OUT </big>
                     </div>
                   ) : (
@@ -140,8 +140,8 @@ const mapDispatch = (dispatch) => ({
   getSingleVehicle: (id) => dispatch(getSingleVehicleThunk(id)),
   addNewToCart: (userId, vehicleId, quantity) =>
     dispatch(addToCartThunk(userId, vehicleId, quantity)),
-  guestAddToCart: (vehicleId, quantity) =>
-    dispatch(guestAddToCartThunk(vehicleId, quantity)),
+  guestAddToCart: (vehicle, quantity) =>
+    dispatch(guestAddToCartThunk(vehicle, quantity)),
 });
 
 export default withSnackbar(
