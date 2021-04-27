@@ -25,7 +25,7 @@ export class Cart extends Component {
     const userId = window.localStorage.getItem("id");
 
     if (userId) {
-      this.props.getCart(+userId);
+      this.props.getCart(userId);
     } else {
       this.props.guestCart();
     }

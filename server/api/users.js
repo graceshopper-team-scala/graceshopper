@@ -3,9 +3,10 @@ const {
   models: { User, Order },
 } = require("../db");
 const Vehicle = require("../db/models/vehicle");
+const { requireAdminToken, requireToken } = require("../gatekeeping");
 module.exports = router;
 
-router.get("/", async (req, res, next) => {
+router.get("/", requireAdminToken, async (req, res, next) => {
   try {
     const users = await User.findAll({
       // explicitly select only the id and username fields - even though
@@ -20,8 +21,10 @@ router.get("/", async (req, res, next) => {
 });
 
 //GET api/users/orders/:userId
-router.get("/orders/:userId", async (req, res, next) => {
+router.get("/orders/:userId", requireToken, async (req, res, next) => {
   try {
+    // req.user.id must equal req.params.id
+    // dont need params
     const orders = await Order.findOrCreate({
       where: {
         userId: req.params.userId,
@@ -35,7 +38,7 @@ router.get("/orders/:userId", async (req, res, next) => {
   }
 });
 
-//GET api/users/orders/:userId
+//GET api/users/orders/history/:userId
 router.get("/orders/history/:userId", async (req, res, next) => {
   try {
     const orders = await Order.findAll({

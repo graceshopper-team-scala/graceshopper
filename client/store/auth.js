@@ -27,7 +27,11 @@ export const me = () => async (dispatch, state) => {
         authorization: token,
       },
     });
-    const { data: orders } = await axios.get(`api/users/orders/${res.data.id}`);
+    const { data: orders } = await axios.get(`api/users/orders/`, {
+      headers: {
+        authorization: token,
+      },
+    });
     //user object is returned
 
     //if no user id--> it creates a new usesr id
@@ -47,6 +51,7 @@ export const authenticate = (username, password, method, history) => async (
   try {
     const res = await axios.post(`/auth/${method}`, { username, password });
     window.localStorage.setItem(TOKEN, res.data.token);
+    console.log("admin token --->", res.data.token);
     dispatch(me());
     history.push("/home");
   } catch (authError) {

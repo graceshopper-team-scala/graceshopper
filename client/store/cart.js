@@ -132,13 +132,6 @@ export const guestSetCart = () => {
 
       dispatch(_guestSetCart(cart));
 
-      for (let i = 0; i < data.length; i++) {
-        guestCart.map((element) => {
-          if (element.vehicleId === data[i].id) {
-            element.vehicle = data[i];
-          }
-        });
-      }
       dispatch(_guestSetCart(guestCart));
     } catch (error) {
       console.log("Error fetching cars from server", error);
