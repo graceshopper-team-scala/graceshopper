@@ -21,15 +21,19 @@ export const gotItems = (items) => {
 };
 
 // Thunk Creators
-export const checkOut = (orderId, vehicles) => {
+export const checkOut = (orderId, vehicles, token) => {
   return async (dispatch) => {
     try {
-      const userId = window.localStorage.getItem("id");
+      console.log("token -->", token);
       const { data: order } = await axios.put(
         `api/orders/${orderId}/complete`,
         {
           vehicles,
-          userId,
+        },
+        {
+          headers: {
+            authorization: token,
+          },
         }
       );
       window.localStorage.setItem(ORDERID, order.id);
@@ -40,13 +44,18 @@ export const checkOut = (orderId, vehicles) => {
   };
 };
 
-export const setCheckout = (userId) => {
+export const setCheckout = (token) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:8080/api/users/orders/${userId}`
+        `http://localhost:8080/api/users/orders`,
+        {
+          headers: {
+            authorization: token,
+          },
+        }
       );
-      console.log(data);
+      console.log(data[0].vehicles);
       dispatch(gotItems(data[0].vehicles || []));
     } catch (error) {
       console.log("Error fetching cars from server - checkout", error);

@@ -12,7 +12,6 @@ class SingleVehicleScreen extends Component {
     super();
     this.state = {
       quantity: 1,
-
       isLoading: true,
     };
 
@@ -39,19 +38,19 @@ class SingleVehicleScreen extends Component {
   handleAddCartItem(evt) {
     evt.preventDefault();
     const orderId = window.localStorage.getItem("order_id");
-    const userId = window.localStorage.getItem("id");
-    if (orderId && userId) {
+    const token = window.localStorage.getItem("token");
+    if (token) {
       this.props.addNewToCart(
         orderId,
         this.props.match.params.id,
-        this.state.quantity
+        this.state.quantity,
+        token
       );
     } else {
       this.props.guestAddToCart(
         this.props.match.params.id,
         this.state.quantity
       );
-      console.log(this.state);
     }
   }
 
@@ -77,6 +76,12 @@ class SingleVehicleScreen extends Component {
       );
     }
 
+    const priceFormatter = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      maximumFractionDigits: 0,
+    });
+
     return (
       <div className="singlevehicle">
         <div className="container">
@@ -85,7 +90,9 @@ class SingleVehicleScreen extends Component {
               <img className="logo-img" src={vehicle.logoUrl} />
               <span className="vehicle-name">{vehicle.vehicleName}</span>
             </div>
-            <span className="vehicle-price">${vehicle.price}</span>
+            <span className="vehicle-price">
+              {priceFormatter.format(vehicle.price)}
+            </span>
           </div>
           <div className="vehicle-card">
             <div className="img-description">
@@ -139,10 +146,10 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => ({
   getSingleVehicle: (id) => dispatch(getSingleVehicleThunk(id)),
-  addNewToCart: (userId, vehicleId, quantity) =>
-    dispatch(addToCartThunk(userId, vehicleId, quantity)),
-  guestAddToCart: (vehicleId, quantity) =>
-    dispatch(guestAddToCartThunk(vehicleId, quantity)),
+  addNewToCart: (orderId, vehicleId, quantity, token) =>
+    dispatch(addToCartThunk(orderId, vehicleId, quantity, token)),
+  guestAddToCart: (vehicle, quantity) =>
+    dispatch(guestAddToCartThunk(vehicle, quantity)),
 });
 
 export default withSnackbar(

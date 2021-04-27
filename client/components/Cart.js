@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import {
-  createCartItem,
   removeFromCart,
   setCart,
   guestSetCart,
+  guesetRemoveItemThunk,
 } from "../store/cart";
 
 import { connect } from "react-redux";
@@ -21,11 +21,11 @@ export class Cart extends Component {
     this.handleContinue = this.handleContinue.bind(this);
     this.goToCheckout = this.goToCheckout.bind(this);
   }
-  componentDidMount() {
-    const userId = window.localStorage.getItem("id");
 
-    if (userId) {
-      this.props.getCart(userId);
+  componentDidMount() {
+    const TOKEN = window.localStorage.getItem("token");
+    if (TOKEN) {
+      this.props.getCart(TOKEN);
     } else {
       this.props.guestCart();
     }
@@ -33,34 +33,48 @@ export class Cart extends Component {
       isLoading: false,
     });
   }
+
   handleClick(vehicleId, orderId) {
-    this.props.removeFromCart(vehicleId, orderId);
+    if (orderId) {
+      this.props.removeFromCart(vehicleId, orderId);
+    } else {
+      this.props.guestRemoveItem(vehicleId);
+    }
   }
+
   handleContinue() {
     this.props.history.push("/vehicles");
   }
+
   goToCheckout() {
     this.props.history.push("/checkout");
   }
+
   render() {
     const cart = this.props.cart || [];
     cart.map((element) => (element.vehicleId = parseInt(element.vehicleId)));
     const itemTotal = cart.reduce((acc, curr) => {
       return acc + curr.price;
     }, 0);
-
     if (this.state.isLoading) {
       return (
         <div className="loading-screen">
           <ReactLoading
             type={"spokes"}
-            color={"#ffc107"}
+            color={"#FFC107"}
             height={500}
             width={250}
           />
         </div>
       );
     }
+
+    const priceFormatter = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      maximumFractionDigits: 0,
+    });
+
     return (
       <>
         <div className="cart-container">
@@ -81,7 +95,8 @@ export class Cart extends Component {
             <CartItems items={cart} handleClick={this.handleClick} />
             <div className="cart-total">
               <p>
-                Subtotal ({cart.length}) items: ${itemTotal}
+                Subtotal ({cart.length}) items:{" "}
+                {priceFormatter.format(itemTotal)}
               </p>
             </div>
           </div>
@@ -91,12 +106,10 @@ export class Cart extends Component {
   }
 }
 
-const mapState = (state) => {
-  return {
-    cart: state.cart,
-    isLoggedIn: !!state.auth.id,
-  };
-};
+const mapState = (state) => ({
+  cart: state.cart,
+  isLoggedIn: !!state.auth.id,
+});
 
 const mapDispatch = (dispatch) => ({
   addCartItems: () => dispatch(addToCart()),
@@ -104,6 +117,7 @@ const mapDispatch = (dispatch) => ({
     dispatch(removeFromCart(vehicleId, orderId)),
   getCart: (id) => dispatch(setCart(id)),
   guestCart: () => dispatch(guestSetCart()),
+  guestRemoveItem: (vehicleId) => dispatch(guesetRemoveItemThunk(vehicleId)),
 });
 
 export default connect(mapState, mapDispatch)(Cart);

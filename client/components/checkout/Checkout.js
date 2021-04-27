@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { checkOut, setCheckout } from "../../store/checkout";
-import { cartCheckout } from "../../store/cart";
+import { cartLogout } from "../../store/cart";
 import Button from "react-bootstrap/Button";
 
 export class Checkout extends Component {
@@ -11,14 +11,15 @@ export class Checkout extends Component {
     this.handleGoBack = this.handleGoBack.bind(this);
   }
   componentDidMount() {
-    const userId = window.localStorage.getItem("id");
-    this.props.fetchCart(userId);
+    const TOKEN = window.localStorage.getItem("token");
+    this.props.fetchCart(TOKEN);
   }
 
   handleComplete(vehicles) {
     const orderId = window.localStorage.getItem("order_id");
-    this.props.checkOutCart(orderId, vehicles);
-    this.props.cleartCart();
+    const TOKEN = window.localStorage.getItem("token");
+    this.props.checkOutCart(orderId, vehicles, TOKEN);
+    this.props.clearCart();
   }
   handleGoBack() {
     this.props.history.push("/cart");
@@ -43,7 +44,7 @@ export class Checkout extends Component {
             return (
               <div key={vehicle.id} className="checkout-item">
                 <p>{vehicle.vehicleName}</p>
-                <p>{vehicle.quantity}</p>
+                <p>{vehicle.order_vehicle.quantity}</p>
                 <p>{vehicle.price}</p>
               </div>
             );
@@ -65,8 +66,8 @@ const mapState = (state) => {
 };
 
 const mapDispatch = (dispatch) => ({
-  checkOutCart: (id, items) => dispatch(checkOut(id, items)),
+  checkOutCart: (id, items, token) => dispatch(checkOut(id, items, token)),
   fetchCart: (id) => dispatch(setCheckout(id)),
-  cleartCart: () => dispatch(cartCheckout()),
+  clearCart: () => dispatch(cartLogout()),
 });
 export default connect(mapState, mapDispatch)(Checkout);

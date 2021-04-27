@@ -1,14 +1,14 @@
 const {
-  models: { Order, Vehicle, User, Order_Vehicle },
+  models: { Order, Vehicle, Order_Vehicle },
 } = require("../db");
-
+const { requireAdminToken, requireToken } = require("../gatekeeping");
 const router = require("express").Router();
 
 //GET /api/orders
-router.get("/", async (req, res, next) => {
+router.get("/all", requireAdminToken, async (req, res, next) => {
   try {
     const orders = await Order.findAll({
-      attributes: ["id", "status", "userId"],
+      attributes: ["id", "status"],
       include: [
         {
           model: Vehicle,
@@ -102,6 +102,7 @@ If quantity === 0, the vehicle will also be removed from order/cart
 }
 */
 router.put("/remove_vehicle", async (req, res, next) => {
+  console.log("reached!!!");
   try {
     const order = await Order.findByPk(+req.body.orderId);
     const vehicle = await Vehicle.findByPk(req.body.vehicleId);
@@ -127,11 +128,36 @@ router.put("/remove_vehicle", async (req, res, next) => {
   }
 });
 
+//PUT /api/orders/admin/:orderId/complete
+router.put(
+  "/admin/:orderId/complete",
+  requireAdminToken,
+  async (req, res, next) => {
+    try {
+      const order = await Order.findByPk(req.params.orderId);
+      let newStatus;
+      if (order.status === "pending") newStatus = "completed";
+      else newStatus = "pending";
+      order.status = newStatus;
+      await order.save();
+      // await order.update({ status: newStatus });
+      res.status(200).send(order);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 //PUT /api/orders/:orderId/complete
 //updates status of order to 'completed'
-router.put("/:orderId/complete", async (req, res, next) => {
+router.put("/:orderId/complete", requireToken, async (req, res, next) => {
   try {
-    const { vehicles, userId } = req.body;
+    const { vehicles } = req.body;
+    const { id: userId } = req.user;
+    console.log("***************");
+    console.log("REQ --->", req);
+    console.log("***************");
+
     vehicles.forEach(async (vehicle) => {
       const dBVehicle = await Vehicle.findByPk(vehicle.id);
       dBVehicle.decrement("quantity", {
