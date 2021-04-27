@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getSingleVehicleThunk } from "../store/singleVehicle";
 import { withSnackbar } from "notistack";
-import { addToCartThunk } from "../store/cart";
+import { addToCartThunk, guestAddToCartThunk } from "../store/cart";
 import Button from "react-bootstrap/Button";
 import PropTypes from "prop-types";
 import ReactLoading from "react-loading";
@@ -12,6 +12,7 @@ class SingleVehicleScreen extends Component {
     super();
     this.state = {
       quantity: 1,
+
       isLoading: true,
     };
 
@@ -38,12 +39,20 @@ class SingleVehicleScreen extends Component {
   handleAddCartItem(evt) {
     evt.preventDefault();
     const orderId = window.localStorage.getItem("order_id");
-
-    this.props.addNewToCart(
-      orderId,
-      this.props.match.params.id,
-      this.state.quantity
-    );
+    const userId = window.localStorage.getItem("id");
+    if (orderId && userId) {
+      this.props.addNewToCart(
+        orderId,
+        this.props.match.params.id,
+        this.state.quantity
+      );
+    } else {
+      this.props.guestAddToCart(
+        this.props.match.params.id,
+        this.state.quantity
+      );
+      console.log(this.state);
+    }
   }
 
   handleQtyChange(evt) {
@@ -52,6 +61,9 @@ class SingleVehicleScreen extends Component {
 
   render() {
     const { vehicle } = this.props;
+
+    console.log();
+
     if (this.state.isLoading) {
       return (
         <div className="loading-screen">
@@ -64,6 +76,7 @@ class SingleVehicleScreen extends Component {
         </div>
       );
     }
+
     return (
       <div className="singlevehicle">
         <div className="container">
@@ -128,6 +141,8 @@ const mapDispatch = (dispatch) => ({
   getSingleVehicle: (id) => dispatch(getSingleVehicleThunk(id)),
   addNewToCart: (userId, vehicleId, quantity) =>
     dispatch(addToCartThunk(userId, vehicleId, quantity)),
+  guestAddToCart: (vehicleId, quantity) =>
+    dispatch(guestAddToCartThunk(vehicleId, quantity)),
 });
 
 export default withSnackbar(

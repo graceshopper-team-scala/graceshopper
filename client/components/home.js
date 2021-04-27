@@ -11,7 +11,7 @@ class Home extends Component {
     this.state = {
       isLoading: true,
     };
-
+    window.localStorage.setItem("GUESTCART", JSON.stringify([]));
     this.loader = this.loader.bind(this);
   }
 

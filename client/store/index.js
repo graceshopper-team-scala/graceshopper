@@ -7,13 +7,18 @@ import allVehicles from "./allVehicles";
 import allUsers from "./allUsers";
 import singleVehicle from "./singleVehicle";
 import cart from "./cart";
+import checkout from "./checkout";
 
 const reducer = combineReducers({
   auth,
   vehicles: allVehicles,
   vehicle: singleVehicle,
   cart,
+<<<<<<< HEAD
   users: allUsers
+=======
+  checkout,
+>>>>>>> main
 });
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
@@ -22,4 +27,3 @@ const store = createStore(reducer, middleware);
 
 export default store;
 export * from "./auth";
-export * from "./cart";
