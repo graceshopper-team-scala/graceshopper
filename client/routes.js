@@ -9,6 +9,8 @@ import { setCart } from "./store/cart";
 import AllVehiclesScreen from "./components/AllVehiclesScreen";
 import Cart from "./components/Cart";
 import ManageVehicles from "./components/admin/ManageVehicles";
+import ManageUsers from "./components/admin/ManageUsers";
+import ManageSingleOrder from "./components/admin/ManageSingleOrder";
 import Checkout from "./components/checkout/Checkout";
 import CheckoutConfirmation from "./components/checkout/CheckoutConfirmation";
 /**
@@ -37,7 +39,8 @@ class Routes extends Component {
                   <Route path="/home" component={Home} />
                   <Route path="/vehicles" component={AllVehiclesScreen} />
                   <Route path="/manage_vehicles" component={ManageVehicles} />
-                  <Route path="/users" component={AllVehiclesScreen} />
+                  <Route path="/manage_users/orders/:orderId" component={ManageSingleOrder} />
+                  <Route path="/manage_users" component={ManageUsers} />
                 </Switch>
               )}
               <Route

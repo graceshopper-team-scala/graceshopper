@@ -58,7 +58,7 @@ export function ButtonAppBar({ handleClick, isLoggedIn, clearState, isAdmin }) {
               </a>
             </Typography>
 
-            <Button color="inherit" component={Link} to="/vehicles">
+            <Button color="inherit" component={Link} to="/manage_users">
               Users
             </Button>
             <Button color="inherit" component={Link} to="/manage_vehicles">
