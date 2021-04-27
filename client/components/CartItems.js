@@ -12,8 +12,8 @@ export default class CartItems extends Component {
       <table className="cart-items">
         <tbody>
           <tr>
-            <th>Item</th>
-            <th>Quantity</th>
+            <th></th>
+            <th></th>
             <th>Price</th>
           </tr>
           {items.map((item) => {

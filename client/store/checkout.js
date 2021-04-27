@@ -1,10 +1,13 @@
 import axios from "axios";
+import history from "../history";
 // Action Types
 const CHECKED_OUT = "CHECKED_OUT";
 const SET_CHECKOUT_ITEMS = "SET_CHECKOUT_ITEMS";
+const ORDERID = "order_id";
 
 // Action Creators
 export const checkedOut = () => {
+  history.push("/confirmation");
   return {
     type: CHECKED_OUT,
     checkout: [],
@@ -21,10 +24,16 @@ export const gotItems = (items) => {
 export const checkOut = (orderId, vehicles) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(`api/orders/${orderId}/complete`, {
-        vehicles,
-      });
-      dispatch(checkedOut(data));
+      const userId = window.localStorage.getItem("id");
+      const { data: order } = await axios.put(
+        `api/orders/${orderId}/complete`,
+        {
+          vehicles,
+          userId,
+        }
+      );
+      window.localStorage.setItem(ORDERID, order.id);
+      dispatch(checkedOut());
     } catch (error) {
       console.log("Error fetching cars from server", error);
     }
@@ -49,16 +58,14 @@ const initialState = {
   isReady: false,
   vehicles: [],
 };
-
 export default function (state = initialState, action) {
   switch (action.type) {
     case CHECKED_OUT:
-      return { ...state, vehicles: action.checkout, isReady: true };
+      return { ...state, vehicles: action.checkout };
     case SET_CHECKOUT_ITEMS:
       return {
         ...state,
         vehicles: action.items,
-        isReady: action.items.length > 0 ? true : false,
       };
     default:
       return state;

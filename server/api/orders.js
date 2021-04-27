@@ -131,7 +131,7 @@ router.put("/remove_vehicle", async (req, res, next) => {
 //updates status of order to 'completed'
 router.put("/:orderId/complete", async (req, res, next) => {
   try {
-    const { vehicles } = req.body;
+    const { vehicles, userId } = req.body;
     vehicles.forEach(async (vehicle) => {
       const dBVehicle = await Vehicle.findByPk(vehicle.id);
       dBVehicle.decrement("quantity", {
@@ -140,7 +140,10 @@ router.put("/:orderId/complete", async (req, res, next) => {
     });
     const order = await Order.findByPk(req.params.orderId);
     await order.update({ status: "completed" });
-    res.sendStatus(200);
+
+    // New Order
+    const newCart = await Order.create({ userId });
+    res.status(200).send(newCart);
   } catch (error) {
     next(error);
   }

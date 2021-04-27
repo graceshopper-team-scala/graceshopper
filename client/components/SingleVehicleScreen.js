@@ -77,6 +77,12 @@ class SingleVehicleScreen extends Component {
       );
     }
 
+    const priceFormatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      maximumFractionDigits: 0,
+    });
+
     return (
       <div className="singlevehicle">
         <div className="container">
@@ -85,7 +91,9 @@ class SingleVehicleScreen extends Component {
               <img className="logo-img" src={vehicle.logoUrl} />
               <span className="vehicle-name">{vehicle.vehicleName}</span>
             </div>
-            <span className="vehicle-price">${vehicle.price}</span>
+            <span className="vehicle-price">
+              {priceFormatter.format(vehicle.price)}
+            </span>
           </div>
           <div className="vehicle-card">
             <div className="img-description">

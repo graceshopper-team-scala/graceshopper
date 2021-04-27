@@ -97,7 +97,7 @@ export const addToCartThunk = (orderId, vehicleId, quantity) => {
 
 //guest THUNKS
 export const guestAddToCartThunk = (vehicleId, quantity) => {
-  return async (dispatch) => {
+  return async () => {
     try {
       const item = {
         vehicleId: vehicleId,
@@ -145,7 +145,7 @@ export const guestSetCart = () => {
         cart.push(singlecar);
       }
 
-      dispatch(_guestSetCart(cart));
+      dispatch(_guestSetCart(guestCart));
     } catch (error) {
       console.log('Error fetching cars from server', error);
     }

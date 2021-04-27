@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-import {
-  createCartItem,
-  removeFromCart,
-  setCart,
-  guestSetCart,
-} from '../store/cart';
+import { removeFromCart, setCart, guestSetCart } from '../store/cart';
+
 import { connect } from 'react-redux';
 import CartItems from './CartItems';
 import Button from 'react-bootstrap/Button';
@@ -51,7 +47,6 @@ export class Cart extends Component {
     const itemTotal = cart.reduce((acc, curr) => {
       return acc + curr.price;
     }, 0);
-    console.log('---->', cart);
     if (this.state.isLoading) {
       return (
         <div className="loading-screen">
@@ -64,12 +59,19 @@ export class Cart extends Component {
         </div>
       );
     }
+
+    const priceFormatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      maximumFractionDigits: 0,
+    });
+
     return (
       <>
         <div className="cart-container">
           <div className="cart-area">
             <div className="cart-top">
-              <p> My Cart</p>
+              <big className="cart-title"> My Cart</big>
               <div>
                 <Button variant="warning" onClick={this.handleContinue}>
                   {' '}
@@ -83,8 +85,10 @@ export class Cart extends Component {
             </div>
             <CartItems items={cart} handleClick={this.handleClick} />
             <div className="cart-total">
-              <p>Subtotal ({cart.length}) items</p>
-              <p>Total: ${itemTotal}</p>
+              <p>
+                Subtotal ({cart.length}) items:{' '}
+                {priceFormatter.format(itemTotal)}
+              </p>
             </div>
           </div>
         </div>
