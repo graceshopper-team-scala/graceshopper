@@ -1,43 +1,35 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react';
+import { SingleCartItem } from './SingleCartItem';
 
 export default class CartItems extends Component {
+  constructor() {
+    super();
+  }
+
   render() {
     const { items, handleClick } = this.props;
-    const orderId = window.localStorage.getItem("order_id");
-    // console.log(handleClick);
+    const orderId = window.localStorage.getItem('order_id');
+
     return (
       <table className="cart-items">
         <tbody>
           <tr>
-            <th>Item</th>
-            <th>Quantity</th>
+            <th></th>
+            <th></th>
             <th>Price</th>
           </tr>
-          {items.map((item) => {
+          {items.map((item, index) => {
+            {
+              /* console.log(item); */
+            }
             return (
-              <tr className="single-cart-item" key={item.id}>
-                <td>
-                  <img className="cart-img" src={item.imageUrl} />
-                  <Link to={`/vehicles/${item.id}`} className="cartitem_name">
-                    {item.make} {item.model}{" "}
-                  </Link>
-                </td>
-                <td>
-                  <select>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                  </select>
-                  <button
-                    className="remove"
-                    onClick={() => handleClick(item.id, orderId)}
-                  >
-                    <i className="fas fa-trash"></i>
-                  </button>
-                </td>
-                <td>{item.price}</td>
-              </tr>
+              <SingleCartItem
+                key={item.id}
+                vehicle={item}
+                item={item.vehicle}
+                handleClick={handleClick}
+                orderId={orderId}
+              />
             );
           })}
         </tbody>
