@@ -6,10 +6,12 @@ const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 const SET_CART = "SET_CART";
 const TOKEN = "token";
 
+
 //Guest action types
 const GUEST_TO_CART = "GUEST_TO_CART";
 const GUEST_CART = "GUEST_CART";
 const GUEST_REMOVE_ITEM = "GUEST_REMOVE_ITEM";
+
 
 // Action Creators
 const addToCart = (cartItem) => ({
@@ -62,6 +64,7 @@ export const removeFromCart = (vehicleId, orderId) => {
   };
 };
 
+
 export const setCart = (token) => {
   return async (dispatch) => {
     try {
@@ -106,6 +109,7 @@ export const addToCartThunk = (orderId, vehicleId, quantity, token) => {
     }
   };
 };
+
 
 //guest THUNKS
 export const guestAddToCartThunk = (vehicleId, quantity) => {

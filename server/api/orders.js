@@ -102,7 +102,6 @@ If quantity === 0, the vehicle will also be removed from order/cart
 }
 */
 router.put("/remove_vehicle", async (req, res, next) => {
-  console.log("reached!!!");
   try {
     const order = await Order.findByPk(+req.body.orderId);
     const vehicle = await Vehicle.findByPk(req.body.vehicleId);
@@ -154,9 +153,6 @@ router.put("/:orderId/complete", requireToken, async (req, res, next) => {
   try {
     const { vehicles } = req.body;
     const { id: userId } = req.user;
-    console.log("***************");
-    console.log("REQ --->", req);
-    console.log("***************");
 
     vehicles.forEach(async (vehicle) => {
       const dBVehicle = await Vehicle.findByPk(vehicle.id);

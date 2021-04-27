@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getSingleVehicleThunk } from "../store/singleVehicle";
 import { withSnackbar } from "notistack";
-import { addToCartThunk, guestAddToCartThunk } from "../store/cart";
+import cart, { addToCartThunk, guestAddToCartThunk } from "../store/cart";
 import Button from "react-bootstrap/Button";
 import PropTypes from "prop-types";
 import ReactLoading from "react-loading";
@@ -21,12 +21,23 @@ class SingleVehicleScreen extends Component {
   }
 
   handleSnackbar() {
+    
+    if(this.props.vehicle.quantity < this.state.quantity){
+      this.key = this.props.enqueueSnackbar(
+        "Not enough vehicles in stock!",
+        {
+          variant: "error",
+        }
+      );
+    }
+    else{
     this.key = this.props.enqueueSnackbar(
       "Your Vehicle was added to the cart!",
       {
         variant: "success",
       }
     );
+    }
   }
   componentDidMount() {
     this.props.getSingleVehicle(this.props.match.params.id);
@@ -37,16 +48,18 @@ class SingleVehicleScreen extends Component {
 
   handleAddCartItem(evt) {
     evt.preventDefault();
+    console.log('!!!!!!', this.props.cart)
     const orderId = window.localStorage.getItem("order_id");
     const token = window.localStorage.getItem("token");
-    if (token) {
+    const acceptAmount = this.props.vehicle.quantity - this.state.quantity >=0 
+    if (token && acceptAmount) {
       this.props.addNewToCart(
         orderId,
         this.props.match.params.id,
         this.state.quantity,
         token
       );
-    } else {
+    } else if(acceptAmount){
       this.props.guestAddToCart(
         this.props.match.params.id,
         this.state.quantity
@@ -60,8 +73,6 @@ class SingleVehicleScreen extends Component {
 
   render() {
     const { vehicle } = this.props;
-
-    console.log();
 
     if (this.state.isLoading) {
       return (
@@ -101,7 +112,7 @@ class SingleVehicleScreen extends Component {
               <div className="img-description-right">
                 <p className="vechicle-description">{vehicle.description}</p>
                 <div className="vehicle-form">
-                  {vehicle.quantity < 5 ? (
+                  {vehicle.quantity === 0 ? (
                     <div className="single-car-sold-out">
                       {" "}
                       <big> SOLD OUT </big>
@@ -142,6 +153,7 @@ SingleVehicleScreen.propTypes = {
 const mapState = (state) => ({
   vehicle: state.vehicle,
   auth: state.auth,
+  cart: state.cart
 });
 
 const mapDispatch = (dispatch) => ({

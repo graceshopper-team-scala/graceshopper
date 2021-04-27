@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import axios from "axios";
+
 
 export class SingleCartItem extends Component {
   constructor() {
@@ -19,6 +21,18 @@ export class SingleCartItem extends Component {
 
     guestCart[0].quantity = Number(evt.target.value);
     window.localStorage.setItem('GUESTCART', JSON.stringify(guestCart));}
+    else{
+      console.log(
+       console.log(typeof(parseInt(this.props.orderId))),
+        
+      )
+      axios.put(`/api/orders/add_vehicle`, {
+        orderId: +this.props.orderId,
+        vehicleId: this.props.vehicle.id,
+        quantity: +evt.target.value,
+        fromCart: true
+      });
+    }
 
     this.setState({quantity: +evt.target.value })
 
@@ -68,3 +82,4 @@ export class SingleCartItem extends Component {
   }
 }
 export default SingleCartItem;
+
