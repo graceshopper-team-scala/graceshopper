@@ -1,7 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { logout, cartLogout } from "../store";
+import { logout } from "../store";
+import { cartLogout } from "../store/cart";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -57,7 +58,7 @@ export function ButtonAppBar({ handleClick, isLoggedIn, clearState, isAdmin }) {
               </a>
             </Typography>
 
-            <Button color="inherit" component={Link} to="/vehicles">
+            <Button color="inherit" component={Link} to="/manage_users">
               Users
             </Button>
             <Button color="inherit" component={Link} to="/manage_vehicles">

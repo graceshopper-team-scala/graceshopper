@@ -2,10 +2,19 @@ import React from "react";
 import { connect } from "react-redux";
 import { fetchVehicles } from "../store/allVehicles";
 import { Link } from "react-router-dom";
-
+import ReactLoading from "react-loading";
 export class AllVehicles extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      isLoading: true,
+    };
+  }
   componentDidMount() {
     this.props.getVehicles();
+    this.setState({
+      isLoading: false,
+    });
   }
 
   render() {
@@ -17,7 +26,18 @@ export class AllVehicles extends React.Component {
       currency: "USD",
       maximumFractionDigits: 0,
     });
-
+    if (this.state.isLoading) {
+      return (
+        <div className="loading-screen">
+          <ReactLoading
+            type={"spokes"}
+            color={"#ffc107"}
+            height={500}
+            width={250}
+          />
+        </div>
+      );
+    }
     return (
       <div className="Allcards">
         {vehicles.map((vehicle) => (

@@ -1,14 +1,18 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Login, Signup } from "./components/AuthForm";
 import Home from "./components/home";
-import UserHome from "./components/userHome";
 import SingleVehicleScreen from "./components/SingleVehicleScreen";
 import { me } from "./store";
+import { setCart } from "./store/cart";
 import AllVehiclesScreen from "./components/AllVehiclesScreen";
 import Cart from "./components/Cart";
 import ManageVehicles from "./components/admin/ManageVehicles";
+import ManageUsers from "./components/admin/ManageUsers";
+import ManageSingleOrder from "./components/admin/ManageSingleOrder";
+import Checkout from "./components/checkout/Checkout";
+import CheckoutConfirmation from "./components/checkout/CheckoutConfirmation";
 /**
  * COMPONENT
  */
@@ -19,24 +23,24 @@ class Routes extends Component {
 
   render() {
     const { isLoggedIn, isAdmin } = this.props;
-
     return (
       <div>
         <Switch>
-          <Route exact path="/" exact component={Home} />
-          <Route path="/Home" exact component={Home} />
+          <Route exact path="/" component={Home} />
+          <Route path="/home" exact component={Home} />
           <Route path="/login" component={Login} />
           {isLoggedIn && (
             <Switch>
               {/* Routes placed here are only available after logging in */}
-              <Route path="/home" component={UserHome} />
+              <Route path="/home" component={Home} />
               {isLoggedIn && isAdmin && (
                 <Switch>
                   {/* Routes placed here are only available after logging in */}
-                  <Route path="/home" component={UserHome} />
+                  <Route path="/home" component={Home} />
                   <Route path="/vehicles" component={AllVehiclesScreen} />
                   <Route path="/manage_vehicles" component={ManageVehicles} />
-                  <Route path="/users" component={AllVehiclesScreen} />
+                  <Route path="/manage_users/orders/:orderId" component={ManageSingleOrder} />
+                  <Route path="/manage_users" component={ManageUsers} />
                 </Switch>
               )}
               <Route
@@ -46,6 +50,8 @@ class Routes extends Component {
               />
               <Route path="/vehicles" component={AllVehiclesScreen} />
               <Route path="/cart" component={Cart} />
+              <Route exact path="/checkout" component={Checkout} />
+              <Route path="/confirmation" component={CheckoutConfirmation} />
             </Switch>
           )}
 
@@ -53,6 +59,7 @@ class Routes extends Component {
           <Route exact path="/vehicles/:id" component={SingleVehicleScreen} />
           <Route path="/vehicles" component={AllVehiclesScreen} />
           <Route path="/cart" component={Cart} />
+          <Route path="/checkout" component={Checkout} />
         </Switch>
       </div>
     );
@@ -68,6 +75,8 @@ const mapState = (state) => {
     // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
     isLoggedIn: !!state.auth.id,
     isAdmin: state.auth.isAdmin,
+    readyToCheckout: state.checkout.isReady,
+    cart: state.cart,
   };
 };
 
@@ -75,6 +84,9 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData() {
       dispatch(me());
+    },
+    loadCart(id) {
+      dispatch(setCart(id));
     },
   };
 };

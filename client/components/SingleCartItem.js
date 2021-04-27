@@ -5,6 +5,7 @@ export class SingleCartItem extends Component {
   constructor() {
     super();
     this.state = {
+
       quantity: 1,
     };
     this.handleQtyChange = this.handleQtyChange.bind(this);
@@ -20,6 +21,7 @@ export class SingleCartItem extends Component {
     window.localStorage.setItem('GUESTCART', JSON.stringify(guestCart));}
 
     this.setState({quantity: +evt.target.value })
+
   }
 
   render() {
@@ -43,8 +45,10 @@ export class SingleCartItem extends Component {
           </td>
           <td>
             <select
+
               value={this.state.quantity}
               onChange={ this.handleQtyChange}
+
             >
               <option value="1">1</option>
               <option value="2">2</option>
