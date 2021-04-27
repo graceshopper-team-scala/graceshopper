@@ -23,12 +23,13 @@ export default class StatusForm extends Component {
 
   async handleSubmit(evt){
     evt.preventDefault();
-    // let newStatus;
-    // // if(this.state.status==='pending') newStatus="completed"
-    // else newStatus="pending"
-    await axios.put(`/api/orders/${this.props.user.id}/complete`)
+    let newStatus;
+    if(this.state.status==='pending') newStatus="completed"
+    else newStatus="pending"
+    
+    await axios.put(`/api/orders/admin/${this.props.order.id}/complete`)
     await this.setState({
-        status: "completed"
+        status: newStatus
     })
 }
 
@@ -40,19 +41,20 @@ export default class StatusForm extends Component {
     return (
         <form onSubmit={this.handleSubmit}>
         <input name = "status" value={this.state.status} />
-        <div>
+        <button type="submit">Mark complete</button>
+        {/* <div>
             {completed ?
             <span>
                 <button disabled type="submit">Mark complete</button>
             </span>
             :
             <span>
-            <button type="submit">Update Status</button>
+            <button type="submit">Mark complete</button>
             </span>
 
             }
         
-        </div>
+        </div> */}
         </form>
     );
   }

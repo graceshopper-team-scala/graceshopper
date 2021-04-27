@@ -128,6 +128,24 @@ router.put("/remove_vehicle", async (req, res, next) => {
   }
 });
 
+//PUT /api/orders/admin/:orderId/complete
+router.put("/admin/:orderId/complete", async (req, res, next) => {
+  try {
+    const order = await Order.findByPk(req.params.orderId);
+      let newStatus;
+      if(order.status==="pending") newStatus="completed"
+      else newStatus="pending"
+      order.status = newStatus
+      await order.save()
+      // await order.update({ status: newStatus });
+    res.status(200).send(order);
+  } catch (error) {
+    next(error);
+  }
+});
+
+
+
 //PUT /api/orders/:orderId/complete
 //updates status of order to 'completed'
 router.put("/:orderId/complete", async (req, res, next) => {

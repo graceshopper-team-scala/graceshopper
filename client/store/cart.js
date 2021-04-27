@@ -130,7 +130,6 @@ export const  guestSetCart = () => {
         _guestSetCart(cart)
       );
       
-      dispatch(_guestSetCart(guestCart));
     } catch (error) {
       console.log("Error fetching cars from server", error);
     }

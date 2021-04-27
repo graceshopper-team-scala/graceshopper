@@ -14,11 +14,8 @@ const reducer = combineReducers({
   vehicles: allVehicles,
   vehicle: singleVehicle,
   cart,
-<<<<<<< HEAD
-  users: allUsers
-=======
   checkout,
->>>>>>> main
+  users: allUsers
 });
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
