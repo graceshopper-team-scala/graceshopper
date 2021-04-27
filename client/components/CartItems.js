@@ -18,6 +18,7 @@ export default class CartItems extends Component {
             <th></th>
             <th>Price</th>
           </tr>
+
           {items.map((item) => {
             return (
               <SingleCartItem

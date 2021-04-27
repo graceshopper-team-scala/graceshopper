@@ -1,23 +1,31 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+
 export class SingleCartItem extends Component {
   constructor() {
     super();
     this.state = {
-      quantity: {},
-      // guest cart should equal to whatever in local storage, we can manipulated to the local state to force render and then set it to local storage to it by parsing into a string.
-      // change the state of cart that correspond to local storage
+
+      quantity: 1,
     };
     this.handleQtyChange = this.handleQtyChange.bind(this);
   }
-
+  componentDidMount(){
+    this.setState({quantity: this.props.vehicle.order_vehicle.quantity})
+  }
   handleQtyChange(evt) {
-    this.setState({ quantity: Number(evt.target.value) });
+    let token = window.localStorage.getItem('token');
+    if(!token){let guestCart = JSON.parse(window.localStorage.getItem('GUESTCART'));
+
+    guestCart[0].quantity = Number(evt.target.value);
+    window.localStorage.setItem('GUESTCART', JSON.stringify(guestCart));}
+
+    this.setState({quantity: +evt.target.value })
+
   }
 
   render() {
     const { vehicle, handleClick, orderId } = this.props;
-    // console.log('vehicle---->', vehicle);
 
     const priceFormatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -37,8 +45,10 @@ export class SingleCartItem extends Component {
           </td>
           <td>
             <select
-              value={vehicle.order_vehicle.quantity}
-              onChange={this.handleQtyChange}
+
+              value={this.state.quantity}
+              onChange={ this.handleQtyChange}
+
             >
               <option value="1">1</option>
               <option value="2">2</option>
