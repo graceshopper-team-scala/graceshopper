@@ -12,7 +12,6 @@ class SingleVehicleScreen extends Component {
     super();
     this.state = {
       quantity: 1,
-
       isLoading: true,
     };
 

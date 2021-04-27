@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { removeFromCart, setCart, guestSetCart } from '../store/cart';
+import {
+  removeFromCart,
+  setCart,
+  guestSetCart,
+  guesetRemoveItemThunk,
+} from '../store/cart';
 
 import { connect } from 'react-redux';
 import CartItems from './CartItems';
@@ -30,7 +35,11 @@ export class Cart extends Component {
   }
 
   handleClick(vehicleId, orderId) {
-    this.props.removeFromCart(vehicleId, orderId);
+    if (orderId) {
+      this.props.removeFromCart(vehicleId, orderId);
+    } else {
+      this.props.guestRemoveItem(vehicleId);
+    }
   }
 
   handleContinue() {
@@ -108,6 +117,7 @@ const mapDispatch = (dispatch) => ({
     dispatch(removeFromCart(vehicleId, orderId)),
   getCart: (id) => dispatch(setCart(id)),
   guestCart: () => dispatch(guestSetCart()),
+  guestRemoveItem: (vehicleId) => dispatch(guesetRemoveItemThunk(vehicleId)),
 });
 
 export default connect(mapState, mapDispatch)(Cart);

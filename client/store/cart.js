@@ -117,9 +117,28 @@ export const guestAddToCartThunk = (vehicleId, quantity) => {
 export const guesetRemoveItemThunk = (vehicleId) => {
   return async (dispatch) => {
     try {
-      const item = {
-        vehicleId: vehicleId,
-      };
+      let guestCart = JSON.parse(window.localStorage.getItem('GUESTCART'));
+      console.log('guest cart >>>', vehicleId);
+
+      guestCart.map((element) => {
+        element.vehicleId = parseInt(element.vehicleId);
+      });
+
+      guestCart = guestCart.filter((element) => {
+        console.log('filter >>>', element);
+        return element.vehicleId !== vehicleId;
+      });
+
+      console.log('guest cart 1 >>>', guestCart);
+
+      guestCart = window.localStorage.setItem(
+        'GUESTCART',
+        JSON.stringify(guestCart)
+      );
+
+      console.log('guest cart 2 >>>', guestCart);
+
+      dispatch(_guestSetCart(guestCart));
     } catch (error) {
       console.error(error);
     }
@@ -129,6 +148,8 @@ export const guesetRemoveItemThunk = (vehicleId) => {
 export const guestSetCart = () => {
   return async (dispatch) => {
     try {
+      const { data } = await axios.get(`api/vehicles`);
+
       let guestCart = JSON.parse(window.localStorage.getItem('GUESTCART'));
       guestCart.map(
         (element) => (element.vehicleId = parseInt(element.vehicleId))
@@ -145,7 +166,7 @@ export const guestSetCart = () => {
         cart.push(singlecar);
       }
 
-      dispatch(_guestSetCart(guestCart));
+      dispatch(_guestSetCart(cart));
     } catch (error) {
       console.log('Error fetching cars from server', error);
     }
@@ -171,10 +192,10 @@ export default function (state = [], action) {
     case GUEST_CART:
       return action.cart;
     case GUEST_REMOVE_ITEM:
-      return (filterVehicles = state.filter(
-        (vehicle) => vehicle.id !== action.vehicleId
-      ));
-
+      const guestVehicles = state.filter((vehicle) => {
+        return vehicle.id !== action.vehicleId;
+      });
+      return guestVehicles;
     default:
       return state;
   }
