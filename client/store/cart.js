@@ -32,12 +32,12 @@ export const _setCart = (cart) => {
 
 // Guest action Creators
 const guestAddCart = (cartItem) => ({
-  type: ADD_TO_CART,
+  type: GUEST_TO_CART,
   cartItem,
 });
 
 const _guestSetCart = (cart) => ({
-  type: SET_CART,
+  type: GUEST_CART,
   cart,
 });
 
@@ -118,27 +118,21 @@ export const guesetRemoveItemThunk = (vehicleId) => {
   return async (dispatch) => {
     try {
       let guestCart = JSON.parse(window.localStorage.getItem('GUESTCART'));
-      console.log('guest cart >>>', vehicleId);
 
       guestCart.map((element) => {
         element.vehicleId = parseInt(element.vehicleId);
       });
 
       guestCart = guestCart.filter((element) => {
-        console.log('filter >>>', element);
         return element.vehicleId !== vehicleId;
       });
-
-      console.log('guest cart 1 >>>', guestCart);
 
       guestCart = window.localStorage.setItem(
         'GUESTCART',
         JSON.stringify(guestCart)
       );
 
-      console.log('guest cart 2 >>>', guestCart);
-
-      dispatch(_guestSetCart(guestCart));
+      dispatch(guestSetCart(guestCart));
     } catch (error) {
       console.error(error);
     }
@@ -178,10 +172,12 @@ export default function (state = [], action) {
   switch (action.type) {
     case ADD_TO_CART:
       return action.cartItem;
+
     case REMOVE_FROM_CART:
       const filterCars = state.filter(
         (vehicle) => vehicle.id !== action.vehicleId
       );
+
       return filterCars;
     case SET_CART:
       return action.cart;
@@ -189,13 +185,16 @@ export default function (state = [], action) {
     // GUEST REDUCER
     case GUEST_TO_CART:
       return state.push(action.cartItem);
+
     case GUEST_CART:
       return action.cart;
+
     case GUEST_REMOVE_ITEM:
       const guestVehicles = state.filter((vehicle) => {
         return vehicle.id !== action.vehicleId;
       });
       return guestVehicles;
+
     default:
       return state;
   }

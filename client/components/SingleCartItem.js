@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+
 export class SingleCartItem extends Component {
   constructor() {
     super();
     this.state = {
       quantity: {},
-      // guest cart should equal to whatever in local storage, we can manipulated to the local state to force render and then set it to local storage to it by parsing into a string.
-      // change the state of cart that correspond to local storage
     };
     this.handleQtyChange = this.handleQtyChange.bind(this);
   }
@@ -17,7 +16,6 @@ export class SingleCartItem extends Component {
 
   render() {
     const { vehicle, handleClick, orderId } = this.props;
-    // console.log('vehicle---->', vehicle);
 
     const priceFormatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
