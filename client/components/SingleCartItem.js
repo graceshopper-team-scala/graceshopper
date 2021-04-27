@@ -5,13 +5,20 @@ export class SingleCartItem extends Component {
   constructor() {
     super();
     this.state = {
-      quantity: {},
+      quantity: 1,
     };
     this.handleQtyChange = this.handleQtyChange.bind(this);
   }
-
+  componentDidMount(){
+    this.setState({quantity: this.props.vehicle.order_vehicle.quantity})
+  }
   handleQtyChange(evt) {
-    this.setState({ quantity: Number(evt.target.value) });
+    let token = window.localStorage.getItem('token');
+    if(!token){let guestCart = JSON.parse(window.localStorage.getItem('GUESTCART'));
+    guestCart[0].quantity = Number(evt.target.value);
+    window.localStorage.setItem('GUESTCART', JSON.stringify(guestCart));}
+
+    this.setState({quantity: +evt.target.value })
   }
 
   render() {
@@ -35,8 +42,8 @@ export class SingleCartItem extends Component {
           </td>
           <td>
             <select
-              value={vehicle.order_vehicle.quantity}
-              onChange={this.handleQtyChange}
+              value={this.state.quantity}
+              onChange={ this.handleQtyChange}
             >
               <option value="1">1</option>
               <option value="2">2</option>

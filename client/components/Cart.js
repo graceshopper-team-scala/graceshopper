@@ -92,7 +92,7 @@ export class Cart extends Component {
                 </Button>
               </div>
             </div>
-            <CartItems items={cart} handleClick={this.handleClick} />
+            <CartItems items={cart}  handleClick={this.handleClick} />
             <div className="cart-total">
               <p>
                 Subtotal ({cart.length}) items:{' '}
