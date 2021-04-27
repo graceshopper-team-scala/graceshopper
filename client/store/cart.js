@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 // Action Types
 const ADD_TO_CART = 'ADD_TO_CART';
 const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
@@ -8,6 +9,7 @@ const SET_CART = 'SET_CART';
 //Guest action types
 const GUEST_TO_CART = 'GUEST_TO_CART';
 const GUEST_CART = 'GUEST_CART';
+const GUEST_REMOVE_ITEM = 'GUEST_REMOVE_ITEM';
 
 // Action Creators
 const addToCart = (cartItem) => ({
@@ -29,19 +31,22 @@ export const _setCart = (cart) => {
 };
 
 // Guest action Creators
-const guestToCart = (cartItem) => ({
+const guestAddCart = (cartItem) => ({
   type: ADD_TO_CART,
   cartItem,
 });
-export const _guestSetCart = (cart) => {
-  return {
-    type: SET_CART,
-    cart,
-  };
-};
+
+const _guestSetCart = (cart) => ({
+  type: SET_CART,
+  cart,
+});
+
+const _guestRemoveItem = (cartItem) => ({
+  type: GUEST_REMOVE_ITEM,
+  cartItem,
+});
 
 // Thunk Creators
-
 export const removeFromCart = (vehicleId, orderId) => {
   return async (dispatch) => {
     //change to remove from through table
@@ -91,7 +96,6 @@ export const addToCartThunk = (orderId, vehicleId, quantity) => {
 };
 
 //guest THUNKS
-
 export const guestAddToCartThunk = (vehicleId, quantity) => {
   return async (dispatch) => {
     try {
@@ -109,6 +113,19 @@ export const guestAddToCartThunk = (vehicleId, quantity) => {
     }
   };
 };
+
+export const guesetRemoveItemThunk = (vehicleId) => {
+  return async (dispatch) => {
+    try {
+      const item = {
+        vehicleId: vehicleId,
+      };
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
 export const guestSetCart = () => {
   return async (dispatch) => {
     try {
@@ -144,14 +161,20 @@ export default function (state = [], action) {
       const filterCars = state.filter(
         (vehicle) => vehicle.id !== action.vehicleId
       );
-      console.log(filterCars);
       return filterCars;
     case SET_CART:
       return action.cart;
+
+    // GUEST REDUCER
     case GUEST_TO_CART:
       return state.push(action.cartItem);
     case GUEST_CART:
       return action.cart;
+    case GUEST_REMOVE_ITEM:
+      return (filterVehicles = state.filter(
+        (vehicle) => vehicle.id !== action.vehicleId
+      ));
+
     default:
       return state;
   }
