@@ -1,38 +1,56 @@
 import React from "react";
 import { connect } from "react-redux";
-import { fetchVehicles } from "../store/allVehicles";
+import { fetchUsers, deleteUser } from "../../store/allUsers";
+import Button from "react-bootstrap/Button";
+import ManageUserVehicles from "./ManageSingleOrder";
+import axios from "axios";
+import ManageSingleUserForm from "./ManageSingleUserForm"
+
 import { Link } from "react-router-dom";
 
-export class ManageVehicles extends React.Component {
+export class ManageUsers extends React.Component {
+  constructor() {
+    super();
+    
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleComplete = this.handleComplete.bind(this);
+
+  }
   componentDidMount() {
-    this.props.getVehicles();
+    this.props.getUsers();
+  }
+  handleDelete(id) {
+    this.props.removeUser(id);
+  }
+  async handleComplete(orderId){
+    await axios.put(`/api/orders/${orderId}/complete`)
   }
 
+  
   render() {
-    const vehicles = this.props.vehicles;
-
-    //priceFormatter converts integer price value from DB into dollar currency format
-    const priceFormatter = new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      maximumFractionDigits: 0,
-    });
-
+    const users = this.props.users;
+    
     return (
-      <div className="Allcards">
-        {vehicles.map((vehicle) => (
-          <div key={vehicle.id} className="Card">
-            <Link to={`/vehicles/${vehicle.id}`}>
-              <div className="Card-image">
-                <img src={vehicle.imageUrl} alt={vehicle.model} />
+      <div>
+        <div className="manage-vehicle-header">
+          <p className="v-header">User</p>
+          <p className="qty-header">Order</p>
+          <p className="p-header">Status</p>
+        </div>
+        <div className="manage-table">
+          {users.map((user) => (
+            <div key={user.id}>
+            <ManageSingleUserForm user={user} deleteUser={this.handleDelete}/>
+            <Button
+                  variant="danger"
+                  onClick={() => this.handleDelete(user.id)}///
+                >
+                  {" "}
+                  <i className="fas fa-trash"></i>{" "}
+              </Button>
               </div>
-            </Link>
-            <div className="Card-data">
-              <Link to={`/vehicles/${vehicle.id}`}>{vehicle.vehicleName}</Link>
-              <div>{priceFormatter.format(vehicle.price)}</div>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     );
   }
@@ -40,14 +58,15 @@ export class ManageVehicles extends React.Component {
 
 const mapStatetoProps = (state) => {
   return {
-    vehicles: state.vehicles,
+    users: state.users,
   };
 };
 
 const mapDispatchtoProps = (dispatch) => {
   return {
-    getVehicles: () => dispatch(fetchVehicles()),
+    getUsers: () => dispatch(fetchUsers()),
+    removeUser: (id) => dispatch(deleteUser(id)),
   };
 };
 
-export default connect(mapStatetoProps, mapDispatchtoProps)(ManageVehicles);
+export default connect(mapStatetoProps, mapDispatchtoProps)(ManageUsers);
