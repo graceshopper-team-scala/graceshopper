@@ -19,7 +19,7 @@ const setAuth = (auth) => ({ type: SET_AUTH, auth });
  * THUNK CREATORS
  */
 
-export const me = () => async (dispatch, state) => {
+export const me = () => async (dispatch) => {
   const token = window.localStorage.getItem(TOKEN);
   if (token) {
     const res = await axios.get("/auth/me", {
@@ -27,13 +27,14 @@ export const me = () => async (dispatch, state) => {
         authorization: token,
       },
     });
-    const { data: orders } = await axios.get(`api/users/orders/${res.data.id}`);
-    //user object is returned
 
-    //if no user id--> it creates a new usesr id
-    //with that new user id, now create an order
-    //store that order in local storage
-    window.localStorage.setItem(ID, res.data.id);
+    const { data: orders } = await axios.get(`api/users/orders`, {
+      headers: {
+        authorization: token,
+      },
+    });
+
+    //window.localStorage.setItem(ID, res.data.id);
     if (orders[0] !== undefined)
       window.localStorage.setItem(ORDERID, orders[0].id);
 
