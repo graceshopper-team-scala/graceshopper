@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 export class SingleCartItem extends Component {
   constructor() {
@@ -9,42 +9,49 @@ export class SingleCartItem extends Component {
     };
     this.handleQtyChange = this.handleQtyChange.bind(this);
   }
-  componentDidMount(){
-    this.setState({quantity: this.props.vehicle.order_vehicle.quantity})
+  componentDidMount() {
+    this.setState({ quantity: this.props.vehicle.order_vehicle.quantity });
   }
   handleQtyChange(evt) {
-    let token = window.localStorage.getItem('token');
-    if(!token){let guestCart = JSON.parse(window.localStorage.getItem('GUESTCART'));
-    guestCart[0].quantity = Number(evt.target.value);
-    window.localStorage.setItem('GUESTCART', JSON.stringify(guestCart));}
+    let token = window.localStorage.getItem("token");
+    if (!token) {
+      let guestCart = JSON.parse(window.localStorage.getItem("GUESTCART"));
+      guestCart.map((element) => {
+        element.vehicleId = parseInt(element.vehicleId);
+      });
 
-    this.setState({quantity: +evt.target.value })
+      guestCart.map((element) => {
+        if (element.vehicleId === this.props.vehicle.id) {
+          element.quantity = Number(evt.target.value);
+          window.localStorage.setItem("GUESTCART", JSON.stringify(guestCart));
+        }
+      });
+    }
+
+    this.setState({ quantity: +evt.target.value });
   }
 
   render() {
     const { vehicle, handleClick, orderId } = this.props;
 
-    const priceFormatter = new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
+    const priceFormatter = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
       maximumFractionDigits: 0,
     });
 
-    console.log('selected >>> ', this.state.quantity);
+    console.log("selected >>> ", this.state.quantity);
     return (
       <>
         <tr className="single-cart-item" key={vehicle.id}>
           <td>
             <img className="cart-img" src={vehicle.imageUrl} />
             <Link to={`/vehicles/${vehicle.id}`} className="cartitem_name">
-              {vehicle.make} {vehicle.model}{' '}
+              {vehicle.make} {vehicle.model}{" "}
             </Link>
           </td>
           <td>
-            <select
-              value={this.state.quantity}
-              onChange={ this.handleQtyChange}
-            >
+            <select value={this.state.quantity} onChange={this.handleQtyChange}>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
