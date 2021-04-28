@@ -6,8 +6,6 @@ const SET_CHECKOUT_ITEMS = "SET_CHECKOUT_ITEMS";
 const ORDERID = "order_id";
 const SET_CHECKOUT = "SET_CHECKOUT";
 
-
-
 // Action Creators
 export const checkedOut = () => {
   history.push("/confirmation");
@@ -54,7 +52,7 @@ export const checkOut = (orderId, vehicles, token) => {
 export const guestCheckedOut = () => {
   return async (dispatch) => {
     try {
-      window.localStorage.setItem("GUESTCART", '[]');
+      window.localStorage.setItem("GUESTCART", "[]");
       dispatch(checkedOut());
     } catch (error) {
       console.log("Error fetching cars from server", error);
@@ -79,7 +77,7 @@ export const guestCheckOut = () => {
           order_vehicle: { quantity: element.quantity },
         };
         cart.push(singlecar);
-        dispatch(guestSetCheckout(cart))
+        dispatch(guestSetCheckout(cart));
       }
       console.log(cart);
     } catch (error) {
@@ -90,7 +88,6 @@ export const guestCheckOut = () => {
 export const guestSetCheckout = () => {
   return async (dispatch) => {
     try {
-
       let guestCart = JSON.parse(window.localStorage.getItem("GUESTCART"));
       guestCart.map(
         (element) => (element.vehicleId = parseInt(element.vehicleId))
@@ -114,18 +111,14 @@ export const guestSetCheckout = () => {
   };
 };
 
-
 export const setCheckout = (token) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(
-        `http://localhost:8080/api/users/orders`,
-        {
-          headers: {
-            authorization: token,
-          },
-        }
-      );
+      const { data } = await axios.get(`/api/users/orders`, {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(gotItems(data[0].vehicles || []));
     } catch (error) {
       console.log("Error fetching cars from server - checkout", error);
@@ -152,7 +145,7 @@ export default function (state = initialState, action) {
         ...state,
         vehicles: action.cart,
         isReady: true,
-      }
+      };
     default:
       return state;
   }
