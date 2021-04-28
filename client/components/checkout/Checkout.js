@@ -41,7 +41,6 @@ export class Checkout extends Component {
   render() {
 
     const vehicles = this.props.vehicles || [];
-    console.log('vehicles--->',vehicles);
     const total =
       vehicles.reduce((acc, curr) => {
         return acc + curr.price;
