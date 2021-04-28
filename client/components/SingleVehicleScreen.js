@@ -21,12 +21,23 @@ class SingleVehicleScreen extends Component {
   }
 
   handleSnackbar() {
+    if(this.props.vehicle.quantity < this.state.quantity){
+      this.key = this.props.enqueueSnackbar(
+        "Not enough vehicles in stock!",
+        {
+          variant: "error",
+        }
+      );
+    }
+
+    else{
     this.key = this.props.enqueueSnackbar(
       "Your Vehicle was added to the cart!",
       {
         variant: "success",
       }
     );
+    }
   }
   componentDidMount() {
     this.props.getSingleVehicle(this.props.match.params.id);
@@ -46,7 +57,7 @@ class SingleVehicleScreen extends Component {
         this.state.quantity,
         token
       );
-    } else {
+    } else{
       this.props.guestAddToCart(
         this.props.match.params.id,
         this.state.quantity
@@ -61,7 +72,6 @@ class SingleVehicleScreen extends Component {
   render() {
     const { vehicle } = this.props;
 
-    console.log();
 
     if (this.state.isLoading) {
       return (
@@ -101,7 +111,7 @@ class SingleVehicleScreen extends Component {
               <div className="img-description-right">
                 <p className="vechicle-description">{vehicle.description}</p>
                 <div className="vehicle-form">
-                  {vehicle.quantity < 5 ? (
+                  {vehicle.quantity === 0 ? (
                     <div className="single-car-sold-out">
                       {" "}
                       <big> SOLD OUT </big>
