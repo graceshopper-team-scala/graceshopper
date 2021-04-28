@@ -18,9 +18,16 @@ export class SingleCartItem extends Component {
     let token = window.localStorage.getItem("token");
     if (!token) {
       let guestCart = JSON.parse(window.localStorage.getItem("GUESTCART"));
+      guestCart.map((element) => {
+        element.vehicleId = parseInt(element.vehicleId);
+      });
 
-      guestCart[0].quantity = Number(evt.target.value);
-      window.localStorage.setItem("GUESTCART", JSON.stringify(guestCart));
+      guestCart.map((element) => {
+        if (element.vehicleId === this.props.vehicle.id) {
+          element.quantity = Number(evt.target.value);
+          window.localStorage.setItem("GUESTCART", JSON.stringify(guestCart));
+        }
+      });
     }
 
     this.setState({ quantity: +evt.target.value });
