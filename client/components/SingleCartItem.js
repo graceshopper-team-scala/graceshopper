@@ -15,14 +15,16 @@ export class SingleCartItem extends Component {
   componentDidMount(){
     this.setState({quantity: this.props.vehicle.order_vehicle.quantity})
   }
-  handleQtyChange(evt) {
+
+
+  async handleQtyChange(evt) {
     let token = window.localStorage.getItem('token');
     if(!token){let guestCart = JSON.parse(window.localStorage.getItem('GUESTCART'));
 
     guestCart[0].quantity = Number(evt.target.value);
     window.localStorage.setItem('GUESTCART', JSON.stringify(guestCart));}
     else{
-      axios.put(`/api/orders/add_vehicle`, {
+      await axios.put(`/api/orders/add_vehicle`, {
         orderId: +this.props.orderId,
         vehicleId: this.props.vehicle.id,
         quantity: +evt.target.value,
@@ -77,5 +79,19 @@ export class SingleCartItem extends Component {
     );
   }
 }
-export default SingleCartItem;
+// export default SingleCartItem;
+const mapState = (state) => ({
+  cart: state.cart,
+});
+
+// const mapDispatch = (dispatch) => ({
+//   addCartItems: () => dispatch(addToCart()),
+//   removeFromCart: (vehicleId, orderId) =>
+//     dispatch(removeFromCart(vehicleId, orderId)),
+//   getCart: (id) => dispatch(setCart(id)),
+//   guestCart: () => dispatch(guestSetCart()),
+//   guestRemoveItem: (vehicleId) => dispatch(guesetRemoveItemThunk(vehicleId)),
+// });
+
+export default connect(mapState, mapDispatch)(SingleCartItem);
 

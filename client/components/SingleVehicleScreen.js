@@ -73,6 +73,7 @@ class SingleVehicleScreen extends Component {
 
   render() {
     const { vehicle } = this.props;
+    console.log(this.props)
     if (this.state.isLoading) {
       return (
         <div className="loading-screen">
