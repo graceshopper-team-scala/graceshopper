@@ -34,7 +34,6 @@ export const me = () => async (dispatch) => {
       },
     });
 
-    //window.localStorage.setItem(ID, res.data.id);
     if (orders[0] !== undefined)
       window.localStorage.setItem(ORDERID, orders[0].id);
 
