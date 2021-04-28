@@ -26,11 +26,15 @@ export const fetchUsers = () => {
   };
 };
 
-
 export const deleteUser = (id) => {
   return async (dispatch) => {
     try {
-      const { data: user } = await axios.delete(`/api/users/${id}`);
+      const token = window.localStorage.getItem("token");
+      const { data: user } = await axios.delete(`/api/users/${id}`, {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(removedUser(user));
     } catch (error) {
       console.log("Error fetching users from server");

@@ -1,7 +1,7 @@
-
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import axios from "axios";
 
 export class SingleCartItem extends Component {
   constructor() {
@@ -14,23 +14,24 @@ export class SingleCartItem extends Component {
   componentDidMount() {
     this.setState({ quantity: this.props.vehicle.order_vehicle.quantity });
   }
-  handleQtyChange(evt) {
+
+  async handleQtyChange(evt) {
+    this.setState({ quantity: +evt.target.value });
     let token = window.localStorage.getItem("token");
     if (!token) {
       let guestCart = JSON.parse(window.localStorage.getItem("GUESTCART"));
-      guestCart.map((element) => {
-        element.vehicleId = parseInt(element.vehicleId);
-      });
-
-      guestCart.map((element) => {
-        if (element.vehicleId === this.props.vehicle.id) {
-          element.quantity = Number(evt.target.value);
-          window.localStorage.setItem("GUESTCART", JSON.stringify(guestCart));
-        }
+      guestCart[0].quantity = Number(evt.target.value);
+      window.localStorage.setItem("GUESTCART", JSON.stringify(guestCart));
+    } else {
+      await axios.put(`/api/orders/add_vehicle`, {
+        orderId: +this.props.orderId,
+        vehicleId: this.props.vehicle.id,
+        quantity: +evt.target.value,
+        fromCart: true,
       });
     }
 
-    this.setState({ quantity: +evt.target.value });
+    this.setState({ quantity: evt.target.value });
   }
 
   render() {

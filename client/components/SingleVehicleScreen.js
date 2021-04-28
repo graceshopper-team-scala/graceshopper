@@ -21,12 +21,18 @@ class SingleVehicleScreen extends Component {
   }
 
   handleSnackbar() {
-    this.key = this.props.enqueueSnackbar(
-      "Your Vehicle was added to the cart!",
-      {
-        variant: "success",
-      }
-    );
+    if (this.props.vehicle.quantity < this.state.quantity) {
+      this.key = this.props.enqueueSnackbar("Not enough vehicles in stock!", {
+        variant: "error",
+      });
+    } else {
+      this.key = this.props.enqueueSnackbar(
+        "Your Vehicle was added to the cart!",
+        {
+          variant: "success",
+        }
+      );
+    }
   }
   componentDidMount() {
     this.props.getSingleVehicle(this.props.match.params.id);
@@ -61,8 +67,6 @@ class SingleVehicleScreen extends Component {
   render() {
     const { vehicle } = this.props;
 
-    console.log();
-
     if (this.state.isLoading) {
       return (
         <div className="loading-screen">
@@ -87,7 +91,6 @@ class SingleVehicleScreen extends Component {
         <div className="container">
           <div className="top-info">
             <div>
-              {/* <img className="logo-img" src={vehicle.logoUrl} /> */}
               <span className="vehicle-name">{vehicle.vehicleName}</span>
             </div>
             <span className="vehicle-price">
@@ -101,7 +104,7 @@ class SingleVehicleScreen extends Component {
               <div className="img-description-right">
                 <p className="vechicle-description">{vehicle.description}</p>
                 <div className="vehicle-form">
-                  {vehicle.quantity < 3 ? (
+                  {vehicle.quantity === 0 ? (
                     <div className="single-car-sold-out">
                       {" "}
                       <big> SOLD OUT </big>

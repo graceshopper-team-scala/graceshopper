@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import Button from "react-bootstrap/Button";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
 export default class StatusForm extends Component {
   constructor(props) {
@@ -25,8 +23,16 @@ export default class StatusForm extends Component {
     let newStatus;
     if (this.state.status === "pending") newStatus = "completed";
     else newStatus = "pending";
-
-    await axios.put(`/api/orders/admin/${this.props.order.id}/complete`);
+    const token = window.localStorage.getItem("token");
+    await axios.put(
+      `/api/orders/admin/${this.props.order.id}/complete`,
+      {},
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
     await this.setState({
       status: newStatus,
     });

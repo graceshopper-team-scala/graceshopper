@@ -45,7 +45,7 @@ export class AllVehicles extends React.Component {
             <Link to={`/vehicles/${vehicle.id}`}>
               <div className="Card-image">
                 <img src={vehicle.imageUrl} alt={vehicle.model} />
-                {vehicle.quantity < 3 && (
+                {vehicle.quantity === 0 && (
                   <img
                     className="sold-out"
                     src="https://pngimg.com/uploads/sold_out/sold_out_PNG77.png"

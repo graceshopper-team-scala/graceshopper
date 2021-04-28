@@ -4,7 +4,6 @@ import axios from "axios";
 const ADD_TO_CART = "ADD_TO_CART";
 const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 const SET_CART = "SET_CART";
-const TOKEN = "token";
 
 //Guest action types
 const GUEST_TO_CART = "GUEST_TO_CART";
@@ -31,19 +30,9 @@ export const _setCart = (cart) => {
 };
 
 // Guest action Creators
-const guestAddCart = (cartItem) => ({
-  type: GUEST_TO_CART,
-  cartItem,
-});
-
 const _guestSetCart = (cart) => ({
   type: GUEST_CART,
   cart,
-});
-
-const _guestRemoveItem = (cartItem) => ({
-  type: GUEST_REMOVE_ITEM,
-  cartItem,
 });
 
 // Thunk Creators
@@ -129,9 +118,7 @@ export const guestAddToCartThunk = (vehicleId, quantity) => {
 export const guesetRemoveItemThunk = (vehicleId) => {
   return async (dispatch) => {
     try {
-
       let guestCart = JSON.parse(window.localStorage.getItem("GUESTCART"));
-
 
       guestCart.map((element) => {
         element.vehicleId = parseInt(element.vehicleId);

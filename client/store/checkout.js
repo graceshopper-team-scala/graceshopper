@@ -24,7 +24,6 @@ export const gotItems = (items) => {
 export const checkOut = (orderId, vehicles, token) => {
   return async (dispatch) => {
     try {
-      console.log("token -->", token);
       const { data: order } = await axios.put(
         `api/orders/${orderId}/complete`,
         {
@@ -55,7 +54,6 @@ export const setCheckout = (token) => {
           },
         }
       );
-      console.log(data[0].vehicles);
       dispatch(gotItems(data[0].vehicles || []));
     } catch (error) {
       console.log("Error fetching cars from server - checkout", error);
