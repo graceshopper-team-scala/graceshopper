@@ -3,13 +3,13 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 
 export function CheckoutConfirmation(props) {
+  const handleClick = () => {
+    props.history.push("/vehicles");
+  };
   if (!props.isCheckout) {
     props.history.push("/home");
     return <></>;
   }
-  const handleClick = () => {
-    props.history.push("/vehicles");
-  };
   return (
     <div className="checkout-confirmation">
       <div className="conf-container">

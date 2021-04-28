@@ -52,7 +52,7 @@ export const checkOut = (orderId, vehicles, token) => {
     }
   };
 };
-export const guesTCheckOut = () => {
+export const guestCheckedOut = () => {
   return async (dispatch) => {
     try {
       window.localStorage.setItem("GUESTCART", '[]');

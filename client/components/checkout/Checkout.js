@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { checkOut, setCheckout, guestCheckOut, guesTCheckOut } from "../../store/checkout";
+import { checkOut, setCheckout, guestCheckOut, guestCheckedOut } from "../../store/checkout";
 import { cartLogout } from "../../store/cart";
 import Button from "react-bootstrap/Button";
 export class Checkout extends Component {
@@ -30,6 +30,8 @@ export class Checkout extends Component {
     this.props.clearCart();
     }else{
       this.props.clearGuestCart();
+      this.props.clearCart();
+
     }
 
   }
@@ -110,6 +112,6 @@ const mapDispatch = (dispatch) => ({
   fetchCart: (id) => dispatch(setCheckout(id)),
   clearCart: () => dispatch(cartLogout()),
   guesTCheckOut: () =>dispatch(guestCheckOut()),
-  clearGuestCart:() =>dispatch(guesTCheckOut()),
+  clearGuestCart:() =>dispatch(guestCheckedOut()),
 });
 export default connect(mapState, mapDispatch)(Checkout);
