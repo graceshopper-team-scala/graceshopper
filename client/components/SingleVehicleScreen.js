@@ -46,6 +46,7 @@ class SingleVehicleScreen extends Component {
     });
   }
 
+
   handleAddCartItem(evt) {
     evt.preventDefault();
     const orderId = window.localStorage.getItem("order_id");
