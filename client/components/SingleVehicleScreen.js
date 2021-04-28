@@ -101,7 +101,7 @@ class SingleVehicleScreen extends Component {
               <div className="img-description-right">
                 <p className="vechicle-description">{vehicle.description}</p>
                 <div className="vehicle-form">
-                  {vehicle.quantity < 5 ? (
+                  {vehicle.quantity < 3 ? (
                     <div className="single-car-sold-out">
                       {" "}
                       <big> SOLD OUT </big>

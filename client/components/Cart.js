@@ -96,9 +96,6 @@ export class Cart extends Component {
                 </Button>
               </div>
             </div>
-<<<<<<< HEAD
-            <CartItems items={cart}  handleClick={this.handleClick} />
-=======
             {cart.length ? (
               <CartItems items={cart} handleClick={this.handleClick} />
             ) : (
@@ -106,7 +103,6 @@ export class Cart extends Component {
                 <p>Your Cart Is Empty</p>
               </div>
             )}
->>>>>>> 8871eff5dd0d94fe9f47bf3b6154c5695ab00581
             <div className="cart-total">
               <p>
                 Subtotal ({cart.length}) items:{" "}
