@@ -39,7 +39,6 @@ export default class StatusForm extends Component {
   }
 
   render() {
-    console.log(this.props);
     const completed = this.state.status === "completed";
     return (
       <form onSubmit={this.handleSubmit}>
