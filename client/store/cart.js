@@ -129,7 +129,9 @@ export const guestAddToCartThunk = (vehicleId, quantity) => {
 export const guesetRemoveItemThunk = (vehicleId) => {
   return async (dispatch) => {
     try {
+
       let guestCart = JSON.parse(window.localStorage.getItem("GUESTCART"));
+
 
       guestCart.map((element) => {
         element.vehicleId = parseInt(element.vehicleId);
