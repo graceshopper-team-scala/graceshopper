@@ -154,9 +154,6 @@ router.put("/:orderId/complete", requireToken, async (req, res, next) => {
   try {
     const { vehicles } = req.body;
     const { id: userId } = req.user;
-    console.log("***************");
-    console.log("REQ --->", req);
-    console.log("***************");
 
     vehicles.forEach(async (vehicle) => {
       const dBVehicle = await Vehicle.findByPk(vehicle.id);
