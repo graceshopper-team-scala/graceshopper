@@ -4,6 +4,9 @@ import history from "../history";
 const CHECKED_OUT = "CHECKED_OUT";
 const SET_CHECKOUT_ITEMS = "SET_CHECKOUT_ITEMS";
 const ORDERID = "order_id";
+const SET_CHECKOUT = "SET_CHECKOUT";
+
+
 
 // Action Creators
 export const checkedOut = () => {
@@ -17,6 +20,12 @@ export const gotItems = (items) => {
   return {
     type: SET_CHECKOUT_ITEMS,
     items,
+  };
+};
+export const _setCheckout = (cart) => {
+  return {
+    type: SET_CHECKOUT,
+    cart,
   };
 };
 
@@ -42,6 +51,69 @@ export const checkOut = (orderId, vehicles, token) => {
     }
   };
 };
+export const guestCheckedOut = () => {
+  return async (dispatch) => {
+    try {
+      window.localStorage.setItem("GUESTCART", '[]');
+      dispatch(checkedOut());
+    } catch (error) {
+      console.log("Error fetching cars from server", error);
+    }
+  };
+};
+
+export const guestCheckOut = () => {
+  return async (dispatch) => {
+    try {
+      let guestCart = JSON.parse(window.localStorage.getItem("GUESTCART"));
+      guestCart.map(
+        (element) => (element.vehicleId = parseInt(element.vehicleId))
+      );
+      const cart = [];
+      for (let element of guestCart) {
+        let { data: singlecar } = await axios.get(
+          `/api/vehicles/${element.vehicleId}`
+        );
+        singlecar = {
+          ...singlecar,
+          order_vehicle: { quantity: element.quantity },
+        };
+        cart.push(singlecar);
+        dispatch(guestSetCheckout(cart))
+      }
+      console.log(cart);
+    } catch (error) {
+      console.log("Error fetching cars from server", error);
+    }
+  };
+};
+export const guestSetCheckout = () => {
+  return async (dispatch) => {
+    try {
+
+      let guestCart = JSON.parse(window.localStorage.getItem("GUESTCART"));
+      guestCart.map(
+        (element) => (element.vehicleId = parseInt(element.vehicleId))
+      );
+      const cart = [];
+      for (let element of guestCart) {
+        let { data: singlecar } = await axios.get(
+          `/api/vehicles/${element.vehicleId}`
+        );
+        singlecar = {
+          ...singlecar,
+          order_vehicle: { quantity: element.quantity },
+        };
+        cart.push(singlecar);
+      }
+
+      dispatch(_setCheckout(cart));
+    } catch (error) {
+      console.log("Error fetching cars from server", error);
+    }
+  };
+};
+
 
 export const setCheckout = (token) => {
   return async (dispatch) => {
@@ -75,6 +147,12 @@ export default function (state = initialState, action) {
         vehicles: action.items,
         isReady: true,
       };
+    case SET_CHECKOUT:
+      return {
+        ...state,
+        vehicles: action.cart,
+        isReady: true,
+      }
     default:
       return state;
   }

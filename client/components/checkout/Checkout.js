@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { checkOut, setCheckout } from "../../store/checkout";
+import { checkOut, setCheckout, guestCheckOut, guestCheckedOut } from "../../store/checkout";
 import { cartLogout } from "../../store/cart";
 import Button from "react-bootstrap/Button";
 export class Checkout extends Component {
@@ -14,20 +14,34 @@ export class Checkout extends Component {
   }
   componentDidMount() {
     const TOKEN = window.localStorage.getItem("token");
-    this.props.fetchCart(TOKEN);
+    if(TOKEN){
+      this.props.fetchCart(TOKEN);
+    }else{
+      this.props.guesTCheckOut();
+    }
+
   }
 
   handleComplete(vehicles) {
     const orderId = window.localStorage.getItem("order_id");
     const TOKEN = window.localStorage.getItem("token");
-    this.props.checkOutCart(orderId, vehicles, TOKEN);
+    if(TOKEN){
+      this.props.checkOutCart(orderId, vehicles, TOKEN);
     this.props.clearCart();
+    }else{
+      this.props.clearGuestCart();
+      this.props.clearCart();
+
+    }
+
   }
   handleGoBack() {
     this.props.history.push("/cart");
   }
   render() {
+
     const vehicles = this.props.vehicles || [];
+    console.log('vehicles--->',vehicles);
     const total =
       vehicles.reduce((acc, curr) => {
         return acc + curr.price;
@@ -97,5 +111,7 @@ const mapDispatch = (dispatch) => ({
   checkOutCart: (id, items, token) => dispatch(checkOut(id, items, token)),
   fetchCart: (id) => dispatch(setCheckout(id)),
   clearCart: () => dispatch(cartLogout()),
+  guesTCheckOut: () =>dispatch(guestCheckOut()),
+  clearGuestCart:() =>dispatch(guestCheckedOut()),
 });
 export default connect(mapState, mapDispatch)(Checkout);
