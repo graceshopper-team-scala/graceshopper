@@ -1,0 +1,36 @@
+.checkout-total {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-top: 1px solid rgba(141, 141, 141, 0.5);
+}
+
+.checkout-total > * {
+  margin-left: 1rem;
+}
+
+/* CONFIRMATION */
+.checkout-confirmation {
+  background-color: rgba(124, 124, 124, 0.5);
+  margin: auto;
+  width: 40%;
+  height: 18rem;
+  margin-top: 7rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.conf-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.conf-container button {
+  margin-top: 2rem;
+}

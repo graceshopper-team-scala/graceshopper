@@ -70,11 +70,12 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
     case CHECKED_OUT:
-      return { ...state, vehicles: action.checkout };
+      return { ...state, vehicles: action.checkout, isReady: true };
     case SET_CHECKOUT_ITEMS:
       return {
         ...state,
         vehicles: action.items,
+        isReady: true,
       };
     default:
       return state;

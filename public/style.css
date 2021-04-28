@@ -4,6 +4,7 @@
 @import "./cssModules/home.css";
 @import "./cssModules/authForm.css";
 @import "./cssModules/adminPage.css";
+@import "./cssModules/checkout.css";
 
 body {
   font-family: sans-serif;

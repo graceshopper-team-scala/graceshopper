@@ -61,7 +61,16 @@
 
 .cart-item-modify {
   display: flex;
+  justify-content: flex-start;
   margin-top: 1rem;
+}
+.cart-item-modify > * {
+  margin-right: 1.5rem;
+}
+.cart-item-modify > select {
+  width: 3rem;
+  text-align-last: center;
+  border-radius: 6px;
 }
 .cart-item-name {
   margin-top: 1rem;
@@ -69,5 +78,13 @@
 }
 
 td {
-  margin: 1rem;
+  margin: 1.5rem;
+}
+
+.empty-cart {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 5rem;
+  margin-bottom: 5rem;
 }
