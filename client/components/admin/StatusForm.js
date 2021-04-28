@@ -45,19 +45,6 @@ export default class StatusForm extends Component {
       <form onSubmit={this.handleSubmit}>
         <input name="status" value={this.state.status} />
         <button type="submit">Mark complete</button>
-        {/* <div>
-            {completed ?
-            <span>
-                <button disabled type="submit">Mark complete</button>
-            </span>
-            :
-            <span>
-            <button type="submit">Mark complete</button>
-            </span>
-
-            }
-        
-        </div> */}
       </form>
     );
   }
