@@ -98,7 +98,7 @@ class SingleVehicleScreen extends Component {
         <div className="container">
           <div className="top-info">
             <div>
-              <img className="logo-img" src={vehicle.logoUrl} />
+              {/* <img className="logo-img" src={vehicle.logoUrl} /> */}
               <span className="vehicle-name">{vehicle.vehicleName}</span>
             </div>
             <span className="vehicle-price">
