@@ -61,6 +61,7 @@ router.get("/:id", async (req, res, next) => {
 */
 router.put("/add_vehicle", async (req, res, next) => {
   try {
+    console.log('!!!!!!', req.body)
     const quantity = req.body.quantity;
     const userId = req.body.userId;
     const vehicle = await Vehicle.findByPk(req.body.vehicleId);

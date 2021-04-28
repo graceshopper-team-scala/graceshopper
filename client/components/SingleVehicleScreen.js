@@ -13,6 +13,7 @@ class SingleVehicleScreen extends Component {
     this.state = {
       quantity: 1,
       isLoading: true,
+      canAdd: true 
     };
 
     this.handleAddCartItem = this.handleAddCartItem.bind(this);
@@ -21,8 +22,18 @@ class SingleVehicleScreen extends Component {
   }
 
   handleSnackbar() {
-    
-    if(this.props.vehicle.quantity < this.state.quantity){
+    const vehicleInCart = this.props.cart.filter(vehicle=>vehicle.id = this.props.match.params.id)
+    let check3=false;
+    if(vehicleInCart.length!==0) check3=vehicleInCart[0].order_vehicle.quantity===3
+    if(check3){
+      this.key = this.props.enqueueSnackbar(
+        "Cannot exceed 3 of the same car in an order!",
+        {
+          variant: "warning",
+        }
+      );
+    }
+    else if(this.props.vehicle.quantity < this.state.quantity){
       this.key = this.props.enqueueSnackbar(
         "Not enough vehicles in stock!",
         {
@@ -48,23 +59,29 @@ class SingleVehicleScreen extends Component {
 
   handleAddCartItem(evt) {
     evt.preventDefault();
-    console.log('!!!!!!', this.props.cart)
+    
     const orderId = window.localStorage.getItem("order_id");
     const token = window.localStorage.getItem("token");
-    const acceptAmount = this.props.vehicle.quantity - this.state.quantity >=0 
-    if (token && acceptAmount) {
-      this.props.addNewToCart(
-        orderId,
-        this.props.match.params.id,
-        this.state.quantity,
-        token
-      );
-    } else if(acceptAmount){
-      this.props.guestAddToCart(
-        this.props.match.params.id,
-        this.state.quantity
-      );
-    }
+    const quantityInInvetory = this.props.vehicle.quantity
+    // const quantityInCart = this.props.vehicle.order_vehicle.quantity 
+    console.log('props-->', this.props)
+    console.log('quantityInInventory---->', quantityInInvetory)
+    // console.log('quantityInCart-->', quantityInCart)
+
+    // if (token) {
+
+    //   this.props.addNewToCart(
+    //     orderId,
+    //     +this.props.match.params.id,
+    //     this.state.quantity,
+    //     token
+    //   );
+    // } else {
+    //   this.props.guestAddToCart(
+    //     this.props.match.params.id,
+    //     this.state.quantity
+    //   );
+    // }
   }
 
   handleQtyChange(evt) {
@@ -73,7 +90,6 @@ class SingleVehicleScreen extends Component {
 
   render() {
     const { vehicle } = this.props;
-
     if (this.state.isLoading) {
       return (
         <div className="loading-screen">
@@ -131,6 +147,7 @@ class SingleVehicleScreen extends Component {
                         variant="warning"
                         type="submit"
                         onClick={this.handleSnackbar}
+                        disabled={!this.state.canAdd}
                       >
                         Add to cart
                       </Button>
