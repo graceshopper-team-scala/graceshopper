@@ -22,10 +22,6 @@ export class SingleCartItem extends Component {
     guestCart[0].quantity = Number(evt.target.value);
     window.localStorage.setItem('GUESTCART', JSON.stringify(guestCart));}
     else{
-      console.log(
-       console.log(typeof(parseInt(this.props.orderId))),
-        
-      )
       axios.put(`/api/orders/add_vehicle`, {
         orderId: +this.props.orderId,
         vehicleId: this.props.vehicle.id,

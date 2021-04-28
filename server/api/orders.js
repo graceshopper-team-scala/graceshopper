@@ -61,7 +61,6 @@ router.get("/:id", async (req, res, next) => {
 */
 router.put("/add_vehicle", async (req, res, next) => {
   try {
-    console.log('!!!!!!', req.body)
     const quantity = req.body.quantity;
     const userId = req.body.userId;
     const vehicle = await Vehicle.findByPk(req.body.vehicleId);
@@ -108,7 +107,6 @@ router.put("/remove_vehicle", async (req, res, next) => {
     const vehicle = await Vehicle.findByPk(req.body.vehicleId);
     if (!req.body.quantity) {
       await order.removeVehicle(vehicle);
-      res.send("Vehicle removed from order");
     } else {
       const quantityToUpdate = await Order_Vehicle.findOne({
         where: {

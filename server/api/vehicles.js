@@ -1,5 +1,5 @@
 const {
-  models: { Vehicle, Order },
+  models: { Vehicle },
 } = require("../db");
 
 const router = require("express").Router();

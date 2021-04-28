@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getSingleVehicleThunk } from "../store/singleVehicle";
 import { withSnackbar } from "notistack";
-import cart, { addToCartThunk, guestAddToCartThunk } from "../store/cart";
+import { addToCartThunk, guestAddToCartThunk } from "../store/cart";
 import Button from "react-bootstrap/Button";
 import PropTypes from "prop-types";
 import ReactLoading from "react-loading";
@@ -21,18 +21,8 @@ class SingleVehicleScreen extends Component {
   }
 
   handleSnackbar() {
-    const vehicleInCart = this.props.cart.filter(vehicle=>vehicle.id = this.props.match.params.id)
-    let check3=false;
-    if(vehicleInCart.length!==0) check3=vehicleInCart[0].order_vehicle.quantity===3
-    if(check3){
-      this.key = this.props.enqueueSnackbar(
-        "Cannot exceed 3 of the same car in an order!",
-        {
-          variant: "warning",
-        }
-      );
-    }
-    else if(this.props.vehicle.quantity < this.state.quantity){
+  
+    if(this.props.vehicle.quantity < this.state.quantity){
       this.key = this.props.enqueueSnackbar(
         "Not enough vehicles in stock!",
         {
@@ -61,7 +51,7 @@ class SingleVehicleScreen extends Component {
     
     const orderId = window.localStorage.getItem("order_id");
     const token = window.localStorage.getItem("token");
-
+    
     if(token) {
       this.props.addNewToCart(
         orderId,
@@ -162,7 +152,6 @@ SingleVehicleScreen.propTypes = {
 const mapState = (state) => ({
   vehicle: state.vehicle,
   auth: state.auth,
-  cart: state.cart
 });
 
 const mapDispatch = (dispatch) => ({
