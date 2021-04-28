@@ -13,7 +13,6 @@ class SingleVehicleScreen extends Component {
     this.state = {
       quantity: 1,
       isLoading: true,
-      canAdd: true 
     };
 
     this.handleAddCartItem = this.handleAddCartItem.bind(this);
@@ -62,26 +61,20 @@ class SingleVehicleScreen extends Component {
     
     const orderId = window.localStorage.getItem("order_id");
     const token = window.localStorage.getItem("token");
-    const quantityInInvetory = this.props.vehicle.quantity
-    // const quantityInCart = this.props.vehicle.order_vehicle.quantity 
-    console.log('props-->', this.props)
-    console.log('quantityInInventory---->', quantityInInvetory)
-    // console.log('quantityInCart-->', quantityInCart)
 
-    // if (token) {
-
-    //   this.props.addNewToCart(
-    //     orderId,
-    //     +this.props.match.params.id,
-    //     this.state.quantity,
-    //     token
-    //   );
-    // } else {
-    //   this.props.guestAddToCart(
-    //     this.props.match.params.id,
-    //     this.state.quantity
-    //   );
-    // }
+    if(token) {
+      this.props.addNewToCart(
+        orderId,
+        this.props.match.params.id,
+        this.state.quantity,
+        token
+      );
+    } else {
+      this.props.guestAddToCart(
+        this.props.match.params.id,
+        this.state.quantity
+      );
+    }
   }
 
   handleQtyChange(evt) {
@@ -147,7 +140,6 @@ class SingleVehicleScreen extends Component {
                         variant="warning"
                         type="submit"
                         onClick={this.handleSnackbar}
-                        disabled={!this.state.canAdd}
                       >
                         Add to cart
                       </Button>
