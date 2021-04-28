@@ -33,12 +33,12 @@ class Home extends Component {
     }
 
     return (
-      <div>
-        <div>
+      <div className="home-container">
+        <div className="greeting-container">
           {username ? (
-            <big>Welcome back, {username}!</big>
+            <p className="home-greeting">Welcome back, {username}!</p>
           ) : (
-            <big>Welcome to Grace Hopper Motors!</big>
+            <p className="home-greeting">Welcome to Grace Hopper Motors!</p>
           )}
         </div>
         <div id="main-home">

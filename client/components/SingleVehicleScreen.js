@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { getSingleVehicleThunk } from '../store/singleVehicle';
-import { withSnackbar } from 'notistack';
-import { addToCartThunk, guestAddToCartThunk } from '../store/cart';
-import Button from 'react-bootstrap/Button';
-import PropTypes from 'prop-types';
-import ReactLoading from 'react-loading';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { getSingleVehicleThunk } from "../store/singleVehicle";
+import { withSnackbar } from "notistack";
+import { addToCartThunk, guestAddToCartThunk } from "../store/cart";
+import Button from "react-bootstrap/Button";
+import PropTypes from "prop-types";
+import ReactLoading from "react-loading";
 
 class SingleVehicleScreen extends Component {
   constructor() {
@@ -22,9 +22,9 @@ class SingleVehicleScreen extends Component {
 
   handleSnackbar() {
     this.key = this.props.enqueueSnackbar(
-      'Your Vehicle was added to the cart!',
+      "Your Vehicle was added to the cart!",
       {
-        variant: 'success',
+        variant: "success",
       }
     );
   }
@@ -37,20 +37,20 @@ class SingleVehicleScreen extends Component {
 
   handleAddCartItem(evt) {
     evt.preventDefault();
-    const orderId = window.localStorage.getItem('order_id');
-    const userId = window.localStorage.getItem('id');
-    if (orderId && userId) {
+    const orderId = window.localStorage.getItem("order_id");
+    const token = window.localStorage.getItem("token");
+    if (token) {
       this.props.addNewToCart(
         orderId,
         this.props.match.params.id,
-        this.state.quantity
+        this.state.quantity,
+        token
       );
     } else {
       this.props.guestAddToCart(
         this.props.match.params.id,
         this.state.quantity
       );
-      console.log(this.state);
     }
   }
 
@@ -67,8 +67,8 @@ class SingleVehicleScreen extends Component {
       return (
         <div className="loading-screen">
           <ReactLoading
-            type={'spokes'}
-            color={'#ffc107'}
+            type={"spokes"}
+            color={"#ffc107"}
             height={500}
             width={250}
           />
@@ -76,9 +76,9 @@ class SingleVehicleScreen extends Component {
       );
     }
 
-    const priceFormatter = new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
+    const priceFormatter = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
       maximumFractionDigits: 0,
     });
 
@@ -87,7 +87,7 @@ class SingleVehicleScreen extends Component {
         <div className="container">
           <div className="top-info">
             <div>
-              <img className="logo-img" src={vehicle.logoUrl} />
+              {/* <img className="logo-img" src={vehicle.logoUrl} /> */}
               <span className="vehicle-name">{vehicle.vehicleName}</span>
             </div>
             <span className="vehicle-price">
@@ -103,7 +103,7 @@ class SingleVehicleScreen extends Component {
                 <div className="vehicle-form">
                   {vehicle.quantity < 5 ? (
                     <div className="single-car-sold-out">
-                      {' '}
+                      {" "}
                       <big> SOLD OUT </big>
                     </div>
                   ) : (
@@ -146,8 +146,8 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => ({
   getSingleVehicle: (id) => dispatch(getSingleVehicleThunk(id)),
-  addNewToCart: (userId, vehicleId, quantity) =>
-    dispatch(addToCartThunk(userId, vehicleId, quantity)),
+  addNewToCart: (orderId, vehicleId, quantity, token) =>
+    dispatch(addToCartThunk(orderId, vehicleId, quantity, token)),
   guestAddToCart: (vehicle, quantity) =>
     dispatch(guestAddToCartThunk(vehicle, quantity)),
 });

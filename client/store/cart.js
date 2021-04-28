@@ -1,15 +1,15 @@
-import axios from 'axios';
+import axios from "axios";
 
 // Action Types
-const ADD_TO_CART = 'ADD_TO_CART';
-const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
-const CART_RESET = 'CART_RESET';
-const SET_CART = 'SET_CART';
+const ADD_TO_CART = "ADD_TO_CART";
+const REMOVE_FROM_CART = "REMOVE_FROM_CART";
+const SET_CART = "SET_CART";
+const TOKEN = "token";
 
 //Guest action types
-const GUEST_TO_CART = 'GUEST_TO_CART';
-const GUEST_CART = 'GUEST_CART';
-const GUEST_REMOVE_ITEM = 'GUEST_REMOVE_ITEM';
+const GUEST_TO_CART = "GUEST_TO_CART";
+const GUEST_CART = "GUEST_CART";
+const GUEST_REMOVE_ITEM = "GUEST_REMOVE_ITEM";
 
 // Action Creators
 const addToCart = (cartItem) => ({
@@ -57,18 +57,22 @@ export const removeFromCart = (vehicleId, orderId) => {
       });
       dispatch(_removeFromCart(vehicleId, orderId));
     } catch (error) {
-      console.log('Error deleting cars from server', error);
+      console.log("Error deleting cars from server", error);
     }
   };
 };
 
-export const setCart = (userId) => {
+export const setCart = (token) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`api/users/orders/${userId}`);
+      const { data } = await axios.get(`api/users/orders`, {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(_setCart(data[0].vehicles));
     } catch (error) {
-      console.log('Error fetching cars from server', error);
+      console.log("Error fetching cars from server", error);
     }
   };
 };
@@ -80,14 +84,22 @@ export const cartLogout = () => {
   };
 };
 
-export const addToCartThunk = (orderId, vehicleId, quantity) => {
+export const addToCartThunk = (orderId, vehicleId, quantity, token) => {
   return async (dispatch) => {
     try {
-      const { data: cart } = await axios.put(`/api/orders/add_vehicle`, {
-        orderId,
-        vehicleId,
-        quantity,
-      });
+      const { data: cart } = await axios.put(
+        `/api/orders/add_vehicle`,
+        {
+          orderId,
+          vehicleId,
+          quantity,
+        },
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
       dispatch(addToCart(cart));
     } catch (error) {
       console.error(error);
@@ -104,10 +116,10 @@ export const guestAddToCartThunk = (vehicleId, quantity) => {
         quantity: quantity,
       };
 
-      let guestCart = JSON.parse(window.localStorage.getItem('GUESTCART'));
+      let guestCart = JSON.parse(window.localStorage.getItem("GUESTCART"));
 
       guestCart.push(item);
-      window.localStorage.setItem('GUESTCART', JSON.stringify(guestCart));
+      window.localStorage.setItem("GUESTCART", JSON.stringify(guestCart));
     } catch (error) {
       console.error(error);
     }
@@ -117,7 +129,9 @@ export const guestAddToCartThunk = (vehicleId, quantity) => {
 export const guesetRemoveItemThunk = (vehicleId) => {
   return async (dispatch) => {
     try {
-      let guestCart = JSON.parse(window.localStorage.getItem('GUESTCART'));
+
+      let guestCart = JSON.parse(window.localStorage.getItem("GUESTCART"));
+
 
       guestCart.map((element) => {
         element.vehicleId = parseInt(element.vehicleId);
@@ -128,7 +142,7 @@ export const guesetRemoveItemThunk = (vehicleId) => {
       });
 
       guestCart = window.localStorage.setItem(
-        'GUESTCART',
+        "GUESTCART",
         JSON.stringify(guestCart)
       );
 
@@ -138,13 +152,12 @@ export const guesetRemoveItemThunk = (vehicleId) => {
     }
   };
 };
-
 export const guestSetCart = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`api/vehicles`);
 
-      let guestCart = JSON.parse(window.localStorage.getItem('GUESTCART'));
+      let guestCart = JSON.parse(window.localStorage.getItem("GUESTCART"));
       guestCart.map(
         (element) => (element.vehicleId = parseInt(element.vehicleId))
       );
@@ -162,7 +175,7 @@ export const guestSetCart = () => {
 
       dispatch(_guestSetCart(cart));
     } catch (error) {
-      console.log('Error fetching cars from server', error);
+      console.log("Error fetching cars from server", error);
     }
   };
 };
@@ -181,7 +194,6 @@ export default function (state = [], action) {
       return filterCars;
     case SET_CART:
       return action.cart;
-
     // GUEST REDUCER
     case GUEST_TO_CART:
       return state.push(action.cartItem);

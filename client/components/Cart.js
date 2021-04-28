@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   removeFromCart,
   setCart,
   guestSetCart,
   guesetRemoveItemThunk,
-} from '../store/cart';
+} from "../store/cart";
 
-import { connect } from 'react-redux';
-import CartItems from './CartItems';
-import Button from 'react-bootstrap/Button';
-import ReactLoading from 'react-loading';
+import { connect } from "react-redux";
+import CartItems from "./CartItems";
+import Button from "react-bootstrap/Button";
+import ReactLoading from "react-loading";
 
 export class Cart extends Component {
   constructor(props) {
@@ -23,9 +23,9 @@ export class Cart extends Component {
   }
 
   componentDidMount() {
-    const userId = window.localStorage.getItem('id');
-    if (userId) {
-      this.props.getCart(userId);
+    const TOKEN = window.localStorage.getItem("token");
+    if (TOKEN) {
+      this.props.getCart(TOKEN);
     } else {
       this.props.guestCart();
     }
@@ -43,11 +43,11 @@ export class Cart extends Component {
   }
 
   handleContinue() {
-    this.props.history.push('/vehicles');
+    this.props.history.push("/vehicles");
   }
 
   goToCheckout() {
-    this.props.history.push('/checkout');
+    this.props.history.push("/checkout");
   }
 
   render() {
@@ -60,8 +60,8 @@ export class Cart extends Component {
       return (
         <div className="loading-screen">
           <ReactLoading
-            type={'spokes'}
-            color={'#FFC107'}
+            type={"spokes"}
+            color={"#FFC107"}
             height={500}
             width={250}
           />
@@ -69,9 +69,9 @@ export class Cart extends Component {
       );
     }
 
-    const priceFormatter = new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
+    const priceFormatter = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
       maximumFractionDigits: 0,
     });
 
@@ -83,19 +83,33 @@ export class Cart extends Component {
               <big className="cart-title"> My Cart</big>
               <div>
                 <Button variant="warning" onClick={this.handleContinue}>
-                  {' '}
+                  {" "}
                   Continue Shopping
                 </Button>
-                <Button variant="warning" onClick={this.goToCheckout}>
-                  {' '}
-                  Checkout{' '}
+                <Button
+                  variant={cart.length < 1 ? "secondary" : "warning"}
+                  onClick={this.goToCheckout}
+                  disabled={cart.length < 1}
+                >
+                  {" "}
+                  Checkout{" "}
                 </Button>
               </div>
             </div>
+<<<<<<< HEAD
             <CartItems items={cart}  handleClick={this.handleClick} />
+=======
+            {cart.length ? (
+              <CartItems items={cart} handleClick={this.handleClick} />
+            ) : (
+              <div className="empty-cart">
+                <p>Your Cart Is Empty</p>
+              </div>
+            )}
+>>>>>>> 8871eff5dd0d94fe9f47bf3b6154c5695ab00581
             <div className="cart-total">
               <p>
-                Subtotal ({cart.length}) items:{' '}
+                Subtotal ({cart.length}) items:{" "}
                 {priceFormatter.format(itemTotal)}
               </p>
             </div>

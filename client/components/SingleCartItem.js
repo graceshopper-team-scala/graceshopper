@@ -1,5 +1,7 @@
+
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Button from "react-bootstrap/Button";
 
 export class SingleCartItem extends Component {
   constructor() {
@@ -40,29 +42,35 @@ export class SingleCartItem extends Component {
       maximumFractionDigits: 0,
     });
 
-    console.log("selected >>> ", this.state.quantity);
     return (
       <>
         <tr className="single-cart-item" key={vehicle.id}>
-          <td>
+          <td className="cart-item-row">
             <img className="cart-img" src={vehicle.imageUrl} />
-            <Link to={`/vehicles/${vehicle.id}`} className="cartitem_name">
-              {vehicle.make} {vehicle.model}{" "}
-            </Link>
+            <div className="cart-item-col">
+              <Link to={`/vehicles/${vehicle.id}`} className="cart-item-name">
+                {vehicle.make} {vehicle.model}{" "}
+              </Link>
+              <div className="cart-item-modify">
+                <select
+                  value={this.state.quantity}
+                  onChange={this.handleQtyChange}
+                >
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+                <Button
+                  className="remove"
+                  variant="danger"
+                  onClick={() => handleClick(vehicle.id, orderId)}
+                >
+                  <i className="fas fa-trash"></i>
+                </Button>
+              </div>
+            </div>
           </td>
-          <td>
-            <select value={this.state.quantity} onChange={this.handleQtyChange}>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-            </select>
-            <button
-              className="remove"
-              onClick={() => handleClick(vehicle.id, orderId)}
-            >
-              <i className="fas fa-trash"></i>
-            </button>
-          </td>
+          <td></td>
           <td>{priceFormatter.format(vehicle.price)}</td>
         </tr>
       </>

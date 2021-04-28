@@ -1,24 +1,27 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { checkOut, setCheckout } from "../../store/checkout";
-import { cartCheckout } from "../../store/cart";
+import { cartLogout } from "../../store/cart";
 import Button from "react-bootstrap/Button";
-
 export class Checkout extends Component {
   constructor() {
     super();
+    this.state = {
+      isConfirmed: false,
+    };
     this.handleComplete = this.handleComplete.bind(this);
     this.handleGoBack = this.handleGoBack.bind(this);
   }
   componentDidMount() {
-    const userId = window.localStorage.getItem("id");
-    this.props.fetchCart(userId);
+    const TOKEN = window.localStorage.getItem("token");
+    this.props.fetchCart(TOKEN);
   }
 
   handleComplete(vehicles) {
     const orderId = window.localStorage.getItem("order_id");
-    this.props.checkOutCart(orderId, vehicles);
-    this.props.cleartCart();
+    const TOKEN = window.localStorage.getItem("token");
+    this.props.checkOutCart(orderId, vehicles, TOKEN);
+    this.props.clearCart();
   }
   handleGoBack() {
     this.props.history.push("/cart");
@@ -29,28 +32,54 @@ export class Checkout extends Component {
       vehicles.reduce((acc, curr) => {
         return acc + curr.price;
       }, 0) || 0;
+    const priceFormatter = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      maximumFractionDigits: 0,
+    });
     return (
-      <div>
-        <div className="checkout-header">
-          <big>Checkout Cart</big>
-          <Button onClick={this.handleGoBack}>Return To Cart</Button>
-          <Button onClick={() => this.handleComplete(vehicles)}>
-            Confirm Checkout
-          </Button>
-        </div>
-        <div className="checkout-items">
-          {vehicles.map((vehicle) => {
-            return (
-              <div key={vehicle.id} className="checkout-item">
-                <p>{vehicle.vehicleName}</p>
-                <p>{vehicle.quantity}</p>
-                <p>{vehicle.price}</p>
-              </div>
-            );
-          })}
-        </div>
-        <div checkout="checkout-total">
-          <big>Total: {total}</big>
+      <div className="cart-container">
+        <div className="cart-area">
+          <div className="cart-top">
+            <big>Checkout Your Cart</big>
+            <div>
+              <Button variant="warning" onClick={this.handleGoBack}>
+                Return To Cart
+              </Button>
+            </div>
+          </div>
+          <table className="cart-items">
+            <tbody>
+              <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Price</th>
+              </tr>
+              {vehicles.map((vehicle) => {
+                return (
+                  <tr className="single-cart-item" key={vehicle.id}>
+                    <td>
+                      <img className="cart-img" src={vehicle.imageUrl} />
+                      <p>{vehicle.vehicleName}</p>
+                    </td>
+                    <td>
+                      <p>{vehicle.order_vehicle.quantity}</p>
+                    </td>
+                    <td>{priceFormatter.format(vehicle.price)}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+          <div className="checkout-total">
+            <big>Total: {priceFormatter.format(total)}</big>
+            <Button
+              variant="success"
+              onClick={() => this.handleComplete(vehicles)}
+            >
+              Confirm Order
+            </Button>
+          </div>
         </div>
       </div>
     );
@@ -65,8 +94,8 @@ const mapState = (state) => {
 };
 
 const mapDispatch = (dispatch) => ({
-  checkOutCart: (id, items) => dispatch(checkOut(id, items)),
+  checkOutCart: (id, items, token) => dispatch(checkOut(id, items, token)),
   fetchCart: (id) => dispatch(setCheckout(id)),
-  cleartCart: () => dispatch(cartCheckout()),
+  clearCart: () => dispatch(cartLogout()),
 });
 export default connect(mapState, mapDispatch)(Checkout);
