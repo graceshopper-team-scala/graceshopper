@@ -86,13 +86,23 @@ export class Cart extends Component {
                   {" "}
                   Continue Shopping
                 </Button>
-                <Button variant="warning" onClick={this.goToCheckout}>
+                <Button
+                  variant={cart.length < 1 ? "secondary" : "warning"}
+                  onClick={this.goToCheckout}
+                  disabled={cart.length < 1}
+                >
                   {" "}
                   Checkout{" "}
                 </Button>
               </div>
             </div>
-            <CartItems items={cart} handleClick={this.handleClick} />
+            {cart.length ? (
+              <CartItems items={cart} handleClick={this.handleClick} />
+            ) : (
+              <div className="empty-cart">
+                <p>Your Cart Is Empty</p>
+              </div>
+            )}
             <div className="cart-total">
               <p>
                 Subtotal ({cart.length}) items:{" "}

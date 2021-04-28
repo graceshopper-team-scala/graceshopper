@@ -147,7 +147,6 @@ export const guesetRemoveItemThunk = (vehicleId) => {
       );
 
       dispatch(guestSetCart(guestCart));
-
     } catch (error) {
       console.error(error);
     }
